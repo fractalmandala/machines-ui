@@ -11,7 +11,7 @@ Svelte 5 components drawn with characters: graphs, animated terminals, diagrams,
 pnpm add @fractaldesign/machines-ui
 ```
 
-Needs Svelte 5. It does not need SvelteKit: a plain Vite + Svelte app works.
+Needs Svelte 5.
 
 ## Use
 
