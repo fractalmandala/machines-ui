@@ -1,0 +1,41 @@
+/* DropdownMenuItem */
+/* fl-dropdown-menu-item */
+:where(.fl-dropdown-menu-item[data-variant="destructive"]) {
+	color: #ff6b61;
+}
+
+:where(.fl-dropdown-menu-item[data-variant="destructive"][data-highlighted]) {
+	background-color: color-mix(in oklab, #e33e31 10%, transparent);
+}
+
+/* fl-dropdown-menu-item-item */
+:where(.fl-dropdown-menu-item-item) {
+	cursor: pointer;
+	border-radius: 8px;
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	color: color-mix(in oklab, #fff 80%, transparent);
+	outline-style: none;
+	-webkit-user-select: none;
+	user-select: none;
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 100ms;
+	position: relative;
+	display: flex;
+	height: calc(0.25rem * 8);
+	align-items: center;
+	gap: calc(0.25rem * 2);
+	padding-inline: calc(0.25rem * 2);
+	font-weight: 500;
+}
+
+:where(.fl-dropdown-menu-item-item[data-disabled]) {
+	pointer-events: none;
+	opacity: 40%;
+}
+
+:where(.fl-dropdown-menu-item-item[data-highlighted]) {
+	background-color: color-mix(in oklab, #fff 5%, transparent);
+	color: #fff;
+}

@@ -1,0 +1,13 @@
+/* flow-grid */
+/* fl-flow-grid */
+.fs-flow-grid {
+	pointer-events: none;
+	inset: 0px;
+	background-image: radial-gradient(circle,#1c1c21 1.2px,transparent 1.7px);
+	background-size: 10.86px 10.86px;
+	background-position: calc(50% - 200px) 42.57px;
+}
+
+.fs-flow-grid[data-ready] {
+	background-image: none;
+}

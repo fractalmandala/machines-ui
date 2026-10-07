@@ -1,0 +1,96 @@
+/* overview */
+/* fl-overview */
+.fl-overview {
+	overflow-y: auto;
+}
+
+/* fl-overview-div */
+.fl-overview-div {
+	margin-inline: auto;
+	box-sizing: content-box;
+	max-width: 1200px;
+	padding-bottom: calc(0.25rem * 10);
+	gap: calc(0.25rem * 4);
+	padding-inline: calc(0.25rem * 4);
+}
+
+@media (width >= 40rem) {
+	.fl-overview-div {
+		gap: calc(0.25rem * 10);
+		padding-inline: calc(0.25rem * 8);
+	}
+}
+
+/* fl-overview-div-2 */
+.fl-overview-div-2 {
+	gap: 18px;
+}
+
+/* fl-overview-div-3 */
+.fl-overview-div-3 {
+	gap: calc(0.25rem * 1.5);
+}
+
+/* fl-overview-heading */
+.fl-overview-heading {
+	font-size: 24px;
+	line-height: calc(0.25rem * 8);
+}
+
+/* fl-overview-span */
+.fl-overview-span {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-overview-segmented-tabs */
+@media (width < 40rem) {
+	.fl-overview-segmented-tabs {
+		display: none;
+	}
+}
+
+/* fl-overview-button */
+.fl-overview-button {
+	margin-left: auto;
+}
+
+/* fl-overview-calendar-icon */
+.fl-overview-calendar-icon {
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-overview-dropdown-menu-conten */
+.fl-overview-dropdown-menu-conten {
+	width: calc(0.25rem * 44);
+}
+
+/* fl-overview-div-5 */
+.fl-overview-div-5 {
+	gap: calc(0.25rem * 5);
+}
+
+/* fl-overview-div-6 */
+.fl-overview-div-6 {
+	grid-template-columns: minmax(0,1fr);
+}
+
+@media (width >= 48rem) {
+	.fl-overview-div-6 {
+		grid-template-columns: repeat(3,minmax(0,1fr));
+	}
+}
+
+/* fl-overview-div-7 */
+.fl-overview-div-7 {
+	grid-template-columns: minmax(0,1fr);
+}
+
+@media (width >= 64rem) {
+	.fl-overview-div-7 {
+		grid-template-columns: repeat(2,minmax(0,1fr));
+	}
+}

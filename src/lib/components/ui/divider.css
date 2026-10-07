@@ -1,0 +1,7 @@
+/* divider */
+/* fl-divider */
+:where(.fl-divider) {
+	height: calc(0.25rem * 0.5);
+	background-image: linear-gradient(to bottom,rgb(0 0 0 / 0.32) 0,rgb(0 0 0 / 0.32) 1.5px,rgb(83 86 101 / 0.06) 1.5px);
+	flex-shrink: 0;
+}

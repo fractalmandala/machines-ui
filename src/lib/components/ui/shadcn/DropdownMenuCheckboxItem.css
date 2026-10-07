@@ -1,0 +1,76 @@
+/* DropdownMenuCheckboxItem */
+/* fl-dropdown-menu-checkbox-item */
+:where(.fl-dropdown-menu-checkbox-item) {
+	padding-left: calc(0.25rem * 8);
+}
+
+/* fl-dropdown-menu-checkbox-item-item */
+:where(.fl-dropdown-menu-checkbox-item-item) {
+	cursor: pointer;
+	border-radius: 8px;
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	color: color-mix(in oklab, #fff 80%, transparent);
+	outline-style: none;
+	-webkit-user-select: none;
+	user-select: none;
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 100ms;
+	position: relative;
+	display: flex;
+	height: calc(0.25rem * 8);
+	align-items: center;
+	gap: calc(0.25rem * 2);
+	padding-inline: calc(0.25rem * 2);
+	font-weight: 500;
+}
+
+:where(.fl-dropdown-menu-checkbox-item-item[data-disabled]) {
+	pointer-events: none;
+	opacity: 40%;
+}
+
+:where(.fl-dropdown-menu-checkbox-item-item[data-highlighted]) {
+	background-color: color-mix(in oklab, #fff 5%, transparent);
+	color: #fff;
+}
+
+/* fl-dropdown-menu-checkbox-item-span */
+:where(.fl-dropdown-menu-checkbox-item-span) {
+	pointer-events: none;
+	left: calc(0.25rem * 2);
+	width: calc(0.25rem * 4);
+	height: calc(0.25rem * 4);
+	border-radius: 4px;
+	box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.16);
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* fl-dropdown-menu-checkbox-item-span-2 */
+:where(.fl-dropdown-menu-checkbox-item-span-2) {
+	width: calc(0.25rem * 4);
+	height: calc(0.25rem * 4);
+	border-radius: 4px;
+	background-color: #5016ff;
+	box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.16);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* fl-dropdown-menu-checkbox-item-span-3 */
+:where(.fl-dropdown-menu-checkbox-item-span-3) {
+	margin-bottom: calc(0.25rem * 0.5);
+	height: calc(0.25rem * 2);
+	width: 0.25rem;
+	rotate: 45deg;
+	border-right-style: solid;
+	border-right-width: 1.5px;
+	border-bottom-style: solid;
+	border-bottom-width: 1.5px;
+	border-color: #fff;
+}

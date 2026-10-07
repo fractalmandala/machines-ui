@@ -1,0 +1,87 @@
+/* automations-filter-sheet */
+/* fl-automations-filter-sheet */
+.fl-automations-filter-sheet {
+	margin-inline: auto;
+	margin-top: calc(0.25rem * 2.5);
+	height: 0.25rem;
+	width: calc(0.25rem * 9);
+	background-color: color-mix(in oklab, #fff 15%, transparent);
+}
+
+/* fl-automations-filter-sheet-div */
+.fl-automations-filter-sheet-div {
+	padding-inline: 18px;
+}
+
+/* fl-automations-filter-sheet-close-icon */
+.fl-automations-filter-sheet-close-icon {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	width: 18px;
+	height: 18px;
+	rotate: 45deg;
+	color: color-mix(in oklab, #fff 70%, transparent);
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+	transition-duration: 150ms;
+}
+
+@media (hover: hover) {
+	.fl-automations-filter-sheet-close-icon:is(:where(.group):hover *) {
+		color: #fff;
+	}
+}
+
+/* fl-automations-filter-sheet-div-2 */
+.fl-automations-filter-sheet-div-2 {
+	overflow-y: auto;
+	padding-inline: 18px;
+	padding-block: calc(0.25rem * 5);
+}
+
+/* fl-automations-filter-sheet-chip */
+.fl-automations-filter-sheet-chip {
+	height: calc(0.25rem * 9);
+}
+
+.fl-automations-filter-sheet-chip[aria-pressed="true"] {
+	background-color: color-mix(in oklab, #7f59f0 14%, transparent);
+	color: #fff;
+	box-shadow: 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 0 0 1px rgb(127 89 240 / 0.55);
+}
+
+/* fl-automations-filter-sheet-label */
+.fl-automations-filter-sheet-label {
+	cursor: pointer;
+	border-radius: 12px;
+	background-color: color-mix(in oklab, #fff 2%, transparent);
+	box-shadow: 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 0 0 1px rgb(255 255 255 / 0.04);
+}
+
+/* fl-automations-filter-sheet-span-2 */
+.fl-automations-filter-sheet-span-2 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 5);
+	font-weight: 550;
+}
+
+/* fl-automations-filter-sheet-span-3 */
+.fl-automations-filter-sheet-span-3 {
+	font-size: 13px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-automations-filter-sheet-div-3 */
+.fl-automations-filter-sheet-div-3 {
+	padding-inline: 18px;
+	padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* fl-automations-filter-sheet-button-4 */
+.fl-automations-filter-sheet-button-4 {
+	height: calc(0.25rem * 10);
+}
+
+/* fl-automations-filter-sheet-button-5 */
+.fl-automations-filter-sheet-button-5 {
+	height: calc(0.25rem * 10);
+}

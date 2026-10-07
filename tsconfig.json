@@ -1,0 +1,33 @@
+{
+	"extends": "$app/tsconfig",
+	"compilerOptions": {
+		"rewriteRelativeImportExtensions": true,
+		"allowJs": true,
+		"checkJs": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"strict": true,
+		"types": ["$app/types", "node"],
+		"paths": {
+			"$lib/*": ["./src/lib/*"],
+			"$site/*": ["./src/site/*"],
+			"$lib/svg/*": ["./src/types/svg-component.d.ts"],
+			"$components/*": ["./src/lib/components/*"],
+			"$stores/*": ["./src/lib/stores/*"],
+			"$data/*": ["./src/lib/data/*"],
+			"$utils/*": ["./src/lib/utils/*"]
+		}
+	},
+  "include": [
+    "src",
+    "test",
+    "*"
+  ],
+  "exclude": [
+    "src/service-worker"
+  ]
+}

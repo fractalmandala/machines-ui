@@ -1,0 +1,15 @@
+/* sliding-number */
+/* fl-sliding-number */
+.fl-sliding-number {
+	display: inline-block;
+	width: 0.92ch;
+	overflow-x: visible;
+	overflow-y: clip;
+	line-height: 1;
+	font-variant-numeric: tabular-nums;
+}
+
+/* fl-sliding-number-div */
+.fl-sliding-number-div {
+	visibility: hidden;
+}

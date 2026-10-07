@@ -1,0 +1,73 @@
+/* actions-panel-item */
+/* fl-actions-panel-item */
+.fl-actions-panel-item {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	cursor: grab;
+	touch-action: none;
+	border-radius: 8px;
+	padding-block: calc(0.25rem * 1.5);
+	transition-property: background-color,box-shadow,opacity;
+	transition-duration: 150ms;
+	outline-style: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+@media (hover: hover) {
+	.fl-actions-panel-item:hover {
+		background-color: color-mix(in oklab, #fff 3%, transparent);
+		box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.08), 0 1px 1px -1px rgb(0 0 0 / 0.12), 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.04), inset 0 0 0 1px rgb(253 253 255 / 0.04);
+	}
+}
+
+.fl-actions-panel-item:focus-visible {
+	background-color: color-mix(in oklab, #fff 3%, transparent);
+	box-shadow: 0 0 0 1px rgb(127 89 240 / 0.6);
+}
+
+.fl-actions-panel-item:active {
+	cursor: grabbing;
+}
+
+.fl-actions-panel-item[data-dragging] {
+	opacity: 50%;
+}
+
+/* fl-actions-panel-item-icon */
+.fl-actions-panel-item-icon {
+	width: 18px;
+	height: 18px;
+	color: var(--accent);
+}
+
+/* fl-actions-panel-item-span-2 */
+.fl-actions-panel-item-span-2 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+}
+
+/* fl-actions-panel-item-span-3 */
+.fl-actions-panel-item-span-3 {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	padding-right: calc(0.25rem * 0.5);
+	opacity: 0%;
+	transition-property: opacity;
+	transition-duration: 150ms;
+}
+
+@media (hover: hover) {
+	.fl-actions-panel-item-span-3:is(:where(.fl-actions-panel-item-group-item):hover *) {
+		opacity: 100%;
+	}
+}
+
+.fl-actions-panel-item-span-3:is(:where(.fl-actions-panel-item-group-item):focus-visible *) {
+	opacity: 100%;
+}
+
+/* fl-actions-panel-item-drag-icon */
+.fl-actions-panel-item-drag-icon {
+	width: calc(0.25rem * 4);
+	height: calc(0.25rem * 4);
+	color: color-mix(in oklab, #fff 60%, transparent);
+}

@@ -1,0 +1,54 @@
+/* FlowActions */
+/* fl-flow-actions */
+.fl-flow-actions {
+	min-width: 114px;
+	justify-content: flex-start;
+}
+
+/* fl-flow-actions-span */
+.fl-flow-actions-span {
+	width: calc(0.25rem * 5);
+	height: calc(0.25rem * 5);
+}
+
+/* fl-flow-actions-play-icon */
+.fl-flow-actions-play-icon {
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	width: calc(0.25rem * 5);
+	height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 80%, transparent);
+	transition-property: opacity,scale,filter;
+	transition-duration: 200ms;
+}
+
+.fl-flow-actions-play-icon[data-hidden] {
+	scale: 0.25;
+	opacity: 0%;
+	filter: blur(4px);
+}
+
+/* fl-flow-actions-span-2 */
+.fl-flow-actions-span-2 {
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	width: calc(0.25rem * 3);
+	height: calc(0.25rem * 3);
+	animation: fl-spin 1s linear infinite;
+	border-style: solid;
+	border-width: 1.5px;
+	border-color: color-mix(in oklab, #fff 25%, transparent);
+	border-top-color: #fff;
+	transition-property: opacity,scale,filter;
+	transition-duration: 200ms;
+}
+
+.fl-flow-actions-span-2[data-hidden] {
+	scale: 0.25;
+	opacity: 0%;
+	filter: blur(4px);
+}
+
+@keyframes fl-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

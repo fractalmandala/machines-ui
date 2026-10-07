@@ -1,0 +1,40 @@
+/* node-panel-look */
+
+/* fl-node-panel-look-swatches */
+.fl-node-panel-look-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+}
+
+/* fl-node-panel-look-swatch */
+.fl-node-panel-look-swatch {
+	width: 18px;
+	height: 18px;
+	padding: 0;
+	cursor: pointer;
+	border: 2px solid transparent;
+	border-radius: 9999px;
+	background: var(--swatch);
+}
+
+.fl-node-panel-look-swatch[aria-pressed="true"] {
+	border-color: #fff;
+}
+
+/* fl-node-panel-look-color */
+.fl-node-panel-look-color {
+	width: 28px;
+	height: 28px;
+	padding: 2px;
+	cursor: pointer;
+}
+
+/* fl-node-panel-look-row: one output port: its id, its side, and a remove button */
+.fl-node-panel-look-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr auto;
+	align-items: center;
+	gap: 6px;
+}

@@ -1,0 +1,46 @@
+/* editor-tabs */
+/* fl-editor-tabs */
+.fl-editor-tabs {
+	background-color: #111114;
+}
+
+@media (width >= 40rem) {
+	.fl-editor-tabs {
+		display: none;
+	}
+}
+
+/* fl-editor-tabs-segmented-tabs */
+.fl-editor-tabs-segmented-tabs {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.fl-editor-tabs-segmented-tabs > button {
+	padding-inline: 0.25rem;
+}
+
+@media (width < 360px) {
+	.fl-editor-tabs-segmented-tabs > button {
+		font-size: 13px;
+	}
+}
+
+/* fl-editor-tabs-div */
+.fl-editor-tabs-div {
+	scrollbar-width: none;
+	display: none;
+	align-items: flex-start;
+	overflow-x: auto;
+	background-color: #111114;
+}
+
+@media (width >= 40rem) {
+	.fl-editor-tabs-div {
+		display: flex;
+		height: 51px;
+	}
+}
+
+.fl-editor-tabs-div::-webkit-scrollbar {
+	display: none;
+}

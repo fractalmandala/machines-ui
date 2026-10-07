@@ -1,0 +1,43 @@
+/* Input */
+/* fl-input */
+:where(.fl-input) {
+	height: calc(0.25rem * 9);
+	font-variant-numeric: tabular-nums;
+	width: 100%;
+	padding-inline: calc(0.25rem * 3);
+}
+
+/* fl-input-field-surface */
+:where(.fl-input-field-surface) {
+	border-radius: 8px;
+	background-color: color-mix(in oklab, #fff 2%, transparent);
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.08), 0 1px 1px -1px rgb(0 0 0 / 0.12), 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 0 0 1px rgb(255 255 255 / 0.04);
+	outline-style: none;
+	transition-property: box-shadow,background-color;
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	transition-duration: 150ms;
+	font-weight: 500;
+	color: #fff;
+}
+
+:where(.fl-input-field-surface::placeholder) {
+	color: color-mix(in oklab, #fff 40%, transparent);
+}
+
+@media (hover: hover) {
+	:where(.fl-input-field-surface:hover) {
+		background-color: color-mix(in oklab, #fff 3%, transparent);
+	}
+}
+
+:where(.fl-input-field-surface:focus-visible) {
+	background-color: color-mix(in oklab, #fff 3%, transparent);
+	box-shadow: 0 0 0 1px #17171c, 0 0 0 4px rgb(117 71 255 / 0.2), inset 0 0 0 1px #7445ff;
+}
+
+:where(.fl-input-field-surface:disabled) {
+	cursor: not-allowed;
+	opacity: 50%;
+}

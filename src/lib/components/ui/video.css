@@ -1,0 +1,14 @@
+/* video */
+/* fl-video */
+:where(.fl-video) {
+	object-fit: cover;
+	position: absolute;
+}
+
+/* fl-video-video */
+:where(.fl-video-video) {
+	mask-image: linear-gradient(#000 1px,#000 calc(100% - 1px));
+	object-fit: cover;
+	-webkit-mask-image: linear-gradient(#000 1px,#000 calc(100% - 1px));
+	position: absolute;
+}

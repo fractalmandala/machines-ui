@@ -1,0 +1,39 @@
+/* TooltipContent */
+/* fl-tooltip-content */
+:where(.fl-tooltip-content) {
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	z-index: 50;
+	width: fit-content;
+	border-radius: 8px;
+	background-color: #1f1f25;
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	color: color-mix(in oklab, #fff 90%, transparent);
+	box-shadow: 0 8px 16px rgb(0 0 0 / 0.24), 0 0 0 1px rgb(0 0 0 / 0.32), inset 0 1px 0 rgb(255 255 255 / 0.06);
+	padding-inline: calc(0.25rem * 2);
+	padding-block: 0.25rem;
+	font-weight: 500;
+}
+
+:where(.fl-tooltip-content[data-state="closed"]) {
+	animation: fl-tooltip-content-exit 100ms cubic-bezier(0.25, 1, 0.5, 1) 0s 1 normal none;
+	transition-duration: 100ms;
+}
+
+:where(.fl-tooltip-content[data-state="delayed-open"]) {
+	animation: fl-tooltip-content-enter 150ms cubic-bezier(0.25, 1, 0.5, 1) 0s 1 normal none;
+	transition-duration: 150ms;
+}
+
+@keyframes fl-tooltip-content-exit {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fl-tooltip-content-enter {
+  from {
+    opacity: 0;
+    transform: scale3d(0.97,0.97,0.97);
+  }
+}

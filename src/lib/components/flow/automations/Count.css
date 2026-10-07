@@ -1,0 +1,18 @@
+/* Count */
+/* fl-count */
+.fl-count {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	white-space: pre;
+}
+
+/* fl-count-span */
+.fl-count-span {
+	font-weight: 550;
+	font-variant-numeric: tabular-nums;
+}
+
+/* fl-count-span-2 */
+.fl-count-span-2 {
+	color: color-mix(in oklab, #fff 60%, transparent);
+}

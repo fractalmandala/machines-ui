@@ -1,0 +1,30 @@
+/* MobileMenu */
+/* fl-mobile-menu */
+.fl-mobile-menu {
+	padding-inline: calc(0.25rem * 1.5);
+}
+
+@media (width >= 40rem) {
+	.fl-mobile-menu {
+		display: none;
+	}
+}
+
+/* fl-mobile-menu-more-icon */
+.fl-mobile-menu-more-icon {
+	width: calc(0.25rem * 5);
+	height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-mobile-menu-dropdown-menu-conten */
+.fl-mobile-menu-dropdown-menu-conten {
+	width: calc(0.25rem * 52);
+}
+
+/* fl-mobile-menu-webhook-icon */
+.fl-mobile-menu-webhook-icon {
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 60%, transparent);
+}

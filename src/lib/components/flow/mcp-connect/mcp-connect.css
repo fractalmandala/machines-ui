@@ -1,0 +1,152 @@
+/* mcp-connect */
+/* fl-mcp-connect */
+.fl-mcp-connect {
+	display: none;
+}
+
+@media (width >= 48rem) {
+	.fl-mcp-connect {
+		display: inline-flex;
+	}
+}
+
+/* fl-mcp-connect-webhook-icon */
+.fl-mcp-connect-webhook-icon {
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-mcp-connect-div */
+.fl-mcp-connect-div {
+	padding: 18px;
+}
+
+/* fl-mcp-connect-div-2 */
+.fl-mcp-connect-div-2 {
+	gap: calc(0.25rem * 3.5);
+}
+
+/* fl-mcp-connect-webhook-icon-2 */
+.fl-mcp-connect-webhook-icon-2 {
+	width: 22px;
+	height: 22px;
+}
+
+/* fl-mcp-connect-close-icon */
+.fl-mcp-connect-close-icon {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	width: 18px;
+	height: 18px;
+	rotate: 45deg;
+	color: color-mix(in oklab, #fff 70%, transparent);
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+	transition-duration: 150ms;
+}
+
+@media (hover: hover) {
+	.fl-mcp-connect-close-icon:is(:where(.group):hover *) {
+		color: #fff;
+	}
+}
+
+/* fl-mcp-connect-div-4 */
+.fl-mcp-connect-div-4 {
+	gap: calc(0.25rem * 5);
+	overflow-y: auto;
+	padding: 18px;
+}
+
+/* fl-mcp-connect-span-2 */
+.fl-mcp-connect-span-2 {
+	font-size: 13px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 70%, transparent);
+}
+
+/* fl-mcp-connect-button */
+.fl-mcp-connect-button {
+	padding-inline: calc(0.25rem * 2.5);
+}
+
+/* fl-mcp-connect-pre */
+.fl-mcp-connect-pre {
+	overflow-x: auto;
+	border-radius: 12px;
+	background-color: color-mix(in oklab, #000 30%, transparent);
+	font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+	font-size: 12.5px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 75%, transparent);
+	box-shadow: 0 0 0 1px rgb(0 0 0 / 0.24), inset 0 0 0 1px rgb(255 255 255 / 0.04);
+}
+
+/* fl-mcp-connect-span-3 */
+.fl-mcp-connect-span-3 {
+	font-size: 13px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 70%, transparent);
+}
+
+/* fl-mcp-connect-button-2 */
+.fl-mcp-connect-button-2 {
+	padding-inline: calc(0.25rem * 2.5);
+}
+
+/* fl-mcp-connect-p */
+.fl-mcp-connect-p {
+	border-radius: 12px;
+	background-color: color-mix(in oklab, #fff 2%, transparent);
+	font-size: 13px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 75%, transparent);
+	box-shadow: 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 0 0 1px rgb(255 255 255 / 0.04);
+}
+
+/* fl-mcp-connect-span-4 */
+.fl-mcp-connect-span-4 {
+	font-size: 13px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 70%, transparent);
+}
+
+/* fl-mcp-connect-div-11 */
+.fl-mcp-connect-div-11 {
+	align-items: baseline;
+	border-radius: 10px;
+	padding-block: calc(0.25rem * 1.5);
+}
+
+/* fl-mcp-connect-span-5 */
+.fl-mcp-connect-span-5 {
+	font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+	font-size: 12.5px;
+	line-height: calc(0.25rem * 5);
+	color: var(--fl-accent-branch);
+}
+
+/* fl-mcp-connect-span-6 */
+.fl-mcp-connect-span-6 {
+	font-size: 13px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 45%, transparent);
+}
+
+/* fl-mcp-connect-div-12 */
+.fl-mcp-connect-div-12 {
+	padding: 18px;
+}
+
+/* fl-mcp-connect-span-8 */
+.fl-mcp-connect-span-8 {
+	display: none;
+	font-size: 13px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 40%, transparent);
+}
+
+@media (width >= 40rem) {
+	.fl-mcp-connect-span-8 {
+		display: inline;
+	}
+}

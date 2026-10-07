@@ -1,0 +1,29 @@
+// =============================================================================
+// LIBRARY — the consumer-facing stylesheet, compiled by scripts/build-styles.mjs
+// into the single dist/style.css. Import it once:
+//
+//   import '@fractaldesign/machines-ui/style.css'
+//
+// It carries the graph component vocabulary from _00_graph.sass (drawing
+// tokens, dash-frame variants, accent maps) plus fallback values for the base
+// design-system tokens the components reference (--border, --text-*…).
+//
+// The fallbacks are scoped to .graph and set to the dark glyph palette, so
+// this sheet never paints the consumer's page chrome. Running a token sheet
+// of your own (e.g. fractalstyler)? Add data-graph-native-tokens to any
+// Frame (or an ancestor) and the fallbacks stand down for that subtree:
+//
+//   <Frame title="PLAN" data-graph-native-tokens>…</Frame>
+// =============================================================================
+
+@use '00_graph' as *
+
+.graph:not([data-graph-native-tokens])
+	// base-token fallbacks — dark glyph palette (markgraphy's own defaults)
+	--border: #373737
+	--text-primary: #f1f1f1
+	--text-secondary: #878787
+	--text-muted: #878787
+	--bg: #101010
+	--font-sans: system-ui, sans-serif
+	--font-mono: 'Google Sans Code', ui-monospace, monospace

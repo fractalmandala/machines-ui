@@ -1,0 +1,56 @@
+/* DropdownMenuSubContent */
+/* fl-dropdown-menu-sub-content */
+:where(.fl-dropdown-menu-sub-content) {
+	min-width: 180px;
+}
+
+/* fl-dropdown-menu-sub-content-surface */
+:where(.fl-dropdown-menu-sub-content-surface) {
+	z-index: 50;
+	overflow-x: hidden;
+	overflow-y: auto;
+	border-radius: 12px;
+	background-color: color-mix(in oklab, #17171c 90%, transparent);
+	padding: calc(0.25rem * 1.5);
+	box-shadow: 0 24px 48px rgb(0 0 0 / 0.24), 0 10px 18px rgb(0 0 0 / 0.16), 0 5px 8px rgb(0 0 0 / 0.16), 0 2px 4px rgb(0 0 0 / 0.16), 0 0 0 1px rgb(0 0 0 / 0.24), inset 0 1px 0 rgb(255 255 255 / 0.04), inset 0 0 0 1px rgb(253 253 255 / 0.04);
+	outline-style: none;
+	-webkit-backdrop-filter: blur(12px);
+	backdrop-filter: blur(12px);
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	color: #fff;
+}
+
+:where(.fl-dropdown-menu-sub-content-surface[data-state="closed"]) {
+	animation: fl-dropdown-menu-sub-content-surface-exit 100ms cubic-bezier(0.25, 1, 0.5, 1) 0s 1 normal none;
+	transition-duration: 100ms;
+}
+
+:where(.fl-dropdown-menu-sub-content-surface[data-state="open"]) {
+	animation: fl-dropdown-menu-sub-content-surface-enter 150ms cubic-bezier(0.25, 1, 0.5, 1) 0s 1 normal none;
+	transition-duration: 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:where(.fl-dropdown-menu-sub-content-surface[data-state="open"]) {
+		animation-name: fl-dropdown-menu-sub-content-surface-enter-2;
+	}
+}
+
+@keyframes fl-dropdown-menu-sub-content-surface-exit {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fl-dropdown-menu-sub-content-surface-enter {
+  from {
+    opacity: 0;
+    transform: scale3d(0.96,0.96,0.96);
+  }
+}
+
+@keyframes fl-dropdown-menu-sub-content-surface-enter-2 {
+  from {
+    opacity: 0;
+  }
+}

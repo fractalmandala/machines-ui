@@ -1,0 +1,110 @@
+.fs-flow-canvas {
+	touch-action: none;
+	overflow: hidden;
+	background-color: var(--bg, #101010);
+	-webkit-user-select: none;
+	user-select: none;
+	display: grid;
+}
+
+.canvas-left {
+	grid-column: 1;
+	min-width: 0;
+}
+
+.canvas-central {
+	grid-column: 2;
+}
+
+.canvas-right {
+	grid-column: 3;
+	min-width: 0;
+}
+
+/* focused: the canvas alone, both sidebars folded away */
+.fs-canvas-wrapper[data-focus] .canvas-left,
+.fs-canvas-wrapper[data-focus] .canvas-right {
+	display: none;
+}
+
+.fs-canvas-wrapper {
+		width: 100%;
+		display: grid;
+	height: calc(100dvh - var(--header-height, 0px) - var(--footer-height, 0px));
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	/* one row, no taller than the wrapper: a panel scrolls inside itself instead of stretching the row */
+	grid-template-rows: minmax(0, 1fr);
+	touch-action: none;
+	overflow: hidden;
+	background-color: var(--bg, #101010);
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+/* fl-flow-canvas-div */
+.fs-flow-canvas-div {
+	top: 0px;
+	left: 50%;
+	transform-origin: 0 0;
+	transform: translate(var(--view-x),var(--view-y)) scale(var(--view-zoom));
+}
+
+/* fl-flow-canvas-div-2 */
+.fs-flow-canvas-div-2 {
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	pointer-events: none;
+	top: 0px;
+	left: 0px;
+	height: 121px;
+	width: 400px;
+	translate: var(--node-x) var(--node-y);
+	border-radius: 12px;
+	border-style: dashed;
+	border-width: 1px;
+	border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+	background-color: color-mix(in oklab, var(--accent) 5%, transparent);
+	transition-property: opacity;
+	transition-duration: 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fs-flow-canvas-div-2 {
+		transition-property: none;
+	}
+}
+
+@starting-style  {
+	.fs-flow-canvas-div-2 {
+		opacity: 0%;
+	}
+}
+
+/* fl-flow-canvas-div-3 */
+.fs-flow-canvas-div-3 {
+	inset: 0px;
+	z-index: 40;
+}
+
+/* fl-flow-canvas-div-3-1 */
+.fs-flow-canvas-div-3-1 {
+	cursor: crosshair;
+}
+
+/* fl-flow-canvas-div-3-2 */
+.fs-flow-canvas-div-3-2 {
+	cursor: grabbing;
+}
+
+/* flow-grid */
+/* fl-flow-grid */
+.fs-flow-grid {
+	pointer-events: none;
+	inset: 0px;
+	background-image: radial-gradient(circle,#1c1c21 1.2px,transparent 1.7px);
+	background-size: 10.86px 10.86px;
+	background-position: calc(50% - 200px) 42.57px;
+}
+
+.fs-flow-grid[data-ready] {
+	background-image: none;
+}

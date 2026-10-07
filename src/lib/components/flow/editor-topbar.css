@@ -1,0 +1,119 @@
+/* editor-topbar */
+/* fl-editor-topbar */
+.fl-editor-topbar {
+	height: calc(0.25rem * 16);
+	background-color: #111114;
+}
+
+/* fl-editor-topbar-toolbar-icon */
+.fl-editor-topbar-toolbar-icon {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	width: calc(0.25rem * 5);
+	height: calc(0.25rem * 5);
+	rotate: calc(90deg * -1);
+	color: color-mix(in oklab, #fff 50%, transparent);
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+	transition-duration: 150ms;
+}
+
+@media (hover: hover) {
+	.fl-editor-topbar-toolbar-icon:is(:where(.group):hover *) {
+		color: color-mix(in oklab, #fff 80%, transparent);
+	}
+}
+
+/* fl-editor-topbar-span */
+.fl-editor-topbar-span {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+}
+
+/* fl-editor-topbar-span-2 */
+.fl-editor-topbar-span-2 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+}
+
+/* fl-editor-topbar-tag */
+.fl-editor-topbar-tag {
+	font-variant-numeric: tabular-nums;
+}
+
+/* fl-editor-topbar-ol */
+.fl-editor-topbar-ol {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+}
+
+/* fl-editor-topbar-li */
+.fl-editor-topbar-li {
+	display: none;
+}
+
+@media (width >= 48rem) {
+	.fl-editor-topbar-li {
+		display: block;
+	}
+}
+
+/* fl-editor-topbar-li-2 */
+.fl-editor-topbar-li-2 {
+	display: none;
+}
+
+@media (width >= 48rem) {
+	.fl-editor-topbar-li-2 {
+		display: block;
+	}
+}
+
+/* fl-editor-topbar-chevron-icon */
+.fl-editor-topbar-chevron-icon {
+	width: calc(0.25rem * 6);
+	height: calc(0.25rem * 6);
+	color: color-mix(in oklab, #fcfdff 30%, transparent);
+}
+
+/* fl-editor-topbar-li-3 */
+.fl-editor-topbar-li-3 {
+	font-weight: 550;
+}
+
+/* fl-editor-topbar-tag-2 */
+@media (width < 380px) {
+	.fl-editor-topbar-tag-2 {
+		display: none;
+	}
+}
+
+/* fl-editor-topbar-button */
+.fl-editor-topbar-button {
+	display: none;
+}
+
+@media (width >= 48rem) {
+	.fl-editor-topbar-button {
+		display: inline-flex;
+	}
+}
+
+/* fl-editor-topbar-search-icon */
+.fl-editor-topbar-search-icon {
+	width: calc(0.25rem * 5);
+	height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 40%, transparent);
+}
+
+/* fl-editor-topbar-span-4 */
+.fl-editor-topbar-span-4 {
+	width: calc(0.25rem * 5);
+	height: calc(0.25rem * 5);
+}
+
+/* fl-editor-topbar-plus-icon */
+.fl-editor-topbar-plus-icon {
+	width: calc(0.25rem * 3.5);
+	height: calc(0.25rem * 3.5);
+}

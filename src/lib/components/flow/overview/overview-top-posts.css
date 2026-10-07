@@ -1,0 +1,170 @@
+/* overview-top-posts */
+/* fl-overview-top-posts */
+.fl-overview-top-posts {
+	min-height: 399px;
+	overflow: clip;
+	border-radius: 16px;
+	background-color: #141417;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 0.16), 0 0 0 1px rgb(0 0 0 / 0.12);
+}
+
+/* fl-overview-top-posts-div */
+.fl-overview-top-posts-div {
+	background-color: #18181c;
+	padding-inline: 18px;
+	padding-block: calc(0.25rem * 3.5);
+}
+
+/* fl-overview-top-posts-div-2 */
+.fl-overview-top-posts-div-2 {
+	gap: calc(0.25rem * 3.5);
+}
+
+/* fl-overview-top-posts-posts-icon */
+.fl-overview-top-posts-posts-icon {
+	width: 22px;
+	height: 22px;
+}
+
+/* fl-overview-top-posts-span */
+.fl-overview-top-posts-span {
+	font-size: 16px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+	text-shadow: 0 -1px 0.25px rgb(0 0 0 / 0.32);
+}
+
+/* fl-overview-top-posts-button */
+.fl-overview-top-posts-button {
+	gap: 0px;
+	background-color: #202026;
+	padding-left: calc(0.25rem * 1.5);
+}
+
+/* fl-overview-top-posts-chevron-icon */
+.fl-overview-top-posts-chevron-icon {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	width: calc(0.25rem * 4);
+	height: calc(0.25rem * 4);
+	rotate: 90deg;
+	color: color-mix(in oklab, #fff 60%, transparent);
+	transition-property: transform, translate, scale, rotate;
+	transition-duration: 200ms;
+}
+
+.fl-overview-top-posts-chevron-icon:is(:where(.group)[data-state="open"] *) {
+	rotate: calc(90deg * -1);
+}
+
+/* fl-overview-top-posts-dropdown-menu-conten */
+.fl-overview-top-posts-dropdown-menu-conten {
+	width: calc(0.25rem * 40);
+}
+
+/* fl-overview-top-posts-div-3 */
+.fl-overview-top-posts-div-3 {
+	padding: calc(0.25rem * 5);
+}
+
+/* fl-overview-top-posts-ol */
+.fl-overview-top-posts-ol {
+	overflow: clip;
+	border-radius: 14px;
+	background-color: #18181c;
+	box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.08), 0 1px 1px -1px rgb(0 0 0 / 0.12), 0 0 0 1px rgb(0 0 0 / 0.32), inset 0 1px 0 rgb(255 255 255 / 0.04), inset 0 0 0 1px rgb(255 255 255 / 0.04);
+}
+
+/* fl-overview-top-posts-div-4 */
+.fl-overview-top-posts-div-4 {
+	animation: fl-fade-in 400ms cubic-bezier(0.25, 1, 0.5, 1) both;
+	justify-content: center;
+	gap: 5px;
+}
+
+/* fl-overview-top-posts-span-3 */
+.fl-overview-top-posts-span-3 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 5);
+	font-weight: 550;
+}
+
+/* fl-overview-top-posts-div-5 */
+.fl-overview-top-posts-div-5 {
+	border-radius: 8px;
+	padding-block: calc(0.25rem * 1.5);
+}
+
+/* fl-overview-top-posts-div-6 */
+.fl-overview-top-posts-div-6 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	color: color-mix(in oklab, #fff 80%, transparent);
+	font-variant-numeric: tabular-nums;
+	text-shadow: 0 -1px 0.25px rgb(0 0 0 / 0.32);
+}
+
+/* fl-overview-top-posts-sent */
+.fl-overview-top-posts-sent {
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-overview-top-posts-span-6 */
+.fl-overview-top-posts-span-6 {
+	height: calc(0.25rem * 3.5);
+	width: 1px;
+	background-color: color-mix(in oklab, #fff 30%, transparent);
+}
+
+/* fl-overview-top-posts-opened */
+.fl-overview-top-posts-opened {
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-overview-top-posts-span-9 */
+.fl-overview-top-posts-span-9 {
+	height: calc(0.25rem * 3.5);
+	width: 1px;
+	background-color: color-mix(in oklab, #fff 30%, transparent);
+}
+
+/* fl-overview-top-posts-clicked */
+.fl-overview-top-posts-clicked {
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-overview-top-posts-span-12 */
+.fl-overview-top-posts-span-12 {
+	display: none;
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+@media (width >= 40rem) {
+	.fl-overview-top-posts-span-12 {
+		display: inline;
+	}
+}
+
+/* fl-overview-top-posts-div-8 */
+.fl-overview-top-posts-div-8 {
+	pointer-events: none;
+	inset: 0px;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04), inset 0 0 0 1px rgb(253 253 255 / 0.04);
+}
+
+@keyframes fl-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,164 @@
+/* flow-edges */
+/* fl-flow-edges */
+.fl-flow-edges {
+	pointer-events: none;
+	top: 0px;
+	left: 0px;
+	overflow: visible;
+}
+
+/* fl-flow-edges-gradient-path */
+.fl-flow-edges-gradient-path {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	transition-property: opacity;
+	transition-duration: 150ms;
+}
+
+/* fl-flow-edges-gradient-path-1 */
+.fl-flow-edges-gradient-path-1 {
+	opacity: 100%;
+}
+
+/* fl-flow-edges-gradient-path-2-2 */
+.fl-flow-edges-gradient-path-2-2 {
+	opacity: 40%;
+}
+
+@media (hover: hover) {
+	.fl-flow-edges-gradient-path-2-2:is(:where(.fl-flow-edges-group-edge):hover *) {
+		opacity: 70%;
+	}
+}
+
+/* fl-flow-edges-path */
+.fl-flow-edges-path {
+	animation: fl-dash-flow 0.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fl-flow-edges-path {
+		animation: none;
+	}
+}
+
+/* fl-flow-edges-presentation */
+.fl-flow-edges-presentation {
+	pointer-events: stroke;
+	cursor: pointer;
+}
+
+/* fl-flow-edges-gradient-path-2 */
+.fl-flow-edges-gradient-path-2 {
+	opacity: 40%;
+}
+
+/* fl-flow-edges-edge-preview */
+.fl-flow-edges-edge-preview {
+	opacity: 70%;
+}
+
+/* fl-flow-edges-presentation-2 */
+.fl-flow-edges-presentation-2 {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	top: var(--point-y);
+	left: var(--point-x);
+	width: calc(0.25rem * 3);
+	height: calc(0.25rem * 3);
+	translate: -50% -50%;
+	cursor: crosshair;
+	background-color: #fff;
+	box-shadow: 0 0 0 3px rgb(255 255 255 / 0.3), 0 0 4px 3px rgb(0 0 0 / 0.25);
+	transition-property: box-shadow;
+	transition-duration: 150ms;
+	position: absolute;
+	border-radius: calc(infinity * 1px);
+}
+
+.fl-flow-edges-presentation-2::before {
+	content: "";
+	position: absolute;
+	inset: calc(0.25rem * -2);
+	border-radius: calc(infinity * 1px);
+}
+
+@media (hover: hover) {
+	.fl-flow-edges-presentation-2:hover {
+		box-shadow: 0 0 0 5px rgb(255 255 255 / 0.4), 0 0 4px 5px rgb(0 0 0 / 0.25);
+	}
+}
+
+.fl-flow-edges-presentation-2[data-snapped] {
+	box-shadow: 0 0 0 7px rgb(255 255 255 / 0.45), 0 0 4px 7px rgb(0 0 0 / 0.25);
+}
+
+/* fl-flow-edges-chevron-down-icon */
+.fl-flow-edges-chevron-down-icon {
+	width: calc(0.25rem * 2.5);
+	height: calc(0.25rem * 2.5);
+}
+
+/* the chevron points the way its port leaves */
+.fl-flow-edges-presentation-2[data-side='top'] .fl-flow-edges-chevron-down-icon {
+	rotate: 180deg;
+}
+
+.fl-flow-edges-presentation-2[data-side='left'] .fl-flow-edges-chevron-down-icon {
+	rotate: 90deg;
+}
+
+.fl-flow-edges-presentation-2[data-side='right'] .fl-flow-edges-chevron-down-icon {
+	rotate: -90deg;
+}
+
+/* fl-flow-edges-presentation-3: sits above the nodes, since a short wire's middle can be under one */
+.fl-flow-edges-presentation-3 {
+	z-index: 30;
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	top: var(--point-y);
+	left: var(--point-x);
+	translate: -50% -50%;
+	transition-property: opacity;
+	transition-duration: 150ms;
+}
+
+@starting-style  {
+	.fl-flow-edges-presentation-3 {
+		opacity: 0%;
+	}
+}
+
+/* fl-flow-edges-controls: what a selected wire offers: its dash, its colour, and Delete */
+.fl-flow-edges-controls {
+	display: grid;
+	gap: 6px;
+	padding: 6px;
+	border-radius: 10px;
+	background-color: #17171c;
+	box-shadow: 0 8px 24px rgb(0 0 0 / 0.4), inset 0 0 0 1px rgb(255 255 255 / 0.06);
+}
+
+.fl-flow-edges-controls-row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.fl-flow-edges-swatch {
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	cursor: pointer;
+	border: 2px solid transparent;
+	border-radius: 9999px;
+	background: var(--swatch);
+}
+
+.fl-flow-edges-swatch[aria-pressed="true"] {
+	border-color: #fff;
+}
+
+@keyframes fl-dash-flow {
+  to {
+    stroke-dashoffset: -12;
+  }
+}

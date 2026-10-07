@@ -1,0 +1,61 @@
+/* editor-app */
+@layer theme, base, components, utilities;
+
+@layer components {
+	/* fl-editor-app */
+	.fl-editor-app {
+		padding: calc(0.25rem * 1.5);
+	}
+
+	/* fl-editor-app-div */
+	.fl-editor-app-div {
+		overflow: hidden;
+		border-radius: 10px;
+		background-color: #111114;
+		box-shadow: 0 0 0 1px rgb(0 0 0 / 0.4), 0 0 2px rgb(0 0 0 / 0.3);
+	}
+
+	/* fl-editor-app-divider */
+	.fl-editor-app-divider {
+		height: 0.25rem;
+		background-color: #111114;
+		position: relative;
+	}
+
+	.fl-editor-app-divider::after {
+		content: "";
+		position: absolute;
+		inset-inline: 0px;
+		top: 1.25px;
+		height: 1.5px;
+		background-color: color-mix(in oklab, #000 32%, transparent);
+		box-shadow: 0 1px 0 rgb(83 86 101 / 0.06), 0 0.5px 0 rgb(83 86 101 / 0.06);
+	}
+
+	/* fl-editor-app-div-3-1 */
+	.fl-editor-app-div-3-1 {
+		display: none;
+	}
+
+	@media (width >= 40rem) {
+		.fl-editor-app-div-3-1 {
+			display: block;
+		}
+	}
+
+	/* fl-editor-app-div-4-1 */
+	@media (width >= 40rem) {
+		.fl-editor-app-div-4-1 {
+			display: none;
+		}
+	}
+
+	/* fl-editor-app-div-5 */
+	.fl-editor-app-div-5 {
+		pointer-events: none;
+		inset: 0px;
+		z-index: 30;
+		border-radius: inherit;
+		box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.035), inset 0 0 0 1px rgb(255 255 255 / 0.02);
+	}
+}

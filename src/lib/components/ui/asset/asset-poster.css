@@ -1,0 +1,19 @@
+/* asset-poster */
+/* fl-asset-poster */
+:where(.fl-asset-poster) {
+	transition-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
+	pointer-events: none;
+	z-index: 10;
+	transition-property: opacity;
+	transition-duration: 500ms;
+}
+
+/* fl-asset-poster-1 */
+:where(.fl-asset-poster-1) {
+	opacity: 100%;
+}
+
+/* fl-asset-poster-2 */
+:where(.fl-asset-poster-2) {
+	opacity: 0%;
+}

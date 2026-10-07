@@ -1,0 +1,173 @@
+/* actions-panel */
+/* fl-actions-panel */
+.fl-actions-panel {
+	position: absolute;
+	top: calc(0.25rem * 4);
+	left: calc(0.25rem * 4);
+	z-index: 20;
+	max-height: calc(100% - 32px);
+	width: calc(100% - 32px);
+	overflow: clip;
+	border-radius: 12px;
+	background-color: #131317;
+	box-shadow: 0 24px 48px rgb(0 0 0 / 0.12), 0 10px 18px rgb(0 0 0 / 0.12), 0 5px 8px rgb(0 0 0 / 0.16), 0 2px 4px rgb(0 0 0 / 0.16), 0 0 0 1px rgb(0 0 0 / 0.12);
+}
+
+@media (width >= 40rem) {
+	/* docked: a column of its own, beside the canvas rather than over it */
+	.fl-actions-panel {
+		position: relative;
+		top: auto;
+		left: auto;
+		z-index: auto;
+		height: 100%;
+		max-height: none;
+		width: 320px;
+		border-radius: 0;
+		box-shadow: none;
+		border-right: 1px solid rgb(255 255 255 / 0.06);
+	}
+}
+
+/* fl-actions-panel-div */
+.fl-actions-panel-div {
+	height: 52px;
+	padding-inline: 18px;
+	padding-block: calc(0.25rem * 2.5);
+}
+
+/* fl-actions-panel-span */
+.fl-actions-panel-span {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+	text-shadow: 0 -1px 0.25px rgb(0 0 0 / 0.32);
+}
+
+/* fl-actions-panel-expand-icon */
+.fl-actions-panel-expand-icon {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 70%, transparent);
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+	transition-duration: 150ms;
+}
+
+@media (hover: hover) {
+	.fl-actions-panel-expand-icon:is(:where(.group):hover *) {
+		color: #fff;
+	}
+}
+
+/* fl-actions-panel-actions-panel-body */
+.fl-actions-panel-actions-panel-body {
+	transition-timing-function: cubic-bezier(0.7, 0, 0, 1);
+	grid-template-rows: 0fr;
+	transition-property: grid-template-rows;
+	transition-duration: 300ms;
+}
+
+.fl-actions-panel-actions-panel-body[data-open] {
+	grid-template-rows: 1fr;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fl-actions-panel-actions-panel-body {
+		transition-property: none;
+	}
+}
+
+/* fl-actions-panel-div-2 */
+.fl-actions-panel-div-2 {
+	overflow: hidden;
+}
+
+/* fl-actions-panel-divider */
+.fl-actions-panel-divider {
+	height: calc(0.25rem * 0.5);
+	background-image: linear-gradient(to bottom,rgb(0 0 0 / 0.32) 0,rgb(0 0 0 / 0.32) 1.5px,rgb(83 86 101 / 0.06) 1.5px);
+}
+
+/* fl-actions-panel-div-4 */
+.fl-actions-panel-div-4 {
+	overflow-y: auto;
+	padding-inline: calc(0.25rem * 5);
+	padding-block: 18px;
+}
+
+/* fl-actions-panel-section */
+.fl-actions-panel-section {
+	gap: calc(0.25rem * 0.5);
+}
+
+/* fl-actions-panel-div-6 */
+.fl-actions-panel-div-6 {
+	padding-block: calc(0.25rem * 1.5);
+}
+
+/* fl-actions-panel-span-2 */
+.fl-actions-panel-span-2 {
+	font-size: 12px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-actions-panel-ul */
+.fl-actions-panel-ul {
+	gap: calc(0.25rem * 0.5);
+}
+
+/* fl-actions-panel-div-8 */
+.fl-actions-panel-div-8 {
+	height: 52px;
+	padding-inline: 18px;
+	padding-block: calc(0.25rem * 2.5);
+}
+
+/* fl-actions-panel-layout-icon */
+.fl-actions-panel-layout-icon {
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-actions-panel-span-4 */
+.fl-actions-panel-span-4 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+	text-shadow: 0 -1px 0.25px rgb(0 0 0 / 0.32);
+}
+
+/* fl-actions-panel-chevron-right-icon */
+.fl-actions-panel-chevron-right-icon {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 50%, transparent);
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+	transition-duration: 150ms;
+}
+
+@media (hover: hover) {
+	.fl-actions-panel-chevron-right-icon:is(:where(.group):hover *) {
+		color: #fff;
+	}
+}
+
+/* fl-actions-panel-div-9 */
+.fl-actions-panel-div-9 {
+	pointer-events: none;
+	inset: 0px;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04), inset 0 0 0 1px rgb(253 253 255 / 0.04);
+}
+
+/* docked, the panel is always open: the fold button belongs to the overlay on small screens */
+@media (width >= 40rem) {
+	.fl-actions-panel-toggle {
+		display: none;
+	}
+}

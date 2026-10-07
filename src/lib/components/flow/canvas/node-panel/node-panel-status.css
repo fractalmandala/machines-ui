@@ -1,0 +1,147 @@
+/* node-panel-status */
+/* fl-node-panel-status-div */
+.fl-node-panel-status-div {
+	border-radius: 12px;
+	background-color: color-mix(in oklab, #fff 2%, transparent);
+	padding-inline: calc(0.25rem * 3.5);
+	box-shadow: 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 0 0 1px rgb(255 255 255 / 0.04);
+}
+
+/* fl-node-panel-status-span */
+.fl-node-panel-status-span {
+	width: calc(0.25rem * 2.5);
+	height: calc(0.25rem * 2.5);
+}
+
+/* fl-node-panel-status-span-2 */
+.fl-node-panel-status-span-2 {
+	inset: 0px;
+	animation: fl-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+	background-color: var(--accent);
+	opacity: 60%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fl-node-panel-status-span-2 {
+		animation: none;
+	}
+}
+
+/* fl-node-panel-status-span-3 */
+.fl-node-panel-status-span-3 {
+	width: calc(0.25rem * 2.5);
+	height: calc(0.25rem * 2.5);
+}
+
+/* fl-node-panel-status-span-3-2 */
+.fl-node-panel-status-span-3-2 {
+	background-color: color-mix(in oklab, #fff 20%, transparent);
+}
+
+/* fl-node-panel-status-span-3-3 */
+.fl-node-panel-status-span-3-3 {
+	background-color: var(--accent);
+	box-shadow: 0 0 8px var(--accent);
+}
+
+/* fl-node-panel-status-state */
+.fl-node-panel-status-state {
+	animation-play-state: running;
+}
+
+/* fl-node-panel-status-span-4 */
+.fl-node-panel-status-span-4 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 5);
+	font-weight: 550;
+}
+
+/* fl-node-panel-status-span-5 */
+.fl-node-panel-status-span-5 {
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-node-panel-status-div-3 */
+.fl-node-panel-status-div-3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* fl-node-panel-status-div-4 */
+.fl-node-panel-status-div-4 {
+	border-radius: 12px;
+	background-color: color-mix(in oklab, #fff 2%, transparent);
+	padding-inline: calc(0.25rem * 3.5);
+	box-shadow: 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 0 0 1px rgb(255 255 255 / 0.04);
+}
+
+/* fl-node-panel-status-span-6 */
+.fl-node-panel-status-span-6 {
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	font-weight: 550;
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-node-panel-status-span-7 */
+.fl-node-panel-status-span-7 {
+	font-family: var(--font-sans, system-ui, sans-serif);
+	font-size: 24px;
+	line-height: calc(0.25rem * 8);
+	font-variant-numeric: tabular-nums;
+}
+
+/* fl-node-panel-status-span-8 */
+.fl-node-panel-status-span-8 {
+	font-size: 12px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-node-panel-status-div-6 */
+.fl-node-panel-status-div-6 {
+	height: calc(0.25rem * 2);
+	overflow: hidden;
+	background-color: color-mix(in oklab, #fff 5%, transparent);
+}
+
+/* fl-node-panel-status-span-9 */
+.fl-node-panel-status-span-9 {
+	width: var(--split);
+	background-color: var(--accent);
+}
+
+/* fl-node-panel-status-div-7 */
+.fl-node-panel-status-div-7 {
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	font-weight: 550;
+	font-variant-numeric: tabular-nums;
+}
+
+/* fl-node-panel-status-span-10 */
+.fl-node-panel-status-span-10 {
+	color: var(--accent);
+}
+
+/* fl-node-panel-status-span-11 */
+.fl-node-panel-status-span-11 {
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-node-panel-status-span-12 */
+.fl-node-panel-status-span-12 {
+	display: block;
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	color: color-mix(in oklab, #fff 40%, transparent);
+}
+
+@keyframes fl-ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}

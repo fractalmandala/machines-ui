@@ -1,0 +1,8 @@
+/* asset-frame */
+/* fl-asset-frame */
+:where(.fl-asset-frame) {
+	aspect-ratio: var(--asset-ratio);
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}

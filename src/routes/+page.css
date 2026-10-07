@@ -1,0 +1,7 @@
+/* +page */
+/* fl-page */
+.fl-page {
+	min-height: 100vh;
+	max-width: 100%;
+	overflow-x: clip;
+}

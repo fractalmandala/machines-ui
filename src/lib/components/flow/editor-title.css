@@ -1,0 +1,55 @@
+/* editor-title */
+/* fl-editor-title */
+.fl-editor-title {
+	top: 50%;
+	left: 50%;
+	display: none;
+	max-width: min(420px, 40%);
+	translate: -50% -50%;
+}
+
+@media (width >= 64rem) {
+	.fl-editor-title {
+		display: block;
+	}
+}
+
+/* fl-editor-title-button */
+.fl-editor-title-button {
+	cursor: text;
+}
+
+/* fl-editor-title-span-2 */
+.fl-editor-title-span-2 {
+	display: inline-grid;
+	max-width: 100%;
+}
+
+/* fl-editor-title-span-3 */
+.fl-editor-title-span-3 {
+	visibility: hidden;
+	grid-column-start: 1;
+	grid-row-start: 1;
+	padding-inline: calc(0.25rem * 1.5);
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* fl-editor-title-automation-name */
+.fl-editor-title-automation-name {
+	grid-column-start: 1;
+	grid-row-start: 1;
+	min-width: 4ch;
+	border-radius: 6px;
+	background-color: color-mix(in oklab, #fff 4%, transparent);
+	padding-inline: calc(0.25rem * 1.5);
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+	box-shadow: 0 0 0 1px #7445ff, 0 0 0 4px rgb(117 71 255 / 0.2);
+	outline-style: none;
+}

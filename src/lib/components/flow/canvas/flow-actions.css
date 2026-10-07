@@ -1,0 +1,66 @@
+/* Per-action accent: set on the node (and its ghost and panel rows) so everything inside reads
+   var(--accent). The colours are the palette's (styles/palette.css), not written here. */
+	/* trigger */
+	.fl-action-theme-trigger {
+		--accent: var(--fl-accent-trigger);
+	}
+
+	/* send-email */
+	.fl-action-theme-send-email {
+		--accent: var(--fl-accent-send-email);
+	}
+
+	/* update-subscription */
+	.fl-action-theme-update-subscription {
+		--accent: var(--fl-accent-update-subscription);
+	}
+
+	/* send-webhook */
+	.fl-action-theme-send-webhook {
+		--accent: var(--fl-accent-send-webhook);
+	}
+
+	/* wait-until */
+	.fl-action-theme-wait-until {
+		--accent: var(--fl-accent-wait-until);
+	}
+
+	/* time-delay */
+	.fl-action-theme-time-delay {
+		--accent: var(--fl-accent-time-delay);
+	}
+
+	/* branch */
+	.fl-action-theme-branch {
+		--accent: var(--fl-accent-branch);
+	}
+
+	/* enroll */
+	.fl-action-theme-enroll {
+		--accent: var(--fl-accent-enroll);
+	}
+
+	/* agent */
+	.fl-action-theme-agent {
+		--accent: var(--fl-accent-violet);
+	}
+
+	/* transform */
+	.fl-action-theme-transform {
+		--accent: var(--fl-accent-cyan);
+	}
+
+	/* read */
+	.fl-action-theme-read {
+		--accent: var(--fl-accent-teal);
+	}
+
+	/* write */
+	.fl-action-theme-write {
+		--accent: var(--fl-accent-green);
+	}
+
+	/* review */
+	.fl-action-theme-review {
+		--accent: var(--fl-accent-amber);
+	}

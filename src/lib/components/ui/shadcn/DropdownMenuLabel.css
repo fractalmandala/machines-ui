@@ -1,0 +1,11 @@
+/* DropdownMenuLabel */
+/* fl-dropdown-menu-label */
+:where(.fl-dropdown-menu-label) {
+	padding-bottom: calc(0.25rem * 1.5);
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	font-weight: 550;
+	color: color-mix(in oklab, #fff 50%, transparent);
+	padding-inline: calc(0.25rem * 2);
+	padding-top: 0.25rem;
+}

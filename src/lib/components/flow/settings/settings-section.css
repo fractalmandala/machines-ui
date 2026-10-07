@@ -1,0 +1,55 @@
+/* settings-section */
+/* fl-settings-section */
+.fl-settings-section {
+	scroll-margin-top: calc(0.25rem * 6);
+	overflow: clip;
+	border-radius: 16px;
+	background-color: #141417;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 0.16), 0 0 0 1px rgb(0 0 0 / 0.12);
+}
+
+/* fl-settings-section-div */
+.fl-settings-section-div {
+	background-color: #18181c;
+	padding-inline: 18px;
+	padding-block: calc(0.25rem * 3.5);
+}
+
+/* fl-settings-section-div-2-2 */
+.fl-settings-section-div-2-2 {
+	background-image: linear-gradient(90deg,rgb(227 62 49 / 0.08),transparent 60%),linear-gradient(#18181c,#18181c);
+}
+
+/* fl-settings-section-div-2 */
+.fl-settings-section-div-2 {
+	gap: calc(0.25rem * 3.5);
+}
+
+/* fl-settings-section-span */
+.fl-settings-section-span {
+	font-size: 16px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+	text-shadow: 0 -1px 0.25px rgb(0 0 0 / 0.32);
+}
+
+/* fl-settings-section-span-2 */
+.fl-settings-section-span-2 {
+	font-size: 13px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-settings-section-div-4 */
+.fl-settings-section-div-4 {
+	gap: calc(0.25rem * 5);
+	padding: calc(0.25rem * 5);
+}
+
+/* fl-settings-section-div-5 */
+.fl-settings-section-div-5 {
+	pointer-events: none;
+	inset: 0px;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04), inset 0 0 0 1px rgb(253 253 255 / 0.04);
+}

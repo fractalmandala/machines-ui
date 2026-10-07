@@ -1,0 +1,44 @@
+// =============================================================================
+// 00_GRAPH — tokens and classes created specifically for the markgraphy
+// component library.  Everything here is markgraphy's own vocabulary; the
+// base design-system tokens (colours, type scale, spacing, radius, motion,
+// z-index, layout) live in _00_tokens.sass and come from fractalstyler2.
+// =============================================================================
+
+// ── Graph vocabulary tokens ──────────────────────────────────────────────────
+// The dash rhythms read --border, so they resolve on .graph — where the
+// library's --border fallback lives — not on :root, where a consumer without
+// a global --border would leave them empty.
+.graph
+	--graph-framer: var(--border) 0 4px, transparent 4px 8px
+	--graph-framer-gapped: var(--border) 0 4px, transparent 4px 16px
+	--graph-framer-long: var(--border) 0 12px, transparent 12px 24px
+	--graph-framer-short: var(--border) 0 2px, transparent 2px 4px
+	--graph-framer-dot: var(--border) 0 1px, transparent 1px 4px
+	--graph-framer-alt: var(--border) 0 2px, transparent 2px 5px, var(--border) 5px 13px, transparent 13px 16px
+
+:root
+	// Frame component defaults (Frame.svelte)
+	--fg-on: 4px
+	--fg-period: 8px
+	--fg-speed: 0.7s
+	// Knob defaults (GraphAgni.svelte)
+	--agni-line: calc(0.85rem * 1.15)
+	--knob-track: 0.375rem
+	--knob-thumb: 0.85rem
+
+// ── Dash variants (site pages pass these through `class` on a Frame) ────────
+.graph.gfgap
+	--graph-framer: var(--graph-framer-gapped)
+.graph.gflong
+	--graph-framer: var(--graph-framer-long)
+.graph.gfshort
+	--graph-framer: var(--graph-framer-short)
+.graph.gfdot
+	--graph-framer: var(--graph-framer-dot)
+.graph.gfalt
+	--graph-framer: var(--graph-framer-alt)
+
+// ── Accent colours ───────────────────────────────────────────────────────────
+// None are listed here. The accent palette is ACCENTS in core/values.ts, and choosing one sets
+// --graph-accent, --graph-accent-2 and --graph-accent-3 on <html> at runtime (utils/accents.ts).

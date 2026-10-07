@@ -1,0 +1,8 @@
+/* editor */
+/* fl-editor */
+.fl-editor {
+	z-index: 0;
+	height: calc(100dvh - var(--header-height, 0px) - var(--footer-height, 0px));
+	min-height: 560px;
+	background-color: #0c0c0f;
+}

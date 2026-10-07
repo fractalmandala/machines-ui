@@ -1,0 +1,47 @@
+/* select-field */
+/* fl-select-field */
+:where(.fl-select-field) {
+	height: calc(0.25rem * 9);
+	cursor: pointer;
+	display: flex;
+	width: 100%;
+	align-items: center;
+	gap: calc(0.25rem * 2);
+	padding-inline: calc(0.25rem * 3);
+	text-align: left;
+}
+
+:where(.fl-select-field[data-state="open"]) {
+	background-color: color-mix(in oklab, #fff 3%, transparent);
+	box-shadow: 0 0 0 1px #17171c, 0 0 0 4px rgb(117 71 255 / 0.2), inset 0 0 0 1px #7445ff;
+}
+
+/* fl-select-field-span */
+:where(.fl-select-field-span) {
+	min-width: 0px;
+	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* fl-select-field-chevron-icon */
+:where(.fl-select-field-chevron-icon) {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	width: calc(0.25rem * 4);
+	height: calc(0.25rem * 4);
+	rotate: 90deg;
+	color: color-mix(in oklab, #fff 40%, transparent);
+	transition-property: transform, translate, scale, rotate;
+	transition-duration: 200ms;
+	flex-shrink: 0;
+}
+
+:where(.fl-select-field-chevron-icon:is(:where(.fl-select-field-group)[data-state="open"] *)) {
+	rotate: calc(90deg * -1);
+}
+
+/* fl-select-field-dropdown-menu-conten */
+:where(.fl-select-field-dropdown-menu-conten) {
+	min-width: 180px;
+}

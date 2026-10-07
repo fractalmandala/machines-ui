@@ -1,0 +1,26 @@
+/* flow-controls */
+/* fl-flow-controls */
+.fl-flow-controls {
+	right: 0px;
+	bottom: 0px;
+	z-index: 20;
+	gap: calc(0.25rem * 2.5);
+}
+
+/* fl-flow-controls-zoom-in-icon */
+.fl-flow-controls-zoom-in-icon {
+	width: 18px;
+	height: 18px;
+}
+
+/* fl-flow-controls-zoom-out-icon */
+.fl-flow-controls-zoom-out-icon {
+	width: 18px;
+	height: 18px;
+}
+
+/* fl-flow-controls-fit-view-icon */
+.fl-flow-controls-fit-view-icon {
+	width: 18px;
+	height: 18px;
+}

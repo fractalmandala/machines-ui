@@ -1,0 +1,8 @@
+/* DropdownMenuSeparator */
+/* fl-dropdown-menu-separator */
+:where(.fl-dropdown-menu-separator) {
+	margin-inline: calc(0.25rem * -1.5);
+	margin-block: calc(0.25rem * 1.5);
+	height: calc(0.25rem * 0.5);
+	background-image: linear-gradient(to bottom,rgb(0 0 0 / 0.32) 0,rgb(0 0 0 / 0.32) 1px,rgb(83 86 101 / 0.08) 1px);
+}

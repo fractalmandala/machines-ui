@@ -1,0 +1,71 @@
+/* editor-sidebar */
+/* fl-editor-sidebar */
+.fl-editor-sidebar {
+	transition-timing-function: cubic-bezier(0.7, 0, 0, 1);
+	display: none;
+	width: 70px;
+	overflow: hidden;
+	transition-property: width;
+	transition-duration: 300ms;
+}
+
+.fl-editor-sidebar[data-open] {
+	width: 236px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fl-editor-sidebar {
+		transition-property: none;
+	}
+}
+
+@media (width >= 40rem) {
+	.fl-editor-sidebar {
+		display: block;
+	}
+}
+
+/* fl-editor-sidebar-div */
+@media (width >= 40rem) {
+	.fl-editor-sidebar-div {
+		display: none;
+	}
+}
+
+/* fl-editor-sidebar-close-sidebar */
+.fl-editor-sidebar-close-sidebar {
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	animation: fl-editor-sidebar-close-sidebar-enter 200ms cubic-bezier(0.25, 1, 0.5, 1) 0s 1 normal none;
+	inset: 0px;
+	z-index: 40;
+	background-color: color-mix(in oklab, #000 55%, transparent);
+	-webkit-backdrop-filter: blur(3px);
+	backdrop-filter: blur(3px);
+	transition-duration: 200ms;
+}
+
+/* fl-editor-sidebar-div-2 */
+.fl-editor-sidebar-div-2 {
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	animation: fl-editor-sidebar-div-2-enter 300ms cubic-bezier(0.25, 1, 0.5, 1) 0s 1 normal none;
+	inset-block: 0px;
+	left: 0px;
+	z-index: 50;
+	width: 236px;
+	background-color: #0c0c0f;
+	box-shadow: 8px 0 32px rgb(0 0 0 / 0.5);
+	transition-duration: 300ms;
+}
+
+@keyframes fl-editor-sidebar-close-sidebar-enter {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fl-editor-sidebar-div-2-enter {
+  from {
+    opacity: 1;
+    transform: translate3d(-100%,0,0);
+  }
+}

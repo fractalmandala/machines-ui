@@ -1,0 +1,128 @@
+/* Rail */
+/* fl-rail */
+.fl-rail {
+	align-items: stretch;
+	padding-inline: 17px;
+	padding-block: calc(0.25rem * 5);
+}
+
+/* fl-rail-cell */
+.fl-rail-cell {
+	width: calc(0.25rem * 9);
+	height: calc(0.25rem * 9);
+}
+
+/* fl-rail-logo */
+.fl-rail-logo {
+	width: calc(0.25rem * 8);
+	height: calc(0.25rem * 8);
+}
+
+/* fl-rail-span-3-1 */
+.fl-rail-span-3-1 {
+	font-size: 15px;
+	font-weight: 550;
+	letter-spacing: -0.01em;
+}
+
+/* fl-rail-label */
+.fl-rail-label {
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	font-size: 14px;
+	line-height: calc(0.25rem * 5);
+	white-space: nowrap;
+	opacity: 0%;
+	transition-property: opacity;
+	transition-duration: 200ms;
+	font-weight: 500;
+}
+
+.fl-rail-label:is(:where(.group\/rail)[data-open] *) {
+	opacity: 100%;
+}
+
+/* fl-rail-div */
+.fl-rail-div {
+	gap: calc(0.25rem * 5);
+}
+
+/* fl-rail-create-automation-1 */
+.fl-rail-create-automation-1 {
+	transition-timing-function: cubic-bezier(0.7, 0, 0, 1);
+	transition-property: border-radius;
+	transition-duration: 300ms;
+}
+
+.fl-rail-create-automation-1:is(:where(.group\/rail)[data-open] *) {
+	border-radius: 12px;
+}
+
+/* fl-rail-row */
+.fl-rail-row {
+	justify-content: flex-start;
+	padding-inline: 0px;
+}
+
+/* fl-rail-plus-icon */
+.fl-rail-plus-icon {
+	width: 15px;
+	height: 15px;
+}
+
+/* fl-rail-ul */
+.fl-rail-ul {
+	gap: calc(0.25rem * 2.5);
+}
+
+/* fl-rail-span-6 */
+.fl-rail-span-6 {
+	transition-timing-function: cubic-bezier(0.7, 0, 0, 1);
+	top: calc(0.25rem * 2);
+	left: -17px;
+	width: calc(0.25rem * 0.5);
+	translate: 0 calc(var(--nav-index) * 46px);
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	background-color: #fff;
+	box-shadow: 2px 0 8px 1px rgb(255 255 255 / 0.25);
+	transition-property: transform, translate, scale, rotate;
+	transition-duration: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fl-rail-span-6 {
+		transition-property: none;
+	}
+}
+
+/* fl-rail-icon */
+.fl-rail-icon {
+	width: calc(0.25rem * 5);
+	height: calc(0.25rem * 5);
+}
+
+/* fl-rail-automation-settings-1 */
+.fl-rail-automation-settings-1 {
+	height: calc(0.25rem * 9);
+}
+
+/* fl-rail-cog-icon */
+.fl-rail-cog-icon {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	width: calc(0.25rem * 5);
+	height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 32%, transparent);
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+	transition-duration: 150ms;
+}
+
+@media (hover: hover) {
+	.fl-rail-cog-icon:is(:where(.group):hover *) {
+		color: color-mix(in oklab, #fff 60%, transparent);
+	}
+}
+
+/* fl-rail-span-10-1 */
+.fl-rail-span-10-1 {
+	color: color-mix(in oklab, #fff 50%, transparent);
+}

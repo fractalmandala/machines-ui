@@ -1,0 +1,36 @@
+/* AccountActions */
+/* fl-account-actions */
+.fl-account-actions {
+	display: none;
+}
+
+@media (width >= 48rem) {
+	.fl-account-actions {
+		display: inline-flex;
+	}
+}
+
+/* fl-account-actions-help-icon */
+.fl-account-actions-help-icon {
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-account-actions-button */
+.fl-account-actions-button {
+	display: none;
+}
+
+@media (width >= 48rem) {
+	.fl-account-actions-button {
+		display: inline-flex;
+	}
+}
+
+/* fl-account-actions-share-icon */
+.fl-account-actions-share-icon {
+	width: 18px;
+	height: 18px;
+	color: color-mix(in oklab, #fff 60%, transparent);
+}

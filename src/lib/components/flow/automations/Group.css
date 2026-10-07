@@ -1,0 +1,13 @@
+/* Group */
+/* fl-group */
+.fl-group {
+	gap: calc(0.25rem * 2.5);
+}
+
+/* fl-group-span */
+.fl-group-span {
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	font-weight: 550;
+	color: color-mix(in oklab, #fff 50%, transparent);
+}

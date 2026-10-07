@@ -1,0 +1,146 @@
+/* overview-stat-card */
+/* fl-overview-stat-card */
+.fl-overview-stat-card {
+	min-height: 145px;
+	overflow: clip;
+	border-radius: 16px;
+	background-color: #141417;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 0.16), 0 0 0 1px rgb(0 0 0 / 0.12);
+}
+
+/* fl-overview-stat-card-img */
+.fl-overview-stat-card-img {
+	pointer-events: none;
+	bottom: 67px;
+	left: 50%;
+	height: 140px;
+	width: 450px;
+	max-width: none;
+	translate: -50% 0;
+	scale: 1 calc(100% * -1);
+	opacity: 4%;
+	mix-blend-mode: screen;
+	filter: blur(1.5px);
+}
+
+/* fl-overview-stat-card-card-glow */
+.fl-overview-stat-card-card-glow {
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	pointer-events: none;
+	top: -84px;
+	left: 50%;
+	height: 181px;
+	width: 519px;
+	max-width: none;
+	translate: -50% 0;
+	scale: 1 calc(100% * -1);
+	opacity: 0%;
+	transition-property: opacity;
+	transition-duration: 600ms;
+}
+
+@media (hover: hover) {
+	.fl-overview-stat-card-card-glow:is(:where(.fl-overview-stat-card-group-stat):hover *) {
+		opacity: 100%;
+	}
+}
+
+/* fl-overview-stat-card-div */
+.fl-overview-stat-card-div {
+	gap: calc(0.25rem * 5);
+	padding-inline: calc(0.25rem * 5);
+	padding-top: 19px;
+	padding-bottom: 18px;
+}
+
+/* fl-overview-stat-card-div-2 */
+.fl-overview-stat-card-div-2 {
+	gap: calc(0.25rem * 3.5);
+}
+
+/* fl-overview-stat-card-icon */
+.fl-overview-stat-card-icon {
+	width: 22px;
+	height: 22px;
+}
+
+/* fl-overview-stat-card-span */
+.fl-overview-stat-card-span {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	font-size: 16px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+	color: color-mix(in oklab, #fff 60%, transparent);
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+	transition-duration: 400ms;
+	text-shadow: 0 -1px 0.25px rgb(0 0 0 / 0.32);
+}
+
+@media (hover: hover) {
+	.fl-overview-stat-card-span:is(:where(.fl-overview-stat-card-group-stat):hover *) {
+		color: #fff;
+	}
+}
+
+/* fl-overview-stat-card-div-4 */
+.fl-overview-stat-card-div-4 {
+	gap: calc(0.25rem * 2.5);
+}
+
+/* fl-overview-stat-card-span-2 */
+.fl-overview-stat-card-span-2 {
+	font-family: var(--font-sans, system-ui, sans-serif);
+	font-size: 40px;
+	line-height: calc(0.25rem * 12);
+	letter-spacing: -0.2px;
+	white-space: nowrap;
+	font-variant-numeric: tabular-nums;
+}
+
+/* fl-overview-stat-card-span-3 */
+.fl-overview-stat-card-span-3 {
+	font-size: 24px;
+	line-height: 1;
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-overview-stat-card-span-4 */
+.fl-overview-stat-card-span-4 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	color: color-mix(in oklab, #fff 50%, transparent);
+	text-shadow: 0 -1px 0.25px rgb(0 0 0 / 0.32);
+}
+
+/* fl-overview-stat-card-span-5 */
+.fl-overview-stat-card-span-5 {
+	padding-block: calc(0.25rem * 1.5);
+}
+
+/* fl-overview-stat-card-span-6 */
+.fl-overview-stat-card-span-6 {
+	min-width: calc(0.25rem * 14);
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	font-variant-numeric: tabular-nums;
+}
+
+/* fl-overview-stat-card-span-6-1 */
+.fl-overview-stat-card-span-6-1 {
+	background-color: color-mix(in oklab, #f05959 20%, transparent);
+	color: #f07070;
+}
+
+/* fl-overview-stat-card-span-6-2 */
+.fl-overview-stat-card-span-6-2 {
+	background-color: color-mix(in oklab, #1fc16b 20%, transparent);
+	color: #1fc16b;
+}
+
+/* fl-overview-stat-card-div-5 */
+.fl-overview-stat-card-div-5 {
+	pointer-events: none;
+	inset: 0px;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04), inset 0 0 0 1px rgb(253 253 255 / 0.04);
+}

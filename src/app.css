@@ -1,0 +1,673 @@
+/*
+ * App-level global styles for the dev and docs site. Not part of the library
+ * stylesheet. The reset and base rules sit in @layer base, below the component
+ * layers, so any component rule overrides them.
+ */
+@layer theme, base, components, utilities;
+
+@font-face {
+	font-family: 'Inter Display';
+	src: url('/fonts/InterDisplay-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root {
+	--default-font-family: var(--font-inter);
+	--default-mono-font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace);
+}
+
+:root {
+	--font-inter:
+		'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--radius: 0.625rem;
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.145 0 0);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.145 0 0);
+	--primary: oklch(0.205 0 0);
+	--primary-foreground: oklch(0.985 0 0);
+	--secondary: oklch(0.97 0 0);
+	--secondary-foreground: oklch(0.205 0 0);
+	--muted: oklch(0.97 0 0);
+	--muted-foreground: oklch(0.556 0 0);
+	--accent: oklch(0.97 0 0);
+	--accent-foreground: oklch(0.205 0 0);
+	--destructive: oklch(0.577 0.245 27.325);
+	--border: oklch(0.922 0 0);
+	--input: oklch(0.922 0 0);
+	--ring: oklch(0.708 0 0);
+	--chart-1: oklch(0.646 0.222 41.116);
+	--chart-2: oklch(0.6 0.118 184.704);
+	--chart-3: oklch(0.398 0.07 227.392);
+	--chart-4: oklch(0.828 0.189 84.429);
+	--chart-5: oklch(0.769 0.188 70.08);
+	--sidebar: oklch(0.985 0 0);
+	--sidebar-foreground: oklch(0.145 0 0);
+	--sidebar-primary: oklch(0.205 0 0);
+	--sidebar-primary-foreground: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.97 0 0);
+	--sidebar-accent-foreground: oklch(0.205 0 0);
+	--sidebar-border: oklch(0.922 0 0);
+	--sidebar-ring: oklch(0.708 0 0);
+	--max-width-global: 76.25rem;
+	--padding-global: 1rem;
+	--padding-section-sm: 1.5rem;
+	--padding-section-md: 2rem;
+	--padding-section-lg: 2.75rem;
+	--padding-section-page: 6rem;
+}
+
+@media (width >= 40rem) {
+	:root {
+		--padding-global: 2rem;
+		--padding-section-sm: 1.5rem;
+		--padding-section-md: 2rem;
+		--padding-section-lg: 3rem;
+		--padding-section-page: 6rem;
+	}
+}
+
+@media (width >= 48rem) {
+	:root {
+		--padding-global: 2.5rem;
+		--padding-section-sm: 1.75rem;
+		--padding-section-md: 2.25rem;
+		--padding-section-lg: 3.5rem;
+		--padding-section-page: 7rem;
+	}
+}
+
+@media (width >= 64rem) {
+	:root {
+		--padding-global: max(4vw, 2.5rem);
+		--padding-section-sm: 2.25rem;
+		--padding-section-md: 3.25rem;
+		--padding-section-lg: 5rem;
+		--padding-section-page: 8rem;
+	}
+}
+
+@layer base {
+	/*
+	  1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+	  2. Remove default margins and padding
+	  3. Reset all borders.
+	*/
+
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+	  box-sizing: border-box; /* 1 */
+	  margin: 0; /* 2 */
+	  padding: 0; /* 2 */
+	  border: 0 solid; /* 3 */
+	}
+
+	/*
+	  1. Use a consistent sensible line-height in all browsers.
+	  2. Prevent adjustments of font size after orientation changes in iOS.
+	  3. Use a more readable tab size.
+	  4. Use the user's configured `sans` font-family by default.
+	  5. Use the user's configured `sans` font-feature-settings by default.
+	  6. Use the user's configured `sans` font-variation-settings by default.
+	  7. Disable tap highlights on iOS.
+	*/
+
+	html,
+	:host {
+	  line-height: 1.5; /* 1 */
+	  -webkit-text-size-adjust: 100%; /* 2 */
+	  tab-size: 4; /* 3 */
+	  font-family: var(
+	    --default-font-family,
+	    -apple-system,
+	    BlinkMacSystemFont,
+	    'Segoe UI',
+	    Roboto,
+	    'Helvetica Neue',
+	    'Noto Sans',
+	    Arial,
+	    sans-serif,
+	    'Apple Color Emoji',
+	    'Segoe UI Emoji',
+	    'Segoe UI Symbol',
+	    'Noto Color Emoji'
+	  ); /* 4 */
+	  font-feature-settings: var(--default-font-feature-settings, normal); /* 5 */
+	  font-variation-settings: var(--default-font-variation-settings, normal); /* 6 */
+	  -webkit-tap-highlight-color: transparent; /* 7 */
+	}
+
+	/*
+	  1. Add the correct height in Firefox.
+	  2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+	  3. Reset the default border style to a 1px solid border.
+	*/
+
+	hr {
+	  height: 0; /* 1 */
+	  color: inherit; /* 2 */
+	  border-top-width: 1px; /* 3 */
+	}
+
+	/*
+	  Add the correct text decoration in Chrome, Edge, and Safari.
+	*/
+
+	abbr:where([title]) {
+	  -webkit-text-decoration: underline dotted;
+	  text-decoration: underline dotted;
+	}
+
+	/*
+	  Remove the default font size and weight for headings.
+	*/
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+	  font-size: inherit;
+	  font-weight: inherit;
+	}
+
+	/*
+	  Reset links to optimize for opt-in styling instead of opt-out.
+	*/
+
+	a {
+	  color: inherit;
+	  -webkit-text-decoration: inherit;
+	  text-decoration: inherit;
+	}
+
+	/*
+	  Add the correct font weight in Edge and Safari.
+	*/
+
+	b,
+	strong {
+	  font-weight: bolder;
+	}
+
+	/*
+	  1. Use the user's configured `mono` font-family by default.
+	  2. Use the user's configured `mono` font-feature-settings by default.
+	  3. Use the user's configured `mono` font-variation-settings by default.
+	  4. Correct the odd `em` font sizing in all browsers.
+	*/
+
+	code,
+	kbd,
+	samp,
+	pre {
+	  font-family: var(
+	    --default-mono-font-family,
+	    ui-monospace,
+	    SFMono-Regular,
+	    Menlo,
+	    Monaco,
+	    Consolas,
+	    'Liberation Mono',
+	    'Courier New',
+	    monospace
+	  ); /* 1 */
+	  font-feature-settings: var(--default-mono-font-feature-settings, normal); /* 2 */
+	  font-variation-settings: var(--default-mono-font-variation-settings, normal); /* 3 */
+	  font-size: 1em; /* 4 */
+	}
+
+	/*
+	  Add the correct font size in all browsers.
+	*/
+
+	small {
+	  font-size: 80%;
+	}
+
+	/*
+	  Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+	*/
+
+	sub,
+	sup {
+	  font-size: 75%;
+	  line-height: 0;
+	  position: relative;
+	  vertical-align: baseline;
+	}
+
+	sub {
+	  bottom: -0.25em;
+	}
+
+	sup {
+	  top: -0.5em;
+	}
+
+	/*
+	  1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+	  2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+	  3. Remove gaps between table borders by default.
+	*/
+
+	table {
+	  text-indent: 0; /* 1 */
+	  border-color: inherit; /* 2 */
+	  border-collapse: collapse; /* 3 */
+	}
+
+	/*
+	  Use the modern Firefox focus style for all focusable elements.
+	*/
+
+	:-moz-focusring:where(:not(iframe)) {
+	  outline: auto;
+	}
+
+	/*
+	  Add the correct vertical alignment in Chrome and Firefox.
+	*/
+
+	progress {
+	  vertical-align: baseline;
+	}
+
+	/*
+	  Add the correct display in Chrome and Safari.
+	*/
+
+	summary {
+	  display: list-item;
+	}
+
+	/*
+	  Make lists unstyled by default.
+	*/
+
+	ol,
+	ul,
+	menu {
+	  list-style: none;
+	}
+
+	/*
+	  1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+	  2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+	      This can trigger a poorly considered lint error in some tools but is included by design.
+	*/
+
+	img,
+	svg,
+	video,
+	canvas,
+	audio,
+	iframe,
+	embed,
+	object {
+	  display: block; /* 1 */
+	  vertical-align: middle; /* 2 */
+	}
+
+	/*
+	  Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+	*/
+
+	img,
+	video {
+	  max-width: 100%;
+	  height: auto;
+	}
+
+	/*
+	  1. Inherit font styles in all browsers.
+	  2. Remove border radius in all browsers.
+	  3. Remove background color in all browsers.
+	  4. Ensure consistent opacity for disabled states in all browsers.
+	*/
+
+	button,
+	input,
+	select,
+	optgroup,
+	textarea,
+	::file-selector-button {
+	  font: inherit; /* 1 */
+	  font-feature-settings: inherit; /* 1 */
+	  font-variation-settings: inherit; /* 1 */
+	  letter-spacing: inherit; /* 1 */
+	  color: inherit; /* 1 */
+	  border-radius: 0; /* 2 */
+	  background-color: transparent; /* 3 */
+	  opacity: 1; /* 4 */
+	}
+
+	/*
+	  Restore default font weight.
+	*/
+
+	:where(select:is([multiple], [size])) optgroup {
+	  font-weight: bolder;
+	}
+
+	/*
+	  Restore indentation.
+	*/
+
+	:where(select:is([multiple], [size])) optgroup option {
+	  padding-inline-start: 20px;
+	}
+
+	/*
+	  Restore space after button.
+	*/
+
+	::file-selector-button {
+	  margin-inline-end: 4px;
+	}
+
+	/*
+	  Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+	*/
+
+	::placeholder {
+	  opacity: 1;
+	}
+
+	/*
+	  Set the default placeholder color to a semi-transparent version of the current text color in browsers that do not
+	  crash when using `color-mix(…)` with `currentcolor`. (https://github.com/tailwindlabs/tailwindcss/issues/17194)
+	*/
+
+	@supports (not (-webkit-appearance: -apple-pay-button)) /* Not Safari */ or
+	  (contain-intrinsic-size: 1px) /* Safari 17+ */ {
+	  ::placeholder {
+	    color: color-mix(in oklab, currentcolor 50%, transparent);
+	  }
+	}
+
+	/*
+	  Prevent resizing textareas horizontally by default.
+	*/
+
+	textarea {
+	  resize: vertical;
+	}
+
+	/*
+	  Remove the inner padding in Chrome and Safari on macOS.
+	*/
+
+	::-webkit-search-decoration {
+	  -webkit-appearance: none;
+	}
+
+	/*
+	  1. Ensure date/time inputs have the same height when empty in iOS Safari.
+	  2. Ensure text alignment can be changed on date/time inputs in iOS Safari.
+	*/
+
+	::-webkit-date-and-time-value {
+	  min-height: 1lh; /* 1 */
+	  text-align: inherit; /* 2 */
+	}
+
+	/*
+	  Prevent height from changing on date/time inputs in macOS Safari when the input is set to `display: block`.
+	*/
+
+	::-webkit-datetime-edit {
+	  display: inline-flex;
+	}
+
+	/*
+	  Remove excess padding from pseudo-elements in date/time inputs to ensure consistent height across browsers.
+	*/
+
+	::-webkit-datetime-edit-fields-wrapper {
+	  padding: 0;
+	}
+
+	::-webkit-datetime-edit,
+	::-webkit-datetime-edit-year-field,
+	::-webkit-datetime-edit-month-field,
+	::-webkit-datetime-edit-day-field,
+	::-webkit-datetime-edit-hour-field,
+	::-webkit-datetime-edit-minute-field,
+	::-webkit-datetime-edit-second-field,
+	::-webkit-datetime-edit-millisecond-field,
+	::-webkit-datetime-edit-meridiem-field {
+	  padding-block: 0;
+	}
+
+	/*
+	  Center dropdown marker shown on inputs with paired `<datalist>`s in Chrome. (https://github.com/tailwindlabs/tailwindcss/issues/18499)
+	*/
+
+	::-webkit-calendar-picker-indicator {
+	  line-height: 1;
+	}
+
+	/*
+	  Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+	*/
+
+	:-moz-ui-invalid {
+	  box-shadow: none;
+	}
+
+	/*
+	  Correct the inability to style the border radius in iOS Safari.
+	*/
+
+	button,
+	input:where([type='button'], [type='reset'], [type='submit']),
+	::file-selector-button {
+	  appearance: button;
+	}
+
+	/*
+	  Correct the cursor style of increment and decrement buttons in Safari.
+	*/
+
+	::-webkit-inner-spin-button,
+	::-webkit-outer-spin-button {
+	  height: auto;
+	}
+
+	/*
+	  Make elements with the HTML hidden attribute stay hidden by default.
+	*/
+
+	[hidden]:where(:not([hidden='until-found'])) {
+	  display: none !important;
+	}
+
+
+	/* App base rules (formerly written with @apply). */
+	* {
+		border-color: var(--border);
+		outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
+		scrollbar-width: thin;
+		scrollbar-color: rgb(255 255 255 / 0.12) transparent;
+	}
+
+	svg[overflow='visible'] {
+		overflow: visible;
+	}
+
+	*:hover {
+		scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+	}
+
+	@supports not (scrollbar-color: auto) {
+		::-webkit-scrollbar {
+			width: 8px;
+			height: 8px;
+		}
+
+		::-webkit-scrollbar-track,
+		::-webkit-scrollbar-corner {
+			background: transparent;
+		}
+
+		::-webkit-scrollbar-thumb {
+			border: 2px solid transparent;
+			border-radius: 999px;
+			background-color: rgb(255 255 255 / 0.12);
+			background-clip: padding-box;
+		}
+
+		::-webkit-scrollbar-thumb:hover {
+			background-color: rgb(255 255 255 / 0.22);
+		}
+	}
+
+	body {
+		background-color: var(--background);
+		color: var(--foreground);
+		font-weight: 500;
+	}
+
+	h1,
+	.h1-style {
+		font-size: min(40px, 10vw);
+		line-height: 96%;
+	}
+
+	h2,
+	.h2-style {
+		font-size: min(36px, 8vw);
+	}
+
+	h3,
+	.h3-style {
+		font-size: min(17.5px, 4.85vw);
+	}
+
+	p,
+	.p-style {
+		font-size: 14px;
+		line-height: 120%;
+		letter-spacing: -0.01em;
+	}
+
+	.lead-style {
+		font-size: 16px;
+		line-height: 150%;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+	}
+
+	@media (width >= 40rem) {
+		h1,
+		.h1-style {
+			font-size: 48px;
+		}
+
+		h2,
+		.h2-style {
+			font-size: 48px;
+		}
+
+		h3,
+		.h3-style {
+			font-size: 20px;
+		}
+	}
+
+	@media (width >= 48rem) {
+		h1,
+		.h1-style {
+			font-size: 70px;
+		}
+
+		h2,
+		.h2-style {
+			font-size: 56px;
+		}
+
+		h3,
+		.h3-style {
+			font-size: 20px;
+		}
+
+		p,
+		.p-style {
+			font-size: 16px;
+		}
+
+		.lead-style {
+			font-size: 18px;
+		}
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	h3 span {
+		line-height: 0.9230769230769231;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+	}
+
+	html,
+	body {
+		scroll-behavior: smooth;
+		scroll-padding: 200px 0;
+	}
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active,
+textarea:-webkit-autofill,
+textarea:autofill,
+select:-webkit-autofill,
+select:autofill {
+	-webkit-box-shadow: inset 0 0 0 1000px var(--card) !important;
+	box-shadow: inset 0 0 0 1000px var(--card) !important;
+	-webkit-text-fill-color: var(--foreground) !important;
+	background-color: transparent !important;
+	background-image: none !important;
+	-webkit-background-clip: text !important;
+	background-clip: text !important;
+	caret-color: var(--foreground);
+	transition: background-color 9999s ease-in-out 0s;
+}
+
+.pswp .pswp__button--arrow--next .pswp__icn {
+	transform: none;
+}
+
+.pswp .pswp__icn-shadow {
+	display: none;
+}
+
+@media (max-width: 340px) {
+	html {
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 300px) {
+	html {
+		font-size: 12px;
+	}
+}

@@ -1,0 +1,9 @@
+/* DialogTitle */
+/* fl-dialog-title */
+:where(.fl-dialog-title) {
+	font-size: 16px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+	text-shadow: 0 -1px 0.25px rgb(0 0 0 / 0.32);
+	color: #fff;
+}

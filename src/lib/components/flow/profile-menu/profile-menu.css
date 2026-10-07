@@ -1,0 +1,279 @@
+/* profile-menu */
+/* fl-profile-menu */
+.fl-profile-menu {
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	pointer-events: none;
+	inset: 0px;
+	z-index: 40;
+	background-color: color-mix(in oklab, #000 25%, transparent);
+	opacity: 0%;
+	-webkit-backdrop-filter: blur(3px);
+	backdrop-filter: blur(3px);
+	transition-property: opacity;
+	transition-duration: 200ms;
+}
+
+.fl-profile-menu[data-open] {
+	opacity: 100%;
+}
+
+/* fl-profile-menu-open-profile-menu */
+.fl-profile-menu-open-profile-menu {
+	transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	width: calc(0.25rem * 8);
+	height: calc(0.25rem * 8);
+	cursor: pointer;
+	overflow: clip;
+	border-radius: 8px;
+	background-color: #fff;
+	box-shadow: 0 1.5px 3px -0.75px rgb(0 0 0 / 0.12), 0 0 0 1px rgb(0 0 0 / 0.4);
+	transition-property: box-shadow;
+	transition-duration: 150ms;
+	outline-style: none;
+}
+
+@media (hover: hover) {
+	.fl-profile-menu-open-profile-menu:hover {
+		box-shadow: 0 1.5px 3px -0.75px rgb(0 0 0 / 0.12), 0 0 0 1px rgb(0 0 0 / 0.4), 0 0 0 4px rgb(255 255 255 / 0.08);
+	}
+}
+
+.fl-profile-menu-open-profile-menu:focus-visible {
+	box-shadow: 0 0 0 calc(2px + 0px) color-mix(in oklab, #7f59f0 60%, transparent);
+}
+
+.fl-profile-menu-open-profile-menu[data-state="open"] {
+	box-shadow: 0 1.5px 3px -0.75px rgb(0 0 0 / 0.12), 0 0 0 1px rgb(0 0 0 / 0.4), 0 0 0 4px rgb(255 255 255 / 0.12);
+}
+
+/* fl-profile-menu-asset */
+.fl-profile-menu-asset {
+	inset: 0px;
+	width: auto;
+	height: auto;
+	border-radius: 8px;
+}
+
+/* fl-profile-menu-dropdown-menu-conten */
+.fl-profile-menu-dropdown-menu-conten {
+	width: min(350px, calc(100vw - 16px));
+	gap: 1px;
+	overflow: clip;
+	border-radius: 16px;
+	background-color: color-mix(in oklab, #17171c 80%, transparent);
+	background-image: radial-gradient(circle at 43px 11px,rgb(255 255 255 / 0.08),transparent 200px);
+	padding: 0px;
+	box-shadow: -10px 32px 64px 2px rgb(0 0 0 / 0.5), 0 24px 48px rgb(0 0 0 / 0.12), 0 10px 18px rgb(0 0 0 / 0.12), 0 5px 8px rgb(0 0 0 / 0.16), 0 2px 4px rgb(0 0 0 / 0.16), 0 0 0 1.7px rgb(0 0 0 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.04), inset 0 0 0 1px rgb(253 253 255 / 0.04);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+}
+
+/* fl-profile-menu-div-2 */
+.fl-profile-menu-div-2 {
+	border-radius: 8px;
+	padding-block: calc(0.25rem * 1.5);
+}
+
+/* fl-profile-menu-span */
+.fl-profile-menu-span {
+	width: calc(0.25rem * 9);
+	height: calc(0.25rem * 9);
+	overflow: clip;
+	border-radius: 9px;
+	background-color: #fff;
+	box-shadow: 0 1.5px 3px -0.75px rgb(0 0 0 / 0.12), 0 0 0 1px rgb(0 0 0 / 0.4);
+}
+
+/* fl-profile-menu-asset-2 */
+.fl-profile-menu-asset-2 {
+	inset: 0px;
+	width: auto;
+	height: auto;
+}
+
+/* fl-profile-menu-span-3 */
+.fl-profile-menu-span-3 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 5);
+	font-weight: 550;
+}
+
+/* fl-profile-menu-span-4 */
+.fl-profile-menu-span-4 {
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-profile-menu-divider */
+.fl-profile-menu-divider {
+	height: calc(0.25rem * 0.5);
+	background-image: linear-gradient(to bottom,rgb(0 0 0 / 0.32) 0,rgb(0 0 0 / 0.32) 1.5px,rgb(83 86 101 / 0.06) 1.5px);
+}
+
+/* fl-profile-menu-div-4 */
+.fl-profile-menu-div-4 {
+	padding: calc(0.25rem * 2.5);
+}
+
+/* fl-profile-menu-dropdown-menu-group */
+.fl-profile-menu-dropdown-menu-group {
+	height: 120px;
+	gap: calc(0.25rem * 1.5);
+	border-radius: 12px;
+	background-color: color-mix(in oklab, #000 24%, transparent);
+	padding-block: calc(0.25rem * 2.5);
+	box-shadow: 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 0 0 1px rgb(255 255 255 / 0.04);
+}
+
+/* fl-profile-menu-span-5 */
+.fl-profile-menu-span-5 {
+	padding-block: 3px;
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	font-weight: 550;
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-profile-menu-div-5 */
+.fl-profile-menu-div-5 {
+	gap: calc(0.25rem * 0.5);
+}
+
+/* fl-profile-menu-dropdown-menu-item */
+.fl-profile-menu-dropdown-menu-item {
+	height: calc(0.25rem * 9);
+	justify-content: space-between;
+	border-radius: 8px;
+}
+
+.fl-profile-menu-dropdown-menu-item[data-highlighted] {
+	background-color: color-mix(in oklab, #fff 5%, transparent);
+}
+
+/* fl-profile-menu-span-7 */
+.fl-profile-menu-span-7 {
+	width: calc(0.25rem * 6);
+	height: calc(0.25rem * 6);
+	border-radius: 6px;
+	background-color: #e471cd;
+	font-size: 12px;
+	line-height: calc(0.25rem * 3);
+	letter-spacing: -0.18px;
+	box-shadow: 0 1px 2px -0.5px rgb(0 0 0 / 0.08), 0 0 0 0.5px rgb(0 0 0 / 0.12), inset 0 0.5px 0 rgb(255 255 255 / 0.04);
+}
+
+/* fl-profile-menu-span-8 */
+.fl-profile-menu-span-8 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 5);
+	font-weight: 550;
+}
+
+/* fl-profile-menu-span-9 */
+.fl-profile-menu-span-9 {
+	font-size: 12px;
+	line-height: calc(0.25rem * 4);
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-profile-menu-dropdown-menu-item-2 */
+.fl-profile-menu-dropdown-menu-item-2 {
+	height: calc(0.25rem * 9);
+	justify-content: space-between;
+	border-radius: 8px;
+}
+
+.fl-profile-menu-dropdown-menu-item-2[data-highlighted] {
+	background-color: color-mix(in oklab, #fff 5%, transparent);
+}
+
+/* fl-profile-menu-span-11 */
+.fl-profile-menu-span-11 {
+	width: calc(0.25rem * 6);
+	height: calc(0.25rem * 6);
+	border-radius: 6px;
+	background-color: #1b1b20;
+	box-shadow: 0 4px 8px rgb(0 0 0 / 0.08), 0 2px 4px rgb(0 0 0 / 0.12), 0 1px 2px rgb(0 0 0 / 0.16), inset 0 1px 0 rgb(255 255 255 / 0.04), inset 0 0 0 1px rgb(253 253 255 / 0.04);
+}
+
+/* fl-profile-menu-plus-icon */
+.fl-profile-menu-plus-icon {
+	width: calc(0.25rem * 2.5);
+	height: calc(0.25rem * 2.5);
+}
+
+/* fl-profile-menu-span-12 */
+.fl-profile-menu-span-12 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-profile-menu-span-13 */
+.fl-profile-menu-span-13 {
+	height: calc(0.25rem * 6);
+	overflow: clip;
+	border-radius: 8px;
+	background-color: color-mix(in oklab, #2013d3 14%, transparent);
+	background-image: linear-gradient(178deg,rgb(255 255 255 / 0.02) 3.85%,rgb(255 255 255 / 0.014) 28%,rgb(255 255 255 / 0.008) 49%,rgb(255 255 255/0) 75%);
+	padding-inline: calc(0.25rem * 1.5);
+	font-size: 12px;
+	line-height: calc(0.25rem * 6);
+	color: #6359f0;
+	box-shadow: 0 4px 10px 2px rgb(42 30 202 / 0.12), 0 1px 2px rgb(0 0 0 / 0.08), 0 1px 0 rgb(0 0 0 / 0.12), 0 0 0 1px rgb(0 0 0 / 0.16), inset 0 1px 0 rgb(255 255 255 / 0.01), inset 0 0 0 1px rgb(253 253 255 / 0.04);
+	text-shadow: 0 -1px 0.25px rgb(0 0 0 / 0.32), 0 4px 6px rgb(99 89 240 / 0.4);
+}
+
+/* fl-profile-menu-sparkles-icon */
+.fl-profile-menu-sparkles-icon {
+	width: calc(0.25rem * 3.5);
+	height: calc(0.25rem * 3.5);
+}
+
+/* fl-profile-menu-dropdown-menu-group-2 */
+.fl-profile-menu-dropdown-menu-group-2 {
+	gap: calc(0.25rem * 0.5);
+}
+
+/* fl-profile-menu-menu-item */
+.fl-profile-menu-menu-item {
+	height: calc(0.25rem * 9);
+	gap: 0px;
+	border-radius: 8px;
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+}
+
+.fl-profile-menu-menu-item[data-highlighted] {
+	background-color: color-mix(in oklab, #fff 5%, transparent);
+}
+
+/* fl-profile-menu-span-14 */
+.fl-profile-menu-span-14 {
+	padding-left: calc(0.25rem * 0.5);
+}
+
+/* fl-profile-menu-icon */
+.fl-profile-menu-icon {
+	width: calc(0.25rem * 5);
+	height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 60%, transparent);
+}
+
+/* fl-profile-menu-div-8 */
+.fl-profile-menu-div-8 {
+	padding-block: calc(0.25rem * 2.5);
+}
+
+/* fl-profile-menu-span-16 */
+.fl-profile-menu-span-16 {
+	padding-left: calc(0.25rem * 0.5);
+}
+
+/* fl-profile-menu-logout-icon */
+.fl-profile-menu-logout-icon {
+	width: calc(0.25rem * 5);
+	height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 60%, transparent);
+}

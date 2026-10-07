@@ -1,0 +1,76 @@
+/* export-preview */
+/* fl-export-preview */
+.fl-export-preview {
+	color: var(--fl-accent-trigger);
+}
+
+/* fl-export-preview-span */
+.fl-export-preview-span {
+	color: var(--fl-accent-branch);
+}
+
+/* fl-export-preview-span-2 */
+.fl-export-preview-span-2 {
+	color: var(--fl-accent-send-webhook);
+}
+
+/* fl-export-preview-span-4 */
+.fl-export-preview-span-4 {
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-export-preview-span-5 */
+.fl-export-preview-span-5 {
+	color: var(--fl-accent-wait-until);
+}
+
+/* fl-export-preview-span-6 */
+.fl-export-preview-span-6 {
+	color: var(--fl-accent-send-webhook);
+}
+
+/* fl-export-preview-span-6-1 */
+.fl-export-preview-span-6-1 {
+	color: var(--fl-accent-trigger);
+}
+
+/* fl-export-preview-span-7 */
+.fl-export-preview-span-7 {
+	color: color-mix(in oklab, #fff 30%, transparent);
+}
+
+/* fl-export-preview-pre */
+.fl-export-preview-pre {
+	overflow: auto;
+	border-radius: 12px;
+	background-color: color-mix(in oklab, #000 30%, transparent);
+	font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+	font-size: 12.5px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 75%, transparent);
+	box-shadow: 0 0 0 1px rgb(0 0 0 / 0.24), inset 0 0 0 1px rgb(255 255 255 / 0.04);
+}
+
+/* fl-export-preview-code */
+.fl-export-preview-code {
+	min-width: max-content;
+	grid-template-columns: auto 1fr;
+}
+
+/* fl-export-preview-span-8 */
+.fl-export-preview-span-8 {
+	display: contents;
+}
+
+/* fl-export-preview-span-9 */
+.fl-export-preview-span-9 {
+	color: color-mix(in oklab, #fff 20%, transparent);
+	font-variant-numeric: tabular-nums;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+/* fl-export-preview-span-10 */
+.fl-export-preview-span-10 {
+	white-space: pre;
+}

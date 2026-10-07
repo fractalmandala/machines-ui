@@ -1,0 +1,68 @@
+/* flow-ghost */
+/* fl-flow-ghost */
+.fl-flow-ghost {
+	pointer-events: none;
+	top: 0px;
+	left: 0px;
+	z-index: 50;
+	translate: var(--ghost-x) var(--ghost-y);
+}
+
+/* fl-flow-ghost-div */
+.fl-flow-ghost-div {
+	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+	height: calc(0.25rem * 9);
+	width: 280px;
+	cursor: grabbing;
+	border-radius: 8px;
+	background-color: color-mix(in oklab, #1b1b20 95%, transparent);
+	padding-block: calc(0.25rem * 1.5);
+	box-shadow: 0 24px 48px rgb(0 0 0 / 0.24), 0 10px 18px rgb(0 0 0 / 0.2), 0 2px 4px rgb(0 0 0 / 0.16), 0 0 0 1px rgb(0 0 0 / 0.24), inset 0 1px 0 rgb(255 255 255 / 0.06), inset 0 0 0 1px rgb(253 253 255 / 0.06);
+	-webkit-backdrop-filter: blur(12px);
+	backdrop-filter: blur(12px);
+	transition-property: opacity,scale;
+	transition-duration: 150ms;
+}
+
+.fl-flow-ghost-div[data-snapped] {
+	scale: 0.96;
+	opacity: 60%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fl-flow-ghost-div {
+		transition-property: none;
+	}
+}
+
+@starting-style  {
+	.fl-flow-ghost-div {
+		scale: 0.96;
+		opacity: 0%;
+	}
+}
+
+/* fl-flow-ghost-icon */
+.fl-flow-ghost-icon {
+	width: 18px;
+	height: 18px;
+	color: var(--accent);
+}
+
+/* fl-flow-ghost-span-2 */
+.fl-flow-ghost-span-2 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+}
+
+/* fl-flow-ghost-span-3 */
+.fl-flow-ghost-span-3 {
+	padding-right: calc(0.25rem * 0.5);
+}
+
+/* fl-flow-ghost-drag-icon */
+.fl-flow-ghost-drag-icon {
+	width: calc(0.25rem * 4);
+	height: calc(0.25rem * 4);
+	color: color-mix(in oklab, #fff 60%, transparent);
+}

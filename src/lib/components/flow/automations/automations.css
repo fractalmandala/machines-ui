@@ -1,0 +1,116 @@
+/* automations */
+/* fl-automations */
+.fl-automations {
+	overflow-y: auto;
+}
+
+/* fl-automations-div */
+.fl-automations-div {
+	margin-inline: auto;
+	box-sizing: content-box;
+	max-width: 1200px;
+	gap: calc(0.25rem * 7);
+	padding: calc(0.25rem * 4);
+}
+
+@media (width >= 40rem) {
+	.fl-automations-div {
+		gap: calc(0.25rem * 10);
+		padding: calc(0.25rem * 8);
+	}
+}
+
+/* fl-automations-bolt-icon */
+.fl-automations-bolt-icon {
+	width: 22px;
+	height: 22px;
+}
+
+/* fl-automations-div-3 */
+.fl-automations-div-3 {
+	gap: calc(0.25rem * 1.5);
+}
+
+/* fl-automations-heading */
+.fl-automations-heading {
+	font-size: 24px;
+	line-height: calc(0.25rem * 8);
+}
+
+/* fl-automations-span */
+.fl-automations-span {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+	color: color-mix(in oklab, #fff 80%, transparent);
+}
+
+/* fl-automations-button */
+.fl-automations-button {
+	display: inline;
+	color: #7f59f0;
+	text-underline-offset: 4px;
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 150ms;
+}
+
+@media (hover: hover) {
+	.fl-automations-button:hover {
+		color: #9b7dff;
+		text-decoration-line: underline;
+	}
+}
+
+/* fl-automations-div-4 */
+.fl-automations-div-4 {
+	gap: calc(0.25rem * 5);
+}
+
+@media (width >= 40rem) {
+	.fl-automations-div-4 {
+		gap: calc(0.25rem * 10);
+	}
+}
+
+/* fl-automations-div-5 */
+.fl-automations-div-5 {
+	gap: calc(0.25rem * 5);
+}
+
+/* fl-automations-div-6 */
+.fl-automations-div-6 {
+	align-items: center;
+	border-radius: 16px;
+	background-color: #141417;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 0.16), 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+/* fl-automations-span-2 */
+.fl-automations-span-2 {
+	font-size: 16px;
+	line-height: calc(0.25rem * 6);
+	font-weight: 550;
+}
+
+/* fl-automations-span-3 */
+.fl-automations-span-3 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 5);
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+/* fl-automations-span-4 */
+.fl-automations-span-4 {
+	font-size: 14px;
+	line-height: calc(0.25rem * 6);
+}
+
+/* fl-automations-span-5 */
+.fl-automations-span-5 {
+	font-variant-numeric: tabular-nums;
+}
+
+/* fl-automations-span-6 */
+.fl-automations-span-6 {
+	color: color-mix(in oklab, #fff 50%, transparent);
+}

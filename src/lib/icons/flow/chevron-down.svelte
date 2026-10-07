@@ -1,0 +1,9 @@
+<script lang="ts">
+	let props: Record<string, unknown> = $props();
+</script>
+
+<svg overflow="visible" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+<g id="Chevron Right Streamline Tabler Line">
+<path id="Vector" transform="rotate(90 5 5)" d="M3.85437 2.70844L6.14604 5.0001L3.85437 7.29177" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

@@ -1,0 +1,7 @@
+<script lang="ts">
+	let props: Record<string, unknown> = $props();
+</script>
+
+<svg overflow="visible" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+<path d="M4.5 2.25H10.5L13.5 5.25V15.75H4.5V2.25ZM10.5 2.25V5.25H13.5M6.75 9H11.25M6.75 11.75H11.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
