@@ -69,7 +69,7 @@
 		"@fractaldesign/fractalstyler": "^0.9.0",
 		"@fractaldesign/pop": "^0.1.0",
 		"@poppanator/sveltekit-svg": "^7.0.1",
-		"@sveltejs/adapter-static": "^4.0.0",
+		"@sveltejs/adapter-vercel": "^7.0.0",
 		"@sveltejs/kit": "^3.0.0",
 		"@sveltejs/package": "^2.5.8",
 		"@sveltejs/vite-plugin-svelte": "^7.2.0",
