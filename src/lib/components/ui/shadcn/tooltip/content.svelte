@@ -36,6 +36,8 @@
 
 	let x = $state(0);
 	let y = $state(0);
+	// the side it first tries; `placedSide` follows the collision check after that
+	// svelte-ignore state_referenced_locally
 	const initialSide: TooltipSide = side;
 	let placedSide = $state<TooltipSide>(initialSide);
 	let isPositioned = $state(false);

@@ -108,6 +108,7 @@
 			"tokens": [
 				"--border",
 				"--fill",
+				"--font-sans",
 				"--graph-accent",
 				"--knob-thumb",
 				"--knob-track",
@@ -164,7 +165,7 @@
 					"type": "number",
 					"optional": true,
 					"default": "22",
-					"description": "Height of the scene in rows. Default 22."
+					"description": "Height of the scene in rows. Default 22, which is also the minimum: smaller values are ignored."
 				},
 				{
 					"name": "speedMs",
@@ -380,13 +381,6 @@
 					"optional": true,
 					"default": "60",
 					"description": "Scene width in characters. Default 60."
-				},
-				{
-					"name": "rows",
-					"type": "number",
-					"optional": true,
-					"default": "12",
-					"description": "Scene height in rows. Default 12."
 				},
 				{
 					"name": "animated",
@@ -1098,6 +1092,7 @@
 			],
 			"tokens": [
 				"--border",
+				"--font-sans",
 				"--graph-accent",
 				"--text-muted",
 				"--text-primary",
@@ -1166,7 +1161,7 @@
 					"type": "number",
 					"optional": true,
 					"default": "17",
-					"description": "Seed for the flow pattern and the diya's vertical bob. Default 17."
+					"description": "Seed for the starting phase of the lamp's vertical bob, so two scenes bob out of step. The water is not seeded. Default 17."
 				},
 				{
 					"name": "label",
@@ -3362,7 +3357,7 @@
 					"type": "number",
 					"optional": true,
 					"default": "0",
-					"description": "Seconds to wait before each loop restarts."
+					"description": "Seconds to wait before each loop restarts. Only applies when `loop` is on."
 				},
 				{
 					"name": "stagger",
@@ -3395,7 +3390,7 @@
 					"type": "boolean",
 					"optional": true,
 					"default": "true",
-					"description": "Stop observing after the first intersection."
+					"description": "Stop watching for scroll into view after the first time. Governs the scroll trigger only: hovering still replays the shuffle (see `triggerOnHover`)."
 				},
 				{
 					"name": "respectReducedMotion",
@@ -3560,6 +3555,7 @@
 			"tokens": [
 				"--border",
 				"--graph-accent",
+				"--text-muted",
 				"--text-primary",
 				"--text-secondary"
 			],
@@ -3583,7 +3579,8 @@
 			"exported": true,
 			"description": "Framed ASCII or Unicode diagram text, with an optional label, a copy button, and accent highlighting of titles, arrows, and corners.",
 			"examples": [
-				"<AsciiDiagram title=\"Signal path\">\n  {`\n+ - - - - - - [ SIGNAL PATH ] - - - - - - +\n|                                         |\n|   source ──> filter ──> gain ──> out    |\n|                    ^                    |\n|                    └─── feedback        |\n|                                         |\n+ - - - - - - - - - - - - - - - - - - - - +\n  `}\n</AsciiDiagram>"
+				"<AsciiDiagram title=\"Signal path\">\n  {`\n+ - - - - - - [ SIGNAL PATH ] - - - - - - +\n|                                         |\n|   source ──> filter ──> gain ──> out    |\n|                    ^                    |\n|                    └─── feedback        |\n|                                         |\n+ - - - - - - - - - - - - - - - - - - - - +\n  `}\n</AsciiDiagram>",
+				"<AsciiDiagram title=\"Box\" content={'+---+\\n| a |\\n+---+'} showCopy={false} />"
 			],
 			"props": [
 				{
@@ -3605,7 +3602,7 @@
 					"type": "boolean",
 					"optional": true,
 					"default": "true",
-					"description": "Show a copy-to-clipboard button. Default true."
+					"description": "Show a copy-to-clipboard button. Default true. The button copies `content`, so it appears only when `content` is passed (not when the diagram is given as children)."
 				},
 				{
 					"name": "bordered",
@@ -3819,8 +3816,8 @@
 				"viewport"
 			],
 			"tokens": [
-				"--border",
 				"--graph-accent",
+				"--text-muted",
 				"--text-primary",
 				"--text-secondary"
 			],
@@ -3893,6 +3890,7 @@
 			"tokens": [
 				"--border",
 				"--graph-accent",
+				"--text-muted",
 				"--text-primary",
 				"--text-secondary"
 			],
@@ -4276,6 +4274,7 @@
 				"FlowItem",
 				"FlowEdges",
 				"FlowControls",
+				"FlowRunBar",
 				"FlowGhost",
 				"FlowGrid",
 				"NodePanel"
@@ -4300,6 +4299,164 @@
 			},
 			"hasChildren": false,
 			"renames": {},
+			"hasPreview": true
+		},
+		{
+			"name": "ButtonMachine",
+			"displayName": "ButtonMachine",
+			"slug": "button-machine",
+			"family": "frame",
+			"file": "src/lib/components/frame/ButtonMachine.svelte",
+			"exported": true,
+			"description": "A button drawn as a dashed frame with the label set in a block of the current accent. The label turns black or white to stay readable on whatever the accent is. Pass `href` and it renders a link.",
+			"examples": [
+				"<ButtonMachine onclick={() => console.log('run')}>Run</ButtonMachine>",
+				"<ButtonMachine href=\"/docs\">Docs</ButtonMachine>"
+			],
+			"props": [
+				{
+					"name": "href",
+					"type": "string",
+					"optional": true,
+					"description": "Makes it a link: an `<a>` with this address instead of a `<button>`."
+				},
+				{
+					"name": "type",
+					"type": "'button' | 'submit' | 'reset'",
+					"optional": true,
+					"default": "'button'",
+					"description": "The `type` of the `<button>`. Not used when `href` is set. Default 'button'."
+				},
+				{
+					"name": "disabled",
+					"type": "boolean",
+					"optional": true,
+					"default": "false",
+					"description": "Disables the `<button>`. Not used when `href` is set. Default false."
+				},
+				{
+					"name": "onclick",
+					"type": "(event: MouseEvent) => void",
+					"optional": true,
+					"description": "Called when the button or link is clicked.",
+					"refs": []
+				},
+				{
+					"name": "class",
+					"type": "string",
+					"optional": true,
+					"default": "''",
+					"description": "Extra classes on the outer element."
+				},
+				{
+					"name": "children",
+					"type": "Snippet",
+					"optional": true,
+					"description": "The label.",
+					"snippet": true
+				}
+			],
+			"slots": [
+				{
+					"name": "default",
+					"props": "Record<string, never>"
+				}
+			],
+			"moduleTypes": [],
+			"uses": [],
+			"classes": [
+				"button-machine",
+				"button-machine-inside"
+			],
+			"tokens": [],
+			"motion": {
+				"animatedProp": false,
+				"reveal": false,
+				"reducedMotion": false
+			},
+			"hasChildren": true,
+			"renames": {
+				"class": "className"
+			},
+			"hasPreview": true
+		},
+		{
+			"name": "ButtonMachineOutline",
+			"displayName": "ButtonMachineOutline",
+			"slug": "button-machine-outline",
+			"family": "frame",
+			"file": "src/lib/components/frame/ButtonMachineOutline.svelte",
+			"exported": true,
+			"description": "The quiet cousin of `ButtonMachine`: the same dashed frame with no block behind the label. On hover the frame and the label take the current accent. Pass `href` and it renders a link.",
+			"examples": [
+				"<ButtonMachineOutline onclick={() => console.log('open')}>Open</ButtonMachineOutline>",
+				"<ButtonMachineOutline href=\"/docs/examples\">Examples</ButtonMachineOutline>"
+			],
+			"props": [
+				{
+					"name": "href",
+					"type": "string",
+					"optional": true,
+					"description": "Makes it a link: an `<a>` with this address instead of a `<button>`."
+				},
+				{
+					"name": "type",
+					"type": "'button' | 'submit' | 'reset'",
+					"optional": true,
+					"default": "'button'",
+					"description": "The `type` of the `<button>`. Not used when `href` is set. Default 'button'."
+				},
+				{
+					"name": "disabled",
+					"type": "boolean",
+					"optional": true,
+					"default": "false",
+					"description": "Disables the `<button>`. Not used when `href` is set. Default false."
+				},
+				{
+					"name": "onclick",
+					"type": "(event: MouseEvent) => void",
+					"optional": true,
+					"description": "Called when the button or link is clicked.",
+					"refs": []
+				},
+				{
+					"name": "class",
+					"type": "string",
+					"optional": true,
+					"default": "''",
+					"description": "Extra classes on the outer element."
+				},
+				{
+					"name": "children",
+					"type": "Snippet",
+					"optional": true,
+					"description": "The label.",
+					"snippet": true
+				}
+			],
+			"slots": [
+				{
+					"name": "default",
+					"props": "Record<string, never>"
+				}
+			],
+			"moduleTypes": [],
+			"uses": [],
+			"classes": [
+				"button-machine",
+				"button-machine-label"
+			],
+			"tokens": [],
+			"motion": {
+				"animatedProp": false,
+				"reveal": false,
+				"reducedMotion": false
+			},
+			"hasChildren": true,
+			"renames": {
+				"class": "className"
+			},
 			"hasPreview": true
 		},
 		{
@@ -4681,7 +4838,7 @@
 			"exported": true,
 			"description": "Horizontal track that spans the frame. Use for graphs that represent a range (meter, stack, bullet, rank) — pair with GraphTick so ticks flex edge to edge. Packed graphs (spark, bars, cells, uptime) should not use tracks.",
 			"examples": [
-				"<GraphTrack>\n  {#each glyphs as glyph}\n    <GraphTick>{glyph}</GraphTick>\n  {/each}\n</GraphTrack>"
+				"<GraphTrack>\n  <GraphTick>█</GraphTick>\n  <GraphTick>█</GraphTick>\n  <GraphTick>░</GraphTick>\n  <GraphTick>░</GraphTick>\n</GraphTrack>"
 			],
 			"props": [
 				{
@@ -4760,13 +4917,6 @@
 					"description": "Ceiling of the intensity scale; defaults to the highest count."
 				},
 				{
-					"name": "legend",
-					"type": "boolean",
-					"optional": true,
-					"default": "true",
-					"description": "Show the intensity legend below the grid."
-				},
-				{
 					"name": "caption",
 					"type": "string | false",
 					"optional": true,
@@ -4829,13 +4979,13 @@
 				"dcell",
 				"fs-box",
 				"fs-gap-sm",
+				"fs-pr-xs",
 				"fs-row",
 				"fs-text-muted",
 				"fs-wfull",
 				"fs-xevenly",
 				"fs-yevenly",
-				"ghost",
-				"pad-right-2xs"
+				"ghost"
 			],
 			"tokens": [
 				"--border",
@@ -5131,7 +5281,7 @@
 					"name": "palette",
 					"type": "GraphPalette",
 					"optional": true,
-					"description": "How many accent colours the graph uses: `mono` one, `duo` two, `multi` three.",
+					"description": "How many accent colours the graph uses: `mono` one, `duo` two, `multi` three. Here it only colours `today`, and only when `today` is not also in `marks` (a marked day is always the accent).",
 					"values": [
 						"'mono'",
 						"'duo'",
@@ -5446,17 +5596,6 @@
 					"type": "string",
 					"optional": true,
 					"description": "Optional text displayed beneath the remaining time."
-				},
-				{
-					"name": "palette",
-					"type": "GraphPalette",
-					"optional": true,
-					"description": "How many accent colours the graph uses: `mono` one, `duo` two, `multi` three.",
-					"values": [
-						"'mono'",
-						"'duo'",
-						"'multi'"
-					]
 				},
 				{
 					"name": "corner",
@@ -6511,17 +6650,6 @@
 					"description": "Characters that draw the graph: a preset name (`shade`, `ascii`, `hash`, `bar`) or your own array, lightest to heaviest."
 				},
 				{
-					"name": "palette",
-					"type": "GraphPalette",
-					"optional": true,
-					"description": "How many accent colours the graph uses: `mono` one, `duo` two, `multi` three.",
-					"values": [
-						"'mono'",
-						"'duo'",
-						"'multi'"
-					]
-				},
-				{
 					"name": "corner",
 					"type": "string",
 					"optional": true,
@@ -6617,7 +6745,7 @@
 					"type": "number",
 					"optional": true,
 					"default": "1",
-					"description": "Fraction (0–1) of the points revealed so far, for drawing the plot in live. Default 1."
+					"description": "Fraction (0–1) of the points revealed so far, for drawing the plot in live: `0.5` draws the first half. Default 1; values above 1 are treated as 1."
 				},
 				{
 					"name": "glyphs",
@@ -6859,17 +6987,6 @@
 					"type": "Glyphs",
 					"optional": true,
 					"description": "Characters that draw the graph: a preset name (`shade`, `ascii`, `hash`, `bar`) or your own array, lightest to heaviest."
-				},
-				{
-					"name": "palette",
-					"type": "GraphPalette",
-					"optional": true,
-					"description": "How many accent colours the graph uses: `mono` one, `duo` two, `multi` three.",
-					"values": [
-						"'mono'",
-						"'duo'",
-						"'multi'"
-					]
 				},
 				{
 					"name": "corner",
@@ -7336,7 +7453,8 @@
 			"exported": true,
 			"description": "One or more stacked tracks showing how each row's segments add up, with a shared glyph legend.",
 			"examples": [
-				"<GraphStack\n  title=\"BUNDLE\"\n  palette=\"multi\"\n  rows={[\n    {\n      label: 'marketing',\n      segments: [\n        { label: 'js', value: 48 },\n        { label: 'css', value: 22 },\n        { label: 'images', value: 30 }\n      ]\n    },\n    {\n      label: 'docs',\n      segments: [\n        { label: 'js', value: 28 },\n        { label: 'css', value: 18 },\n        { label: 'images', value: 54 }\n      ]\n    }\n  ]}\n/>"
+				"<GraphStack\n  title=\"BUNDLE\"\n  palette=\"multi\"\n  rows={[\n    {\n      label: 'marketing',\n      segments: [\n        { label: 'js', value: 48 },\n        { label: 'css', value: 22 },\n        { label: 'images', value: 30 }\n      ]\n    },\n    {\n      label: 'docs',\n      segments: [\n        { label: 'js', value: 28 },\n        { label: 'css', value: 18 },\n        { label: 'images', value: 54 }\n      ]\n    }\n  ]}\n/>",
+				"<GraphStack\n  title=\"BUNDLE\"\n  palette=\"mono\"\n  accent=\"css\"\n  rows={[\n    {\n      label: 'marketing',\n      segments: [\n        { label: 'js', value: 48 },\n        { label: 'css', value: 22 },\n        { label: 'images', value: 30 }\n      ]\n    }\n  ]}\n/>"
 			],
 			"props": [
 				{
@@ -7356,7 +7474,7 @@
 					"name": "accent",
 					"type": "string",
 					"optional": true,
-					"description": "Segment label to treat as the highlighted one (the others dim in mono palettes)."
+					"description": "Segment label to treat as the highlighted one. Only acts when `palette` is `mono`: the others dim. In `duo` and `multi` every segment is drawn in colour and `accent` is ignored."
 				},
 				{
 					"name": "ticks",
@@ -7763,17 +7881,6 @@
 					"type": "string",
 					"optional": true,
 					"description": "Muted line drawn under the value."
-				},
-				{
-					"name": "palette",
-					"type": "GraphPalette",
-					"optional": true,
-					"description": "How many accent colours the graph uses: `mono` one, `duo` two, `multi` three.",
-					"values": [
-						"'mono'",
-						"'duo'",
-						"'multi'"
-					]
 				},
 				{
 					"name": "corner",
@@ -8430,7 +8537,7 @@
 		},
 		"FlowItemProps": {
 			"values": [],
-			"type": "{\n\t\tnode: NodeData;\n\t\tselected: boolean;\n\t\ttargeted: boolean;\n\t\tdragging: boolean;\n\t\trunState: 'active' | 'done' | 'idle';\n\t\tonMeasure: (id: string, height: number) => void;\n\t\tonNodePointerDown: (id: string, event: PointerEvent) => void;\n\t\tonHandlePointerDown: (id: string, event: PointerEvent, port?: PortId) => void;\n\t\tonOpen: (id: string) => void;\n\t\tediting: boolean;\n\t}"
+			"type": "{\n\t\tnode: NodeData;\n\t\tselected: boolean;\n\t\ttargeted: boolean;\n\t\tdragging: boolean;\n\t\trunState: 'active' | 'done' | 'idle' | 'failed' | 'waiting';\n\t\t/** Words for the status line, from the run: the path a branch took. */\n\t\trunLabel?: string;\n\t\tonMeasure: (id: string, height: number) => void;\n\t\tonNodePointerDown: (id: string, event: PointerEvent) => void;\n\t\tonHandlePointerDown: (id: string, event: PointerEvent, port?: PortId) => void;\n\t\tonOpen: (id: string) => void;\n\t\tediting: boolean;\n\t}"
 		},
 		"NodePanelBuildProps": {
 			"values": [],
@@ -8448,21 +8555,22 @@
 			"values": [],
 			"type": "{\n\t\tnode: FlowNodeData;\n\t}"
 		},
+		"NodePanelPropsProps": {
+			"values": [],
+			"type": "{\n\t\tnode: FlowNodeData;\n\t}"
+		},
+		"When": {
+			"values": [],
+			"type": "{ key: string; value: string }",
+			"doc": "A field shows only while another rule has a given value: the schema while the check is \"Schema valid\"."
+		},
 		"RuleField": {
 			"values": [],
-			"type": "| {\n\t\t\t\tkey: string;\n\t\t\t\tlabel: string;\n\t\t\t\ttype: 'select';\n\t\t\t\toptions: readonly string[];\n\t\t  }\n\t\t| {\n\t\t\t\tkey: string;\n\t\t\t\tlabel: string;\n\t\t\t\ttype: 'text' | 'time' | 'number';\n\t\t\t\tplaceholder?: string;\n\t\t  }\n\t\t| {\n\t\t\t\tkey: string;\n\t\t\t\tlabel: string;\n\t\t\t\ttype: 'automation';\n\t\t  }"
-		},
-		"Condition": {
-			"values": [],
-			"type": "{\n\t\tfield: string;\n\t\toperator: string;\n\t\tvalue: string;\n\t}"
+			"type": "(\n\t\t| { key: string; label: string; type: 'select'; options: readonly string[]; /** Shown words for stored values. */ labels?: Record<string, string> }\n\t\t| { key: string; label: string; type: 'text' | 'time' | 'number'; placeholder?: string }\n\t\t| { key: string; label: string; type: 'json'; placeholder?: string }\n\t\t| { key: string; label: string; type: 'automation' }\n\t) & { when?: When }"
 		},
 		"NodePanelRulesProps": {
 			"values": [],
 			"type": "{\n\t\tnode: FlowNodeData;\n\t\tonChange: (rules: Record<string, string>) => void;\n\t}"
-		},
-		"NodePanelStatusProps": {
-			"values": [],
-			"type": "{\n\t\tnode: FlowNodeData;\n\t}"
 		},
 		"NodePanelProps": {
 			"values": [],
@@ -8475,14 +8583,9 @@
 		"ExportFormat": {
 			"values": [
 				"'json'",
-				"'csv'",
 				"'markdown'"
 			],
-			"type": "'json' | 'csv' | 'markdown'"
-		},
-		"ExportOptions": {
-			"values": [],
-			"type": "{\n\tincludeRules: boolean;\n\tincludeLogs: boolean;\n}"
+			"type": "'json' | 'markdown'"
 		},
 		"McpConnectProps": {
 			"values": [],
@@ -8701,29 +8804,9 @@
 			"values": [],
 			"type": "{\n\t\twidth: number;\n\t\theight: number;\n\t\tclassName?: string;\n\t\tchildren: Snippet;\n\t}"
 		},
-		"LottiePlayer": {
-			"values": [],
-			"type": "{\n\t\tloadAnimation: (options: {\n\t\t\tcontainer: HTMLElement;\n\t\t\trenderer: 'svg';\n\t\t\tloop: boolean;\n\t\t\tautoplay: boolean;\n\t\t\tanimationData: unknown;\n\t\t\trendererSettings: { preserveAspectRatio: string };\n\t\t}) => {\n\t\t\tdestroy: () => void;\n\t\t\taddEventListener?: (event: string, cb: () => void) => void;\n\t\t};\n\t}"
-		},
 		"AssetPosterProps": {
 			"values": [],
 			"type": "{\n\t\tsrc: string;\n\t\talt?: string;\n\t\tfit?: AssetFit;\n\t\tvisible?: boolean;\n\t\tclassName?: string;\n\t}"
-		},
-		"AssetRiveCanvasProps": {
-			"values": [],
-			"type": "{\n\t\tbuffer: ArrayBuffer;\n\t\tfit?: AssetFit;\n\t\tartboard?: string;\n\t\tanimations?: string | string[];\n\t\tstateMachines?: string | string[];\n\t\tautoplay?: boolean;\n\t\tactive?: boolean;\n\t\tclassName?: string;\n\t\tonLoad?: () => void;\n\t}"
-		},
-		"RiveModule": {
-			"values": [],
-			"type": "typeof import('@rive-app/canvas')"
-		},
-		"Release": {
-			"values": [],
-			"type": "() => void"
-		},
-		"Mount": {
-			"values": [],
-			"type": "(release: Release) => void"
 		},
 		"AssetSvgComponent": {
 			"values": [],
@@ -8758,17 +8841,9 @@
 			"values": [],
 			"type": "AssetBaseProps & {\n\ttype: 'video';\n\tsrc: string;\n\tposter: string;\n\tstillPoster?: string;\n\talt?: string;\n\tmobileSrc?: string;\n}"
 		},
-		"AssetRiveProps": {
-			"values": [],
-			"type": "AssetBaseProps & {\n\ttype: 'rive';\n\tsrc: string;\n\tposter: string;\n\talt: string;\n\tartboard?: string;\n\tanimations?: string | string[];\n\tstateMachines?: string | string[];\n\tautoplay?: boolean;\n\tpriority?: boolean;\n}"
-		},
-		"AssetLottieProps": {
-			"values": [],
-			"type": "AssetBaseProps & {\n\ttype: 'lottie';\n\tsrc: string;\n\tposter: string;\n\talt: string;\n\tloop?: boolean;\n\tautoplay?: boolean;\n}"
-		},
 		"AssetProps": {
 			"values": [],
-			"type": "AssetImageProps | AssetVideoProps | AssetRiveProps | AssetLottieProps"
+			"type": "AssetImageProps | AssetVideoProps"
 		},
 		"ButtonVariant": {
 			"values": [

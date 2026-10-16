@@ -41,6 +41,8 @@
 
 /* fl-export-preview-pre */
 .fl-export-preview-pre {
+	/* the markup has whitespace between the line elements; in a <pre> that whitespace would draw as gaps */
+	white-space: normal;
 	overflow: auto;
 	border-radius: 12px;
 	background-color: color-mix(in oklab, #000 30%, transparent);

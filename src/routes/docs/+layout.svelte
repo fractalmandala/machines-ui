@@ -12,6 +12,7 @@
 
 	const GUIDES = [
 		{ name: 'Examples', slug: 'examples', href: '/docs/examples' },
+		{ name: 'Engine and file format', slug: 'engine', href: '/docs/engine' },
 		{ name: 'Markdown (mdsvex)', slug: 'mdsvex', href: '/mdsvex' }
 	];
 

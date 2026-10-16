@@ -77,6 +77,41 @@ export function statusText(status: Status, label: string | false | undefined): s
 
 // ── Ports: where a connection leaves or enters ────────────────────────────────
 
+/** Every kind of step. The order is the order the Actions panel offers them in. */
+export const STEP_KINDS = [
+	'trigger',
+	'send-email',
+	'update-record',
+	'send-webhook',
+	'wait-until',
+	'time-delay',
+	'branch',
+	'run-workflow',
+	'agent',
+	'transform',
+	'read',
+	'write',
+	'review'
+] as const;
+export type StepKind = (typeof STEP_KINDS)[number];
+
+/** What each kind of step is called, in the Actions panel, the exports and the logs. */
+export const STEP_LABELS: Record<StepKind, string> = {
+	trigger: 'Trigger Action',
+	'send-email': 'Send Email',
+	'update-record': 'Update Record',
+	'send-webhook': 'Send Webhook',
+	'wait-until': 'Wait Until',
+	'time-delay': 'Time Delay',
+	branch: 'True/False Branch',
+	'run-workflow': 'Run Workflow',
+	agent: 'Run Agent',
+	transform: 'Transform',
+	read: 'Read Source',
+	write: 'Write Output',
+	review: 'Review'
+};
+
 /** Which output a connection leaves from: `out` is the usual one, a branch has `true` and `false`. */
 export const PORT_IDS = ['out', 'true', 'false'] as const;
 export type PortId = (typeof PORT_IDS)[number];
@@ -113,8 +148,8 @@ export const BADGES = ['IF', 'type', 'interface', 'schema', 'config'] as const;
  * The accent palette: the one list of colours a node, a wire or the site can be painted with.
  * The ten site colours come first, then the flow editor's eight, one per kind of step (their ids
  * are the step kinds). Every picker, swatch, default and stylesheet reads this list; nothing else
- * in the package may spell one of these colours. `scripts/lint-palette.mjs` enforces that, and
- * `scripts/build-palette.mjs` writes the stylesheet form (`styles/palette.css`) from it.
+ * in the package may spell one of these colours. `scripts/lint-palette.ts` enforces that, and
+ * `scripts/build-palette.ts` writes the stylesheet form (`styles/palette.css`) from it.
  */
 export const ACCENTS = [
 	{ id: 'orange', name: 'orange', value: '#FF3E00' },
@@ -129,12 +164,12 @@ export const ACCENTS = [
 	{ id: 'red', name: 'red', value: '#c92a2a' },
 	{ id: 'trigger', name: 'trigger', value: '#9875ff' },
 	{ id: 'send-email', name: 'send email', value: '#75caff' },
-	{ id: 'update-subscription', name: 'update subscription', value: '#75ff77' },
+	{ id: 'update-record', name: 'update record', value: '#75ff77' },
 	{ id: 'send-webhook', name: 'send webhook', value: '#ffb575' },
 	{ id: 'wait-until', name: 'wait until', value: '#ff75e3' },
 	{ id: 'time-delay', name: 'time delay', value: '#ff7575' },
 	{ id: 'branch', name: 'branch', value: '#75ffd3' },
-	{ id: 'enroll', name: 'enroll', value: '#75aaff' }
+	{ id: 'run-workflow', name: 'run workflow', value: '#75aaff' }
 ] as const;
 
 export type AccentId = (typeof ACCENTS)[number]['id'];

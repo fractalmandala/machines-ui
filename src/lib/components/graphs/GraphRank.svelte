@@ -18,7 +18,6 @@ Ranked rows: each item gets a label, a glyph bar whose length follows its value 
 
 <script module lang="ts">
 	import type { Glyphs } from '../frame/glyphs.js';
-	import type { GraphPalette } from '../frame/tone.js';
 
 	/** One ranked row: label, a full-width glyph bar, and the value. */
 	export interface RankItem {
@@ -38,8 +37,6 @@ Ranked rows: each item gets a label, a glyph bar whose length follows its value 
 		ticks?: number;
 		/** Characters that draw the graph: a preset name (`shade`, `ascii`, `hash`, `bar`) or your own array, lightest to heaviest. */
 		glyphs?: Glyphs;
-		/** How many accent colours the graph uses: `mono` one, `duo` two, `multi` three. */
-		palette?: GraphPalette;
 		/** Character drawn at each corner of the frame. */
 		corner?: string;
 		class?: string;
@@ -60,7 +57,6 @@ Ranked rows: each item gets a label, a glyph bar whose length follows its value 
 		max,
 		ticks = 20,
 		glyphs,
-		palette,
 		corner,
 		class: className = ''
 	}: GraphRankProps = $props();

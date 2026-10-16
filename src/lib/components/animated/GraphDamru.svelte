@@ -115,6 +115,8 @@ A damru (hourglass drum) drawn in ASCII, pulsing in place through the eight beat
 		return { cells };
 	})();
 
+	// the starting frame is read once; `moving` follows `animated` after that
+	// svelte-ignore state_referenced_locally
 	const initialTick = animated ? 0 : beatTicks * 4;
 
 	// svelte-ignore state_referenced_locally

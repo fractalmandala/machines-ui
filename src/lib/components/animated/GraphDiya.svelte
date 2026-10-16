@@ -168,6 +168,8 @@ A row of diyas that light one by one and then breathe, drawn as character-art ca
 		return { ch: '█', cls: 'hot' };
 	}
 
+	// the starting frame is read once; `moving` follows `animated` after that
+	// svelte-ignore state_referenced_locally
 	const initialTick = animated ? 0 : sequenceTicks;
 
 	// svelte-ignore state_referenced_locally

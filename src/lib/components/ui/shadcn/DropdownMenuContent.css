@@ -16,6 +16,8 @@
 	outline-style: none;
 	-webkit-backdrop-filter: blur(12px);
 	backdrop-filter: blur(12px);
+	/* only opacity may transition: left and top are the computed position, and must not glide there from 0,0 */
+	transition-property: opacity;
 	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
 	color: #fff;
 }

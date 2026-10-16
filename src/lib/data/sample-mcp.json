@@ -1,0 +1,183 @@
+{
+	"jev": {
+		"mcpServers": {
+			"jev-router": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"<your-mcp-server>",
+					"--workflow",
+					"jev-router"
+				],
+				"env": {
+					"LUNA_API_KEY": "<your Luna key>",
+					"JEV_API_KEY": "<your Jev key>",
+					"SOL_API_KEY": "<your Sol key>"
+				}
+			}
+		}
+	},
+	"json": {
+		"mcpServers": {
+			"json-to-markdown": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"<your-mcp-server>",
+					"--workflow",
+					"json-to-markdown"
+				],
+				"env": {
+					"LUNA_API_KEY": "<your Luna key>",
+					"FILES_DIR": "<folder path>"
+				}
+			}
+		}
+	},
+	"wiki": {
+		"mcpServers": {
+			"llm-wiki": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"<your-mcp-server>",
+					"--workflow",
+					"llm-wiki"
+				],
+				"env": {
+					"LUNA_API_KEY": "<your Luna key>",
+					"WEBHOOK_URL": "<url to call>",
+					"FILES_DIR": "<folder path>"
+				}
+			}
+		}
+	},
+	"pr": {
+		"mcpServers": {
+			"pull-request-review": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"<your-mcp-server>",
+					"--workflow",
+					"pull-request-review"
+				],
+				"env": {
+					"SOL_API_KEY": "<your Sol key>",
+					"WEBHOOK_URL": "<url to call>",
+					"FILES_DIR": "<folder path>"
+				}
+			}
+		}
+	},
+	"support": {
+		"mcpServers": {
+			"support-triage": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"<your-mcp-server>",
+					"--workflow",
+					"support-triage"
+				],
+				"env": {
+					"JEV_API_KEY": "<your Jev key>",
+					"LUNA_API_KEY": "<your Luna key>",
+					"MAIL_API_KEY": "<your mail key>",
+					"RECORDS_API_KEY": "<your records key>",
+					"WEBHOOK_URL": "<url to call>"
+				}
+			}
+		}
+	},
+	"meeting": {
+		"mcpServers": {
+			"meeting-notes": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"<your-mcp-server>",
+					"--workflow",
+					"meeting-notes"
+				],
+				"env": {
+					"LUNA_API_KEY": "<your Luna key>",
+					"MAIL_API_KEY": "<your mail key>",
+					"FILES_DIR": "<folder path>"
+				}
+			}
+		}
+	},
+	"report": {
+		"mcpServers": {
+			"weekly-report": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"<your-mcp-server>",
+					"--workflow",
+					"weekly-report"
+				],
+				"env": {
+					"LUNA_API_KEY": "<your Luna key>",
+					"MAIL_API_KEY": "<your mail key>",
+					"FILES_DIR": "<folder path>",
+					"WORKFLOWS_DIR": "<folder path>"
+				}
+			}
+		}
+	},
+	"release": {
+		"mcpServers": {
+			"release-notes": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"<your-mcp-server>",
+					"--workflow",
+					"release-notes"
+				],
+				"env": {
+					"LUNA_API_KEY": "<your Luna key>",
+					"FILES_DIR": "<folder path>"
+				}
+			}
+		}
+	},
+	"translate": {
+		"mcpServers": {
+			"translate-a-post": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"<your-mcp-server>",
+					"--workflow",
+					"translate-a-post"
+				],
+				"env": {
+					"LUNA_API_KEY": "<your Luna key>",
+					"FILES_DIR": "<folder path>"
+				}
+			}
+		}
+	},
+	"incident": {
+		"mcpServers": {
+			"incident-response": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"<your-mcp-server>",
+					"--workflow",
+					"incident-response"
+				],
+				"env": {
+					"SOL_API_KEY": "<your Sol key>",
+					"WEBHOOK_URL": "<url to call>",
+					"FILES_DIR": "<folder path>",
+					"WORKFLOWS_DIR": "<folder path>"
+				}
+			}
+		}
+	}
+}

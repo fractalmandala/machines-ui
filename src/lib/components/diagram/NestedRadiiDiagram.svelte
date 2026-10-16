@@ -131,7 +131,8 @@ An interactive ASCII diagram of nested border radii, showing inner = outer − i
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.35;
-		color: var(--border, oklch(0.6 0 0 / 0.5));
+		/* labels live in this art, so it takes readable ink — --border is for rules only */
+		color: var(--text-muted, oklch(0.6 0 0));
 		white-space: pre;
 	}
 

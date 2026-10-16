@@ -32,3 +32,15 @@ The content region inside a graph frame, with optional compact spacing for dense
 <div class="body {className}" class:tight>
 	{@render children?.()}
 </div>
+
+<style>
+	/* Clears the [ TITLE ] caption on the top edge and the four corner glyphs.
+	   Only when the Frame doesn't pad itself, so pad="sm|md|lg" never doubles up. */
+	:global(.graph[data-pad='none']) > .body {
+		padding: 1.25em 1.5ch 1em;
+	}
+
+	:global(.graph[data-pad='none']) > .body.tight {
+		padding: 1em 1ch 0.75em;
+	}
+</style>

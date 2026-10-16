@@ -131,3 +131,39 @@
     opacity: 1;
   }
 }
+
+/* the two levels the run adds */
+.fl-node-panel-logs-level-dot-4 {
+	background-color: var(--fl-accent-red);
+}
+
+.fl-node-panel-logs-level-dot-5 {
+	background-color: color-mix(in oklab, #fff 20%, transparent);
+}
+
+.fl-node-panel-logs-scroll {
+	max-height: 22rem;
+	overflow-y: auto;
+}
+
+.fl-node-panel-logs-step {
+	margin-right: 6px;
+	font-weight: 550;
+	color: #fff;
+}
+
+.fl-node-panel-logs-data summary {
+	cursor: pointer;
+	font-size: 11px;
+	color: color-mix(in oklab, #fff 45%, transparent);
+}
+
+.fl-node-panel-logs-data pre {
+	margin: 4px 0 0;
+	max-height: 10rem;
+	overflow: auto;
+	font-family: var(--font-mono, ui-monospace, monospace);
+	font-size: 11px;
+	white-space: pre-wrap;
+	color: color-mix(in oklab, #fff 70%, transparent);
+}

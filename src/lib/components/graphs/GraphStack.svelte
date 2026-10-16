@@ -27,6 +27,25 @@ One or more stacked tracks showing how each row's segments add up, with a shared
   ]}
 />
 ```
+
+@example
+```svelte
+<GraphStack
+  title="BUNDLE"
+  palette="mono"
+  accent="css"
+  rows={[
+    {
+      label: 'marketing',
+      segments: [
+        { label: 'js', value: 48 },
+        { label: 'css', value: 22 },
+        { label: 'images', value: 30 }
+      ]
+    }
+  ]}
+/>
+```
 -->
 
 <script module lang="ts">
@@ -50,7 +69,7 @@ One or more stacked tracks showing how each row's segments add up, with a shared
 		title: string;
 		/** Rows to draw top to bottom, each a label and its segments. */
 		rows: StackRow[];
-		/** Segment label to treat as the highlighted one (the others dim in mono palettes). */
+		/** Segment label to treat as the highlighted one. Only acts when `palette` is `mono`: the others dim. In `duo` and `multi` every segment is drawn in colour and `accent` is ignored. */
 		accent?: string;
 		/** Length of each track in ticks. */
 		ticks?: number;

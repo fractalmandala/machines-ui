@@ -4,7 +4,7 @@
 // component refs only — no markup.
 // Keyed by component slug (kebab-case of the export name). Every prop used
 // here is checked against the component's real props by
-// `node scripts/extract-docs.mjs`.
+// `node scripts/extract-docs.ts`.
 
 import type { Component } from 'svelte';
 import { accentOf } from '$lib/core/values.js';
@@ -14,6 +14,8 @@ import FrameRuleDemo from './demos/FrameRuleDemo.svelte';
 import GraphTrackDemo from './demos/GraphTrackDemo.svelte';
 import GraphArrowDemo from './demos/GraphArrowDemo.svelte';
 import FlowNodeDemo from './demos/FlowNodeDemo.svelte';
+import ButtonMachineDemo from './demos/ButtonMachineDemo.svelte';
+import ButtonMachineOutlineDemo from './demos/ButtonMachineOutlineDemo.svelte';
 import {
 	GraphActivity,
 	GraphBars,
@@ -194,6 +196,44 @@ export const previews: Record<string, PreviewEntry[]> = {
 			Comp: FrameRuleDemo,
 			of: 'FrameRule',
 			props: {}
+		}
+	],
+	'button-machine': [
+		{
+			Comp: ButtonMachineDemo,
+			of: 'ButtonMachine',
+			props: {}
+		},
+		{
+			Comp: ButtonMachineDemo,
+			of: 'ButtonMachine',
+			props: { href: '/docs' },
+			code: `<ButtonMachine href="/docs">Button</ButtonMachine>`
+		},
+		{
+			Comp: ButtonMachineDemo,
+			of: 'ButtonMachine',
+			props: { disabled: true },
+			code: `<ButtonMachine disabled>Button</ButtonMachine>`
+		}
+	],
+	'button-machine-outline': [
+		{
+			Comp: ButtonMachineOutlineDemo,
+			of: 'ButtonMachineOutline',
+			props: {}
+		},
+		{
+			Comp: ButtonMachineOutlineDemo,
+			of: 'ButtonMachineOutline',
+			props: { href: '/docs/examples' },
+			code: `<ButtonMachineOutline href="/docs/examples">Button</ButtonMachineOutline>`
+		},
+		{
+			Comp: ButtonMachineOutlineDemo,
+			of: 'ButtonMachineOutline',
+			props: { disabled: true },
+			code: `<ButtonMachineOutline disabled>Button</ButtonMachineOutline>`
 		}
 	],
 	'graph-track': [

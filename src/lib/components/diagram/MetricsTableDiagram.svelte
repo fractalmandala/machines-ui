@@ -117,7 +117,8 @@ An ASCII ledger of cost: one row per tool with its call count and time, and a to
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.4;
-		color: var(--border, oklch(0.6 0 0 / 0.5));
+		/* labels live in this art, so it takes readable ink — --border is for rules only */
+		color: var(--text-muted, oklch(0.6 0 0));
 		white-space: pre;
 	}
 

@@ -23,14 +23,6 @@
 	border-color: #fff;
 }
 
-/* fl-node-panel-look-color */
-.fl-node-panel-look-color {
-	width: 28px;
-	height: 28px;
-	padding: 2px;
-	cursor: pointer;
-}
-
 /* fl-node-panel-look-row: one output port: its id, its side, and a remove button */
 .fl-node-panel-look-row {
 	display: grid;

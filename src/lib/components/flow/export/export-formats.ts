@@ -1,29 +1,15 @@
-import type { Automation, AutomationGraph } from '$lib/data/automations.js';
-import type { RunLog } from '$lib/stores/flow-store.svelte';
-import { ACTIONS } from '../canvas/flow-actions.js';
+import type { Automation } from '$lib/data/automations.js';
+import { exportFlow, exportMarkdown, type FlowGraph, type TestRunLog } from '$lib/engine/index.js';
+import type { RunRecord } from '$lib/engine/index.js';
 
-export type ExportFormat = 'json' | 'csv' | 'markdown';
+export type ExportFormat = 'json' | 'markdown';
 
-export type ExportOptions = {
-	includeRules: boolean;
-	includeLogs: boolean;
-};
-
-export const FORMAT_META: Record<
-	ExportFormat,
-	{ label: string; extension: string; mime: string; description: string }
-> = {
+export const FORMAT_META: Record<ExportFormat, { label: string; extension: string; mime: string; description: string }> = {
 	json: {
-		label: 'Flow JSON',
+		label: 'Workflow JSON',
 		extension: 'json',
 		mime: 'application/json',
-		description: 'Every step and connection. Re-import it or keep it in version control.'
-	},
-	csv: {
-		label: 'Steps report',
-		extension: 'csv',
-		mime: 'text/csv',
-		description: 'One row per step with its type, copy and connections for spreadsheets.'
+		description: 'Every step and connection, with its look. Import it back here, or keep it in version control.'
 	},
 	markdown: {
 		label: 'Markdown brief',
@@ -33,111 +19,35 @@ export const FORMAT_META: Record<
 	}
 };
 
-function ordered(graph: AutomationGraph) {
-	return graph.nodes.toSorted((a, b) => a.y - b.y || a.x - b.x);
-}
-
 function slug(name: string) {
 	return (
 		name
 			.toLowerCase()
 			.replace(/[^\p{L}\p{N}]+/gu, '-')
-			.replace(/^-+|-+$/g, '') || 'automation'
+			.replace(/^-+|-+$/g, '') || 'workflow'
 	);
 }
 
 export function fileName(automation: Automation, format: ExportFormat) {
-	return `${slug(automation.name)}.${FORMAT_META[format].extension}`;
+	return `${slug(automation.name)}.${format === 'json' ? 'flow.json' : 'md'}`;
 }
 
-function csvCell(value: string) {
-	return /[",\n]/.test(value) ? `"${value.replaceAll('"', '""')}"` : value;
+/** The latest run as an export carries it, or null when there is nothing to carry. */
+export function testRunOf(record: RunRecord | null): TestRunLog | null {
+	if (!record?.logs.length) return null;
+
+	return {
+		startedAt: record.startedAt,
+		finishedAt: record.finishedAt,
+		logs: record.logs.map((log) => ({ level: log.level, message: log.message, nodeId: log.nodeId, time: log.t }))
+	};
 }
 
-export function buildExport(
-	format: ExportFormat,
-	automation: Automation,
-	graph: AutomationGraph,
-	logs: RunLog[],
-	options: ExportOptions
-) {
-	const steps = ordered(graph);
-	const titleOf = (id: string) => graph.nodes.find((node) => node.id === id)?.title ?? id;
+/** The text of an export. `testRun` is null when the toggle is off. */
+export function buildExport(format: ExportFormat, automation: Automation, graph: FlowGraph, testRun: TestRunLog | null) {
+	const meta = { id: automation.id, name: automation.name, description: automation.description };
 
-	if (format === 'csv') {
-		const rows = [
-			['step', 'type', 'title', 'description', 'next'],
-			...steps.map((node, index) => [
-				String(index + 1),
-				ACTIONS[node.kind].label,
-				node.title,
-				node.description,
-				graph.edges
-					.filter((edge) => edge.source === node.id)
-					.map(
-						(edge) =>
-							`${edge.port === 'out' ? '' : `${edge.port.toUpperCase()} → `}${titleOf(edge.target)}`
-					)
-					.join(' | ')
-			])
-		];
-		return rows.map((row) => row.map(csvCell).join(',')).join('\n');
-	}
-
-	if (format === 'markdown') {
-		const lines = [
-			`# ${automation.name}`,
-			'',
-			`> ${automation.description}`,
-			'',
-			`**Status:** ${automation.status} · **Steps:** ${steps.length} · **Runs:** ${automation.started}`,
-			'',
-			'## Steps',
-			'',
-			...steps.flatMap((node, index) => {
-				const next = graph.edges.filter((edge) => edge.source === node.id);
-				return [
-					`${index + 1}. **${ACTIONS[node.kind].label}** — ${node.title}`,
-					`   ${node.description}`,
-					...next.map(
-						(edge) =>
-							`   - ${edge.port === 'out' ? 'Then' : `If ${edge.port.toUpperCase()}`} → ${titleOf(edge.target)}`
-					)
-				];
-			})
-		];
-		if (options.includeLogs && logs.length) {
-			lines.push('', '## Latest test run', '', ...logs.slice(-12).map((log) => `- ${log.message}`));
-		}
-		return lines.join('\n');
-	}
-
-	return JSON.stringify(
-		{
-			name: automation.name,
-			description: automation.description,
-			status: automation.status,
-			version: 1,
-			steps: steps.map((node) => ({
-				id: node.id,
-				type: node.kind,
-				title: node.title,
-				description: node.description,
-				...(options.includeRules && node.rules ? { rules: node.rules } : {}),
-				position: { x: node.x, y: node.y }
-			})),
-			connections: graph.edges.map((edge) => ({
-				from: edge.source,
-				to: edge.target,
-				...(edge.port === 'out' ? {} : { when: edge.port })
-			})),
-			...(options.includeLogs && logs.length
-				? {
-						testRun: logs.slice(-20).map((log) => ({ level: log.level, message: log.message }))
-					}
-				: {})
-		},
-		null,
-		2
-	);
+	return format === 'json'
+		? JSON.stringify(exportFlow(graph, meta, { testRun }), null, 2)
+		: exportMarkdown(graph, meta, { testRun });
 }

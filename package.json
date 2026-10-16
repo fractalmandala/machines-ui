@@ -1,6 +1,6 @@
 {
 	"name": "@fractaldesign/machines-ui",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "Svelte 5 components drawn with characters: graphs, animated terminals, diagrams, and a node-and-edge workflow builder.",
 	"license": "MIT",
 	"repository": {
@@ -19,28 +19,32 @@
 		"build": "vite build && pnpm run prepack",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
-		"prepack": "node scripts/build-icons.mjs && svelte-kit sync && svelte-package && node scripts/build-fs.mjs && node scripts/lint-fs.mjs && node scripts/build-palette.mjs && node scripts/lint-palette.mjs && node scripts/prefix-fs.mjs && node scripts/build-styles.mjs && publint",
+		"prepack": "node scripts/build-icons.ts && svelte-kit sync && svelte-package && node scripts/build-fs.ts && node scripts/lint-fs.ts && node scripts/build-palette.ts && node scripts/lint-palette.ts && node scripts/prefix-fs.ts && node scripts/build-styles.ts && node scripts/engine-check.ts && node scripts/engine-run-check.ts && publint",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --check . && eslint .",
+		"lint": "prettier --check . && eslint --flag unstable_native_nodejs_ts_config .",
 		"format": "prettier --write .",
-		"docs:extract": "node scripts/extract-docs.mjs",
-		"docs:check": "node scripts/extract-docs.mjs --check",
-		"docs:shots": "node scripts/docs-shots.mjs",
-		"docs:shots:update": "node scripts/docs-shots.mjs --update",
-		"predev": "node scripts/build-icons.mjs && node scripts/build-fs.mjs",
-		"build:fs": "node scripts/build-fs.mjs",
-		"lint:fs": "node scripts/lint-fs.mjs && node scripts/prefix-fs.mjs",
+		"docs:extract": "node scripts/extract-docs.ts",
+		"docs:check": "node scripts/extract-docs.ts --check",
+		"docs:shots": "node scripts/docs-shots.ts",
+		"docs:shots:update": "node scripts/docs-shots.ts --update",
+		"predev": "node scripts/build-icons.ts && node scripts/build-fs.ts",
+		"build:fs": "node scripts/build-fs.ts",
+		"lint:fs": "node scripts/lint-fs.ts && node scripts/prefix-fs.ts",
 		"docs:api": "svelte-package && sveld",
 		"docs:api:check": "svelte-package && sveld --check=src/docs/data/COMPONENT_API.json",
-		"icons:build": "node scripts/build-icons.mjs",
-		"icons:check": "node scripts/build-icons.mjs --check",
-		"palette:build": "node scripts/build-palette.mjs",
-		"palette:check": "node scripts/lint-palette.mjs",
-		"route:check": "node scripts/route-check.mjs",
-		"docs:gen": "node scripts/docs-gen.mjs",
-		"docs:gen:strict": "node scripts/docs-gen.mjs --strict",
-		"docs:check:file": "node scripts/docs-check-file.mjs"
+		"engine:check": "node scripts/engine-check.ts",
+		"engine:run-check": "node scripts/engine-run-check.ts",
+		"e2e:creator": "node scripts/e2e-creator.ts",
+		"engine:snapshots": "node scripts/engine-check.ts --update",
+		"icons:build": "node scripts/build-icons.ts",
+		"icons:check": "node scripts/build-icons.ts --check",
+		"palette:build": "node scripts/build-palette.ts",
+		"palette:check": "node scripts/lint-palette.ts",
+		"route:check": "node scripts/route-check.ts",
+		"docs:gen": "node scripts/docs-gen.ts",
+		"docs:gen:strict": "node scripts/docs-gen.ts --strict",
+		"docs:check:file": "node scripts/docs-check-file.ts"
 	},
 	"files": [
 		"dist",
@@ -59,7 +63,15 @@
 			"types": "./dist/index.d.ts",
 			"svelte": "./dist/index.js"
 		},
-		"./style.css": "./dist/style.css"
+		"./style.css": "./dist/style.css",
+		"./engine": {
+			"types": "./dist/engine/index.d.ts",
+			"default": "./dist/engine/index.js"
+		},
+		"./engine/node": {
+			"types": "./dist/engine/node.d.ts",
+			"default": "./dist/engine/node.js"
+		}
 	},
 	"dependencies": {
 		"clsx": "^2.1.1",

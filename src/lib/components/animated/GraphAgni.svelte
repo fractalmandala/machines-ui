@@ -653,4 +653,31 @@ An ASCII fire that burns upward from a pit, with rising sparks and live sliders 
 		border-radius: 999px;
 		background: var(--graph-accent, oklch(0.78 0.17 155));
 	}
+
+	/* The play / pause control: a bordered character button, self-contained so the
+	   component looks the same on any host page. */
+	.ghost {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		height: 36px;
+		min-width: 96px;
+		padding: 0 1rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-size: 0.72rem;
+		font-family: var(--font-sans);
+		font-weight: 600;
+		text-decoration: none;
+		background: transparent;
+		color: var(--text-primary);
+		border: 1px solid var(--border);
+		transition:
+			background 90ms,
+			border-color 90ms;
+	}
+
+	.ghost:hover {
+		border-color: var(--text-primary);
+	}
 </style>

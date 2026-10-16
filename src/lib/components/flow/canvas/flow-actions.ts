@@ -1,6 +1,6 @@
 import './flow-actions.css';
 import '$lib/styles/palette.css';
-import { accentOf } from '$lib/core/values.js';
+import { STEP_LABELS, accentOf } from '$lib/core/values.js';
 import type { AssetSvgComponent } from '$lib/components/ui/asset/asset-types.js';
 import type { ActionKind } from '$lib/stores/flow-store.svelte';
 import BoltIcon from '$lib/icons/flow/bolt.svelte';
@@ -30,7 +30,7 @@ export type ActionDefinition = {
 export const ACTIONS: Record<ActionKind, ActionDefinition> = {
 	trigger: {
 		kind: 'trigger',
-		label: 'Trigger Action',
+		label: STEP_LABELS['trigger'],
 		accent: accentOf('trigger'),
 		theme: 'fl-action-theme-trigger',
 		Icon: BoltIcon,
@@ -39,25 +39,25 @@ export const ACTIONS: Record<ActionKind, ActionDefinition> = {
 	},
 	'send-email': {
 		kind: 'send-email',
-		label: 'Send Email',
+		label: STEP_LABELS['send-email'],
 		accent: accentOf('send-email'),
 		theme: 'fl-action-theme-send-email',
 		Icon: MailIcon,
 		title: 'Send a summary',
 		description: 'Emails the result to the people who need it.'
 	},
-	'update-subscription': {
-		kind: 'update-subscription',
-		label: 'Update Record',
-		accent: accentOf('update-subscription'),
-		theme: 'fl-action-theme-update-subscription',
+	'update-record': {
+		kind: 'update-record',
+		label: STEP_LABELS['update-record'],
+		accent: accentOf('update-record'),
+		theme: 'fl-action-theme-update-record',
 		Icon: RotateIcon,
 		title: 'Tag the record',
 		description: 'Adds a tag or changes a field on the record.'
 	},
 	'send-webhook': {
 		kind: 'send-webhook',
-		label: 'Send Webhook',
+		label: STEP_LABELS['send-webhook'],
 		accent: accentOf('send-webhook'),
 		theme: 'fl-action-theme-send-webhook',
 		Icon: WebhookIcon,
@@ -66,7 +66,7 @@ export const ACTIONS: Record<ActionKind, ActionDefinition> = {
 	},
 	'wait-until': {
 		kind: 'wait-until',
-		label: 'Wait Until',
+		label: STEP_LABELS['wait-until'],
 		accent: accentOf('wait-until'),
 		theme: 'fl-action-theme-wait-until',
 		Icon: ProgressIcon,
@@ -75,7 +75,7 @@ export const ACTIONS: Record<ActionKind, ActionDefinition> = {
 	},
 	'time-delay': {
 		kind: 'time-delay',
-		label: 'Time Delay',
+		label: STEP_LABELS['time-delay'],
 		accent: accentOf('time-delay'),
 		theme: 'fl-action-theme-time-delay',
 		Icon: HistoryIcon,
@@ -84,7 +84,7 @@ export const ACTIONS: Record<ActionKind, ActionDefinition> = {
 	},
 	branch: {
 		kind: 'branch',
-		label: 'True/False Branch',
+		label: STEP_LABELS['branch'],
 		accent: accentOf('branch'),
 		theme: 'fl-action-theme-branch',
 		Icon: GitBranchIcon,
@@ -93,7 +93,7 @@ export const ACTIONS: Record<ActionKind, ActionDefinition> = {
 	},
 	agent: {
 		kind: 'agent',
-		label: 'Run Agent',
+		label: STEP_LABELS['agent'],
 		accent: accentOf('violet'),
 		theme: 'fl-action-theme-agent',
 		Icon: SparkleIcon,
@@ -102,7 +102,7 @@ export const ACTIONS: Record<ActionKind, ActionDefinition> = {
 	},
 	transform: {
 		kind: 'transform',
-		label: 'Transform',
+		label: STEP_LABELS['transform'],
 		accent: accentOf('cyan'),
 		theme: 'fl-action-theme-transform',
 		Icon: TransformIcon,
@@ -111,7 +111,7 @@ export const ACTIONS: Record<ActionKind, ActionDefinition> = {
 	},
 	read: {
 		kind: 'read',
-		label: 'Read Source',
+		label: STEP_LABELS['read'],
 		accent: accentOf('teal'),
 		theme: 'fl-action-theme-read',
 		Icon: ReadIcon,
@@ -120,7 +120,7 @@ export const ACTIONS: Record<ActionKind, ActionDefinition> = {
 	},
 	write: {
 		kind: 'write',
-		label: 'Write Output',
+		label: STEP_LABELS['write'],
 		accent: accentOf('green'),
 		theme: 'fl-action-theme-write',
 		Icon: WriteIcon,
@@ -129,18 +129,18 @@ export const ACTIONS: Record<ActionKind, ActionDefinition> = {
 	},
 	review: {
 		kind: 'review',
-		label: 'Review',
+		label: STEP_LABELS['review'],
 		accent: accentOf('amber'),
 		theme: 'fl-action-theme-review',
 		Icon: ReviewIcon,
 		title: 'Check the result',
 		description: 'Holds the run until the result passes a check.'
 	},
-	enroll: {
-		kind: 'enroll',
-		label: 'Run Flow',
-		accent: accentOf('enroll'),
-		theme: 'fl-action-theme-enroll',
+	'run-workflow': {
+		kind: 'run-workflow',
+		label: STEP_LABELS['run-workflow'],
+		accent: accentOf('run-workflow'),
+		theme: 'fl-action-theme-run-workflow',
 		Icon: UsersPlusIcon,
 		title: 'Another flow',
 		description: 'Hands the run over to another flow.'
@@ -151,7 +151,7 @@ export const ACTION_GROUPS: { label: string; kinds: ActionKind[] }[] = [
 	{ label: 'Agents', kinds: ['agent', 'review'] },
 	{ label: 'Data', kinds: ['read', 'transform', 'write'] },
 	{ label: 'Messages', kinds: ['send-email', 'send-webhook'] },
-	{ label: 'Records', kinds: ['update-subscription'] },
+	{ label: 'Records', kinds: ['update-record'] },
 	{ label: 'Delays', kinds: ['wait-until', 'time-delay'] },
-	{ label: 'Flow control', kinds: ['branch', 'enroll'] }
+	{ label: 'Flow control', kinds: ['branch', 'run-workflow'] }
 ];

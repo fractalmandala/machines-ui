@@ -20,7 +20,7 @@ Three stepped river lines cascading down the frame while a lit diya rides the bo
 		rows?: number;
 		/** Milliseconds per tick. Default 110. */
 		speedMs?: number;
-		/** Seed for the flow pattern and the diya's vertical bob. Default 17. */
+		/** Seed for the starting phase of the lamp's vertical bob, so two scenes bob out of step. The water is not seeded. Default 17. */
 		seedNum?: number;
 		/** Short caption under the art; the art itself is decorative. */
 		label?: string;

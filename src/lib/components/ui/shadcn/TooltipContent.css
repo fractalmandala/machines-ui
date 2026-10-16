@@ -1,6 +1,8 @@
 /* TooltipContent */
 /* fl-tooltip-content */
 :where(.fl-tooltip-content) {
+	/* only opacity may transition: left and top are the computed position, and must not glide there from 0,0 */
+	transition-property: opacity;
 	transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
 	z-index: 50;
 	width: fit-content;

@@ -17,7 +17,7 @@ resonance wave that travels the stroke order before settling.
 		animated?: boolean;
 		/** Width of the scene in characters; at least 46 so the figure fits. Default 56. */
 		cols?: number;
-		/** Height of the scene in rows. Default 22. */
+		/** Height of the scene in rows. Default 22, which is also the minimum: smaller values are ignored. */
 		rows?: number;
 		/** Milliseconds per tick. Default 110. */
 		speedMs?: number;

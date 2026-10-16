@@ -58,6 +58,21 @@ Every component has a page with its props, defaults, types and a live example: <
 
 Give it a container with an explicit height. A single node is also available on its own as `FlowNode`, drawn as a dashed frame or a card.
 
+## Run, export, connect
+
+The canvas has a Run button, a payload editor, per-step Status and Logs, human approval, Export (JSON or Markdown, with or without the latest test run) and Connect MCP. Sample workflows are simulated: nothing calls a model, an inbox or a URL.
+
+The engine behind it is headless and has its own entry, with no DOM and no Svelte:
+
+```ts
+import { createRunner, exportFlow, importFlow, validateGraph, mcpConfigText } from '@fractaldesign/machines-ui/engine';
+
+const runner = createRunner({ adapters: { agents: { 'Luna (worker)': callYourModel } } });
+const record = await runner.run(graph, { trigger: { prompt: 'hi' } }).result;
+```
+
+The package ships the adapter interfaces and stand-ins, and no provider code. The MCP config is the shape of a server for a workflow; hosting it is up to you. Details: `/docs/engine`.
+
 ## Theming
 
 Graphs read a handful of CSS custom properties (`--border`, `--text-primary`, `--text-secondary`, `--text-muted`, `--bg`, `--font-sans`, `--font-mono`). The stylesheet supplies a dark set scoped to `.graph`, so it never paints your page. If your app already defines those tokens, add `data-graph-native-tokens` to a frame or an ancestor and the fallbacks step aside.

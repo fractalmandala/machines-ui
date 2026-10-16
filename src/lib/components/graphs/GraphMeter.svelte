@@ -9,7 +9,6 @@
 
 <script module lang="ts">
 	import type { Glyphs } from '../frame/glyphs.js';
-	import type { GraphPalette } from '../frame/tone.js';
 
 	/** Horizontal progress bar that spans the frame: [ = = = - - - ] 42%. */
 	export interface GraphMeterProps {
@@ -23,8 +22,6 @@
 		caption?: string;
 		/** Characters that draw the graph: a preset name (`shade`, `ascii`, `hash`, `bar`) or your own array, lightest to heaviest. */
 		glyphs?: Glyphs;
-		/** How many accent colours the graph uses: `mono` one, `duo` two, `multi` three. */
-		palette?: GraphPalette;
 		/** Character drawn at each corner of the frame. */
 		corner?: string;
 		class?: string;
@@ -45,7 +42,6 @@
 		ticks = 14,
 		caption,
 		glyphs,
-		palette,
 		corner,
 		class: className = ''
 	}: GraphMeterProps = $props();

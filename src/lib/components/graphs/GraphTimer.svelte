@@ -10,7 +10,6 @@ clock.
 -->
 
 <script module lang="ts">
-	import type { GraphPalette } from '../frame/tone.js';
 
 	/** Elapsed time, how long ago, or the local clock. */
 	export type TimerKind = 'elapsed' | 'ago' | 'clock';
@@ -24,8 +23,6 @@ clock.
 		at?: Date | number | string;
 		/** Muted line drawn under the value. */
 		caption?: string;
-		/** How many accent colours the graph uses: `mono` one, `duo` two, `multi` three. */
-		palette?: GraphPalette;
 		/** Character drawn at each corner of the frame. */
 		corner?: string;
 		class?: string;
@@ -43,7 +40,6 @@ clock.
 		kind = 'elapsed',
 		at,
 		caption,
-		palette,
 		corner,
 		class: className = ''
 	}: GraphTimerProps = $props();

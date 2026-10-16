@@ -1,9 +1,4 @@
 /* DropdownMenuRadioItem */
-/* fl-dropdown-menu-radio-item */
-:where(.fl-dropdown-menu-radio-item) {
-	padding-left: calc(0.25rem * 8);
-}
-
 /* fl-dropdown-menu-radio-item-item */
 :where(.fl-dropdown-menu-radio-item-item) {
 	cursor: pointer;
@@ -56,4 +51,9 @@
 	background-color: var(--fl-accent-trigger);
 	box-shadow: 0 0 6px color-mix(in srgb, var(--fl-accent-trigger) 80%, transparent);
 	border-radius: calc(infinity * 1px);
+}
+
+/* fl-dropdown-menu-radio-item: after the rule above, so room for the selected dot is not reset by its padding */
+:where(.fl-dropdown-menu-radio-item) {
+	padding-left: calc(0.25rem * 8);
 }

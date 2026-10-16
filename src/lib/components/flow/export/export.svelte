@@ -8,7 +8,6 @@
 	import Tag from '$lib/components/ui/tag.svelte';
 	import { cn , resolveState, type StateInput } from '$lib/utils/utils.js';
 	import WebhookIcon from '$lib/icons/flow/webhook.svelte';
-	import UsersIcon from '$lib/icons/flow/users-plus.svelte';
 	import LayoutIcon from '$lib/icons/flow/layout.svelte';
 	import RowInsertIcon from '$lib/icons/flow/row-insert.svelte';
 	import ShareIcon from '$lib/icons/topbar/share.svelte';
@@ -16,16 +15,13 @@
 	import SettingsSection from '../settings/settings-section.svelte';
 import SettingsRow from '../settings/SettingsRow.svelte';
 	import ExportPreview from './export-preview.svelte';
-	import { FORMAT_META, buildExport, fileName, type ExportFormat } from './export-formats.js';
+	import { FORMAT_META, buildExport, fileName, testRunOf, type ExportFormat } from './export-formats.js';
+	import { FlowParseError, importFlow, type Problem } from '$lib/engine/index.js';
 
 	const FORMAT_ICONS = {
 		json: {
 			Icon: WebhookIcon,
 			theme: 'fl-export-theme-json'
-		},
-		csv: {
-			Icon: UsersIcon,
-			theme: 'fl-export-theme-csv'
 		},
 		markdown: {
 			Icon: LayoutIcon,
@@ -46,10 +42,10 @@ import SettingsRow from '../settings/SettingsRow.svelte';
 </script>
 
 <script lang="ts">
-	import { app, DEFAULT_SETTINGS, updateSettings } from '$lib/stores/app-store.svelte';
+	import { activeAutomation, app, DEFAULT_SETTINGS, importAutomation, updateSettings } from '$lib/stores/app-store.svelte';
 	import { flow } from '$lib/stores/flow-store.svelte';
 
-	const automation = $derived(app.automations.find((item) => item.id === app.automationId));
+	const automation = $derived(activeAutomation());
 
 	const settings = $derived(app.settings[app.automationId] ?? DEFAULT_SETTINGS);
 
@@ -57,24 +53,17 @@ import SettingsRow from '../settings/SettingsRow.svelte';
 
 	const edges = $derived(flow.edges);
 
-	const logs = $derived(flow.logs);
-
 	let format = $state<ExportFormat>('json');
-
-	let includeRules = $state(true);
-	function setIncludeRules(value: StateInput<boolean>) {
-		includeRules = resolveState(includeRules, value);
-	}
 
 	let includeLogs = $state(false);
 	function setIncludeLogs(value: StateInput<boolean>) {
 		includeLogs = resolveState(includeLogs, value);
 	}
 
+	const testRun = $derived(testRunOf(flow.record));
+
 	let content = $derived(
-		automation
-			? buildExport(format, automation, { nodes, edges }, logs, { includeRules, includeLogs })
-			: ''
+		automation ? buildExport(format, automation, { nodes, edges }, includeLogs ? testRun : null) : ''
 	);
 
 	let name = $derived(automation ? fileName(automation, format) : 'export');
@@ -83,11 +72,34 @@ import SettingsRow from '../settings/SettingsRow.svelte';
 
 	let shareUrl = $derived(automation ? `https://example.com/a/${automation.id}` : '');
 
-	let curl = $derived(
-		automation
-			? `curl -X POST https://api.example.com/v1/automations/${automation.id}/enroll \\\n  -H "Authorization: Bearer $API_KEY" \\\n  -d '{ "email": "reader@example.com" }'`
-			: ''
-	);
+	// Import: a Workflow JSON file, dropped in or pasted, opens as a new workflow
+	let pasted = $state('');
+	let report = $state<{ ok: boolean; title: string; problems: Problem[] } | null>(null);
+
+	function tryImport(text: string) {
+		try {
+			const result = importFlow(text);
+
+			importAutomation({ name: result.meta.name, description: result.meta.description }, result.graph);
+			report = { ok: true, title: `Opened “${result.meta.name}”`, problems: result.warnings };
+			pasted = '';
+			toast.success(`Imported “${result.meta.name}”`, { description: `${result.graph.nodes.length} steps` });
+		} catch (error) {
+			report = {
+				ok: false,
+				title: 'This file could not be imported',
+				problems: error instanceof FlowParseError ? error.problems : [{ severity: 'error', code: 'unknown', message: String(error) }]
+			};
+		}
+	}
+
+	async function onFile(event: Event) {
+		const input = event.currentTarget as HTMLInputElement;
+		const file = input.files?.[0];
+
+		if (file) tryImport(await file.text());
+		input.value = '';
+	}
 
 	const download = () => {
 		const url = URL.createObjectURL(
@@ -114,8 +126,7 @@ import SettingsRow from '../settings/SettingsRow.svelte';
 					>Export</span
 				>
 				<span class="fs-weight-400 fl-export-span">
-					Take {automation.name} anywhere — download the flow, share a read-only link or trigger it
-					from your own code.
+					Take {automation.name} anywhere: download it as JSON or Markdown, or bring a workflow in from a JSON file.
 				</span>
 			</div>
 			<div
@@ -168,28 +179,16 @@ import SettingsRow from '../settings/SettingsRow.svelte';
 						{/each}
 					</div>
 					<SettingsRow
-						title="Include step rules"
-						description="Conditions, subjects and timings you set in the step panel."
-						htmlFor="export-rules"
-					>
-						<Switch
-							id="export-rules"
-							checked={includeRules}
-							disabled={format !== 'json'}
-							onCheckedChange={setIncludeRules}
-						/>
-					</SettingsRow>
-					<SettingsRow
 						title="Include latest test run"
-						description={logs.length
-							? `${logs.length} log entries from Run once.`
-							: 'Use Run once on the Flow tab first.'}
+						description={testRun
+							? `${testRun.logs.length} log entries from the last run.`
+							: 'Run the workflow on the Flow tab first.'}
 						htmlFor="export-logs"
 					>
 						<Switch
 							id="export-logs"
 							checked={includeLogs}
-							disabled={!logs.length || format === 'csv'}
+							disabled={!testRun}
 							onCheckedChange={setIncludeLogs}
 						/>
 					</SettingsRow>
@@ -274,30 +273,42 @@ import SettingsRow from '../settings/SettingsRow.svelte';
 					</div>
 				</SettingsSection>
 				<SettingsSection
-					id="export-api"
-					title="Trigger from your code"
-					description="Start a run with a single request."
+					id="export-import"
+					title="Import"
+					description="Open a Workflow JSON file as a new workflow."
 				>
 					{#snippet icon()}
 						<PostsIcon class="fs-text-white fl-export-posts-icon" />
 					{/snippet}
-					{#snippet action()}
-						<Button
-							variant="field"
-							size="field"
-							className="fs-px-md"
-							onClick={() => copy(curl, 'cURL command copied')}
-						>
-							Copy
-						</Button>
-					{/snippet}
-					<pre
-						class="fs-px-bs fs-py-md fl-export-pre">
-						<code>
-							<span class="fl-export-span-14">curl</span>
-							{curl.slice(4)}
-						</code>
-					</pre>
+					<div class="fs-box fs-gap-md">
+						<input
+							type="file"
+							accept="application/json,.json"
+							aria-label="Choose a Workflow JSON file"
+							class="fl-export-file"
+							onchange={onFile}
+						/>
+						<textarea
+							aria-label="Or paste Workflow JSON"
+							placeholder="Or paste Workflow JSON here"
+							rows="5"
+							class="fs-px-bs fs-py-md fl-export-paste"
+							bind:value={pasted}
+						></textarea>
+						<div class="fs-row fs-gap-md">
+							<Button variant="accent" size="field" className="fs-px-md" disabled={!pasted.trim()} onClick={() => tryImport(pasted)}>
+								Import
+							</Button>
+						</div>
+						{#if report}
+							<div class="fs-box fs-gap-xs fl-export-report" data-ok={report.ok || undefined} role="status">
+								<strong>{report.title}</strong>
+								{#each report.problems as problem, i (i)}
+									<span data-severity={problem.severity}>{problem.message}</span>
+								{/each}
+							</div>
+						{/if}
+					</div>
 				</SettingsSection>
 			</div>
 		</div>

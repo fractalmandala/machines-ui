@@ -1,0 +1,88 @@
+/* the run bar: over the top left of the canvas */
+.fl-flow-run-bar {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	z-index: 25;
+	width: min(24rem, calc(100% - 32px));
+}
+
+.fl-flow-run-bar-icon {
+	width: 14px;
+	height: 14px;
+}
+
+.fl-flow-run-bar-row {
+	width: fit-content;
+	max-width: 100%;
+	border-radius: 12px;
+	padding: 6px;
+	background-color: color-mix(in oklab, var(--bg, #101010) 82%, transparent);
+	backdrop-filter: blur(8px);
+	box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+
+.fl-flow-run-bar-status {
+	padding-inline: 6px;
+	font-size: 12px;
+	color: color-mix(in oklab, #fff 65%, transparent);
+}
+
+.fl-flow-run-bar-status[data-status='done'] {
+	color: var(--fl-accent-green);
+}
+
+.fl-flow-run-bar-status[data-status='failed'] {
+	color: var(--fl-accent-red);
+}
+
+.fl-flow-run-bar-status[data-status='paused'] {
+	color: var(--fl-accent-amber);
+}
+
+.fl-flow-run-bar-panel {
+	border-radius: 12px;
+	padding: 12px;
+	background-color: color-mix(in oklab, var(--bg, #101010) 92%, transparent);
+	backdrop-filter: blur(8px);
+	box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08), 0 12px 32px rgb(0 0 0 / 0.35);
+}
+
+.fl-flow-run-bar-approve {
+	box-shadow: 0 0 0 1px color-mix(in oklab, var(--fl-accent-amber) 55%, transparent), 0 12px 32px rgb(0 0 0 / 0.35);
+}
+
+.fl-flow-run-bar-label {
+	font-size: 12px;
+	color: color-mix(in oklab, #fff 70%, transparent);
+}
+
+.fl-flow-run-bar-label strong {
+	color: #fff;
+}
+
+.fl-flow-run-bar-text {
+	width: 100%;
+	box-sizing: border-box;
+	resize: vertical;
+	border-radius: 10px;
+	border: 1px solid color-mix(in oklab, #fff 12%, transparent);
+	background-color: color-mix(in oklab, #fff 4%, transparent);
+	padding: 10px 12px;
+	font-family: var(--font-mono, ui-monospace, monospace);
+	font-size: 12px;
+	color: #fff;
+}
+
+.fl-flow-run-bar-text[aria-invalid='true'] {
+	border-color: var(--fl-accent-red);
+}
+
+.fl-flow-run-bar-hint {
+	font-size: 12px;
+	color: color-mix(in oklab, #fff 50%, transparent);
+}
+
+.fl-flow-run-bar-hint[data-invalid] {
+	color: var(--fl-accent-red);
+}

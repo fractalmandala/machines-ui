@@ -3,6 +3,8 @@
 	import Number from './Number.svelte';
 
 	let { value, place }: { value: number; place: number } = $props();
+	// starts at `value`; the effect below tweens to each new one
+	// svelte-ignore state_referenced_locally
 	let animatedValue = $state(value);
 
 	$effect(() => {

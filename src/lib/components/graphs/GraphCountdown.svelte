@@ -13,7 +13,6 @@
 -->
 
 <script module lang="ts">
-	import type { GraphPalette } from '../frame/tone.js';
 
 	/** Time left until a date. */
 	export interface GraphCountdownProps {
@@ -25,8 +24,6 @@
 		done?: string;
 		/** Optional text displayed beneath the remaining time. */
 		caption?: string;
-		/** How many accent colours the graph uses: `mono` one, `duo` two, `multi` three. */
-		palette?: GraphPalette;
 		/** Character drawn at each corner of the frame. */
 		corner?: string;
 		class?: string;
@@ -44,7 +41,6 @@
 		to,
 		done = 'done',
 		caption,
-		palette,
 		corner,
 		class: className = ''
 	}: GraphCountdownProps = $props();

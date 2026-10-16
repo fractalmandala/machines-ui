@@ -3,10 +3,21 @@
 	import Button from '$lib/components/ui/button.svelte';
 	import type { ActionKind } from '$lib/stores/flow-store.svelte';
 	import ExpandIcon from '$lib/icons/flow/expand.svelte';
-	import LayoutIcon from '$lib/icons/flow/layout.svelte';
-	import ChevronRightIcon from '$lib/icons/flow/chevron-right.svelte';
 	import { ACTION_GROUPS } from '../flow-actions.js';
 	import ActionsPanelItem from './actions-panel-item.svelte';
+	import ExportDialog from '$lib/components/flow/export/export-dialog.svelte';
+	import McpConnect from '$lib/components/flow/mcp-connect/mcp-connect.svelte';
+	import { SEED_GRAPHS, blankGraph, seedAutomations } from '$lib/data/automations.js';
+	import { flow, loadGraph, select, sendCommand } from '$lib/stores/flow-store.svelte';
+
+	// the open list of workflows: a blank one, then the ten samples
+	const WORKFLOWS = [{ id: 'blank', name: 'Blank workflow' }, ...seedAutomations(0).map((a) => ({ id: a.id, name: a.name }))];
+
+	function openWorkflow(id: string) {
+		loadGraph(id, id === 'blank' ? () => blankGraph('blank') : SEED_GRAPHS[id]);
+		select(null);
+		sendCommand('fit');
+	}
 
 	type ActionsPanelProps = {
 		ref?: HTMLElement | null;
@@ -70,7 +81,31 @@
 			<div class={divider}></div>
 			<div class="fs-minh0 fl-actions-panel-div-4">
 				<div class="fs-box fs-gap-bs">
-					{#each ACTION_GROUPS as group (group.label)}
+					<section aria-label="Workflows" class="fs-box fl-actions-panel-section">
+						<div class="fs-row fs-h-lg fs-ycenter fl-actions-panel-div-6">
+							<span class="fs-tt-u fl-actions-panel-span-2">Workflows</span>
+						</div>
+						<ul class="fs-box fl-actions-panel-ul" role="listbox" aria-label="Workflows">
+							{#each WORKFLOWS as item (item.id)}
+								<li
+									role="option"
+									tabindex={0}
+									aria-selected={flow.graphId === item.id}
+									onclick={() => openWorkflow(item.id)}
+									onkeydown={(event) => {
+										if (event.key === 'Enter' || event.key === ' ') {
+											event.preventDefault();
+											openWorkflow(item.id);
+										}
+									}}
+									class="fs-relative fs-row fs-wfull fs-ycenter fs-px-xs fl-actions-panel-item-group-item fl-actions-panel-item"
+								>
+									<span class="fs-row fs-minw0 fs-grow fs-ycenter fs-px-bs fs-weight-500 fs-text-white fl-actions-panel-item-span-2">{item.name}</span>
+								</li>
+							{/each}
+						</ul>
+					</section>
+					{#each ACTION_GROUPS.filter((group) => group.label !== 'Messages') as group (group.label)}
 						<section aria-label={group.label} class="fs-box fl-actions-panel-section">
 							<div class="fs-row fs-h-lg fs-ycenter fl-actions-panel-div-6">
 								<span class="fs-tt-u fl-actions-panel-span-2"
@@ -92,21 +127,9 @@
 				</div>
 			</div>
 			<div class={divider}></div>
-			<div class="fs-row fs-shrink-0 fs-ycenter fs-xbetween fl-actions-panel-div-8">
-				<span class="fs-row fs-ycenter fs-gap-sm">
-					<LayoutIcon aria-hidden class="fl-actions-panel-layout-icon" />
-					<span
-						class="fs-text-white fl-actions-panel-span-4"
-					>
-						Template
-					</span>
-				</span>
-				<Button variant="ghost" size="icon" aria-label="Browse templates">
-					<ChevronRightIcon
-						aria-hidden
-						class="fl-actions-panel-chevron-right-icon"
-					/>
-				</Button>
+			<div class="fs-row fs-shrink-0 fs-ycenter fs-gap-sm fl-actions-panel-div-8">
+				<ExportDialog />
+				<McpConnect />
 			</div>
 		</div>
 	</div>

@@ -1,11 +1,11 @@
-import {
+import { type AutomationGraph,
 	SEED_GRAPHS,
 	blankGraph,
 	seedAutomations,
 	type Automation,
 	type AutomationStatus
 } from '$lib/data/automations.js';
-import { exportGraph, loadGraph } from './flow-store.svelte.js';
+import { exportGraph, flow, loadGraph } from './flow-store.svelte.js';
 
 export type Screen = 'dashboard' | 'automations' | 'editor';
 
@@ -98,6 +98,54 @@ export function createAutomation() {
 	app.automationId = id;
 	app.tab = 'flow';
 	app.renameRequest++;
+}
+
+/**
+ * The workflow that is open on the canvas, as the Export and Connect dialogs name it: its entry in the list when it has one,
+ * else one made up from the graph's id (a playground has no entry).
+ */
+export function activeAutomation(): Automation {
+	const found = app.automations.find((item) => item.id === flow.graphId);
+
+	if (found) return found;
+
+	const now = Date.now();
+
+	return {
+		id: flow.graphId,
+		name: flow.graphId.replace(/[-_]+/g, ' ').replace(/^./, (c) => c.toUpperCase()),
+		description: '',
+		status: 'draft',
+		category: 'agents',
+		started: 0,
+		finished: 0,
+		createdAt: now,
+		updatedAt: now
+	};
+}
+
+/** Opens a graph read from a Workflow JSON file as a new workflow. */
+export function importAutomation(meta: { name: string; description: string }, graph: AutomationGraph) {
+	const id = `automation-${crypto.randomUUID().slice(0, 8)}`;
+	const now = Date.now();
+
+	app.automations.unshift({
+		id,
+		name: meta.name,
+		description: meta.description,
+		status: 'draft',
+		category: 'agents',
+		started: 0,
+		finished: 0,
+		createdAt: now,
+		updatedAt: now
+	});
+	loadGraph(id, () => graph);
+	app.screen = 'editor';
+	app.automationId = id;
+	app.tab = 'flow';
+
+	return id;
 }
 
 export function updateAutomation(

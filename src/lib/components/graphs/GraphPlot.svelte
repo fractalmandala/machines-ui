@@ -28,7 +28,7 @@ A line or area plot drawn from glyph columns: each value becomes a cap glyph at 
 		height?: number;
 		/** `line` draws only the cap glyphs; `area` also fills the rows below them. Default 'area'. */
 		variant?: 'line' | 'area';
-		/** Fraction (0–1) of the points revealed so far, for drawing the plot in live. Default 1. */
+		/** Fraction (0–1) of the points revealed so far, for drawing the plot in live: `0.5` draws the first half. Default 1; values above 1 are treated as 1. */
 		progress?: number;
 		/** Characters that draw the graph: a preset name (`shade`, `ascii`, `hash`, `bar`) or your own array, lightest to heaviest. */
 		glyphs?: Glyphs;

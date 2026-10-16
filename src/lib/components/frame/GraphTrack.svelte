@@ -4,9 +4,10 @@
 @example
 ```svelte
 <GraphTrack>
-  {#each glyphs as glyph}
-    <GraphTick>{glyph}</GraphTick>
-  {/each}
+  <GraphTick>█</GraphTick>
+  <GraphTick>█</GraphTick>
+  <GraphTick>░</GraphTick>
+  <GraphTick>░</GraphTick>
 </GraphTrack>
 ```
 -->

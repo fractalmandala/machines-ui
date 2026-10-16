@@ -13,17 +13,17 @@
 	import RowInsertIcon from '$lib/icons/flow/row-insert.svelte';
 	import { ACTIONS, ACTION_GROUPS } from '../flow-actions.js';
 	import NodePanelBuild from './node-panel-build.svelte';
-	import NodePanelStatus from './node-panel-status.svelte';
+	import NodePanelPropsTab from './node-panel-props.svelte';
 	import NodePanelLogs from './node-panel-logs.svelte';
 
 	const TABS = [
 		{
-			value: 'build',
-			label: 'Build'
+			value: 'props',
+			label: 'Props'
 		},
 		{
-			value: 'status',
-			label: 'Status'
+			value: 'build',
+			label: 'Build'
 		},
 		{
 			value: 'logs',
@@ -89,11 +89,11 @@
 		<div class="fs-minh0 fs-grow fs-box fl-node-panel-div-2">
 			<Divider />
 			<div class="fs-minh0 fl-node-panel-div-3">
+				{#if inspector.tab === 'props'}
+					<NodePanelPropsTab {node} />
+				{/if}
 				{#if inspector.tab === 'build'}
 					<NodePanelBuild {node} />
-				{/if}
-				{#if inspector.tab === 'status'}
-					<NodePanelStatus {node} />
 				{/if}
 				{#if inspector.tab === 'logs'}
 					<NodePanelLogs {node} />

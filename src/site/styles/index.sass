@@ -1,7 +1,6 @@
 @forward '../../lib/styles/00_tokens'
 @use '../../lib/styles/00_graph' as *
-@use '09_site' as *
-@use '08_own' as *
+@use 'chrome'
 
 @font-face
 	font-family: 'Google Sans Code'
@@ -12,6 +11,12 @@
 @font-face
 	font-family: 'Stack Sans Text'
 	src: url('/fonts/stacksans.woff2') format('woff2')
+	font-weight: 300 700
+	font-style: normal
+	font-display: swap
+@font-face
+	font-family: 'Chakra Petch',
+	src: url('/fonts/chakra-petch.woff2') format('woff2')
 	font-weight: 300 700
 	font-style: normal
 	font-display: swap
@@ -39,3 +44,14 @@ body
 	outline-offset: 3px
 button:not(:disabled)
 	cursor: pointer
+
+.heading-link
+	text-decoration: none
+	color: var(--text-primary)
+	font-size: var(--text-md)
+	text-transform: uppercase
+	&:hover
+		color: var(--graph-accent)
+
+a.fs-primary, a.fs-outline
+	text-decoration: none

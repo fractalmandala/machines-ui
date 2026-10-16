@@ -74,31 +74,39 @@
 		/>
 	</Field>
 	<Field label="Status text">
-		<SelectField
-			value={statusText}
-			options={[AUTO, NONE, ...STATUS_WORDS]}
-			onChange={(value) =>
-				set({ statusLabel: value === AUTO ? undefined : value === NONE ? false : value })}
-		/>
-		<Input
-			placeholder="or type your own"
-			value={customStatus}
-			onFocus={checkpoint}
-			onChange={(event) => updateView(node.id, { statusLabel: event.target.value || undefined })}
-		/>
+		<div class="fs-row fs-gap-md">
+			<SelectField
+				className="fs-grow fs-minw0"
+				value={statusText}
+				options={[AUTO, NONE, ...STATUS_WORDS]}
+				onChange={(value) =>
+					set({ statusLabel: value === AUTO ? undefined : value === NONE ? false : value })}
+			/>
+			<Input
+				className="fs-grow fs-minw0"
+				placeholder="or type your own"
+				value={customStatus}
+				onFocus={checkpoint}
+				onChange={(event) => updateView(node.id, { statusLabel: event.target.value || undefined })}
+			/>
+		</div>
 	</Field>
 	<Field label="Badge">
-		<SelectField
-			value={badge}
-			options={[AUTO, NONE, ...BADGES]}
-			onChange={(value) => set({ badge: value === AUTO ? undefined : value === NONE ? '' : value })}
-		/>
-		<Input
-			placeholder="or type your own"
-			value={customBadge}
-			onFocus={checkpoint}
-			onChange={(event) => updateView(node.id, { badge: event.target.value || undefined })}
-		/>
+		<div class="fs-row fs-gap-md">
+			<SelectField
+				className="fs-grow fs-minw0"
+				value={badge}
+				options={[AUTO, NONE, ...BADGES]}
+				onChange={(value) => set({ badge: value === AUTO ? undefined : value === NONE ? '' : value })}
+			/>
+			<Input
+				className="fs-grow fs-minw0"
+				placeholder="or type your own"
+				value={customBadge}
+				onFocus={checkpoint}
+				onChange={(event) => updateView(node.id, { badge: event.target.value || undefined })}
+			/>
+		</div>
 	</Field>
 	<Field label="Pad">
 		<SelectField
@@ -127,14 +135,6 @@
 					onclick={() => set({ accent: tone.value })}
 				></button>
 			{/each}
-			<Input
-				type="color"
-				className="fl-node-panel-look-color"
-				aria-label="Custom accent colour"
-				value={view.accent?.startsWith('#') ? view.accent : ACCENTS[0].value}
-				onFocus={checkpoint}
-				onChange={(event) => updateView(node.id, { accent: event.target.value })}
-			/>
 		</div>
 	</Field>
 

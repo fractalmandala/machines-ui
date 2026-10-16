@@ -150,3 +150,14 @@
 		display: inline;
 	}
 }
+
+/* the hosting note: always shown, above the config */
+.fl-mcp-connect-note {
+	margin: 0;
+	border-radius: 12px;
+	border: 1px solid color-mix(in oklab, var(--fl-accent-amber) 45%, transparent);
+	background-color: color-mix(in oklab, var(--fl-accent-amber) 10%, transparent);
+	font-size: 13px;
+	line-height: 1.5;
+	color: color-mix(in oklab, #fff 85%, transparent);
+}

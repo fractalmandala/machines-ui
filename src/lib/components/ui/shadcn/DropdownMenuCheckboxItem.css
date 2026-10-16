@@ -1,9 +1,4 @@
 /* DropdownMenuCheckboxItem */
-/* fl-dropdown-menu-checkbox-item */
-:where(.fl-dropdown-menu-checkbox-item) {
-	padding-left: calc(0.25rem * 8);
-}
-
 /* fl-dropdown-menu-checkbox-item-item */
 :where(.fl-dropdown-menu-checkbox-item-item) {
 	cursor: pointer;
@@ -73,4 +68,9 @@
 	border-bottom-style: solid;
 	border-bottom-width: 1.5px;
 	border-color: #fff;
+}
+
+/* fl-dropdown-menu-checkbox-item: after the rule above, so room for the check is not reset by its padding */
+:where(.fl-dropdown-menu-checkbox-item) {
+	padding-left: calc(0.25rem * 8);
 }

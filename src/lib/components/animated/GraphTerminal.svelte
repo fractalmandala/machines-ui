@@ -65,17 +65,21 @@ A terminal session that types prompt lines and streams output, with optional loo
 		cls?: string;
 	}
 
-	const script: TerminalLine[] = lines.length > 0
-		? lines
-		: [
-				{ kind: 'prompt', text: 'echo ready' },
-				{ kind: 'output', text: 'ready' }
-			];
+	const script: TerminalLine[] = $derived(
+		lines.length > 0
+			? lines
+			: [
+					{ kind: 'prompt', text: 'echo ready' },
+					{ kind: 'output', text: 'ready' }
+				]
+	);
 
 	// Per-character durations for each line, in ticks (1 char = 1 tick).
-	const charMs: number[] = script.map((l) => (l.kind === 'prompt' ? typeMs : streamMs));
-	const totalChars: number = script.reduce((sum, l) => sum + l.text.length, 0);
+	const charMs: number[] = $derived(script.map((l) => (l.kind === 'prompt' ? typeMs : streamMs)));
+	const totalChars: number = $derived(script.reduce((sum, l) => sum + l.text.length, 0));
 
+	// the starting position is read once; `moving` follows `animated` after that
+	// svelte-ignore state_referenced_locally
 	const initialChar = animated ? Math.floor(totalChars * 0.55) : totalChars;
 
 	let char = $state(initialChar);

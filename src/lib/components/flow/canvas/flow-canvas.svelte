@@ -40,6 +40,7 @@ The node canvas on its own: pan and zoom, drag to connect nodes, an actions pane
 	import FlowItem from './flow-item.svelte';
 	import FlowEdges, { portKey, type EdgePreview } from './flow-edges.svelte';
 	import FlowControls from './flow-controls.svelte';
+	import FlowRunBar from './flow-run-bar.svelte';
 	import FlowGhost from './flow-ghost.svelte';
 	import FlowGrid from './flow-grid.svelte';
 	import NodePanel from './node-panel/node-panel.svelte';
@@ -198,6 +199,16 @@ The node canvas on its own: pan and zoom, drag to connect nodes, an actions pane
 	const view = $derived(flow.view);
 
 	const run = $derived(flow.run);
+
+	// what a step's status line says beyond the word: the path a branch took, or that a stand-in answered
+	function runLabelOf(node: NodeData): string | undefined {
+		const step = flow.record?.steps.findLast((s) => s.nodeId === node.id);
+
+		if (!step || step.status !== 'done') return undefined;
+		if (node.kind === 'branch' && step.port) return step.port.toUpperCase();
+
+		return step.stubbed ? 'Simulated' : undefined;
+	}
 
 	const inspectorNodeId = $derived(flow.inspector?.nodeId ?? null);
 
@@ -844,11 +855,16 @@ The node canvas on its own: pan and zoom, drag to connect nodes, an actions pane
 				selected={selection?.type === 'node' && selection.id === node.id}
 				targeted={link?.target === node.id}
 				dragging={draggingNode === node.id}
-				runState={run.activeNodeId === node.id
+				runState={run.stepStatus[node.id] === 'running' || run.activeNodeId === node.id
 					? 'active'
-					: run.visited.includes(node.id)
-						? 'done'
-						: 'idle'}
+					: run.stepStatus[node.id] === 'waiting'
+						? 'waiting'
+						: run.stepStatus[node.id] === 'failed'
+							? 'failed'
+							: run.stepStatus[node.id] === 'done' || run.visited.includes(node.id)
+								? 'done'
+								: 'idle'}
+				runLabel={runLabelOf(node)}
 				onMeasure={setSize}
 				onNodePointerDown={handleNodePointerDown}
 				onHandlePointerDown={handleHandlePointerDown}
@@ -857,6 +873,7 @@ The node canvas on its own: pan and zoom, drag to connect nodes, an actions pane
 			/>
 		{/each}
 	</div>
+	<FlowRunBar />
 	<FlowControls
 		canZoomIn={view.zoom < MAX_ZOOM - 0.001}
 		canZoomOut={view.zoom > MIN_ZOOM + 0.001}

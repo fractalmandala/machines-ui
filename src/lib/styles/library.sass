@@ -1,5 +1,5 @@
 // =============================================================================
-// LIBRARY — the consumer-facing stylesheet, compiled by scripts/build-styles.mjs
+// LIBRARY — the consumer-facing stylesheet, compiled by scripts/build-styles.ts
 // into the single dist/style.css. Import it once:
 //
 //   import '@fractaldesign/machines-ui/style.css'
@@ -18,7 +18,8 @@
 
 @use '00_graph' as *
 
-.graph:not([data-graph-native-tokens])
+// …on the graph itself or on any ancestor: a page-level opt-out must reach every frame
+.graph:not([data-graph-native-tokens], [data-graph-native-tokens] *)
 	// base-token fallbacks — dark glyph palette (markgraphy's own defaults)
 	--border: #373737
 	--text-primary: #f1f1f1

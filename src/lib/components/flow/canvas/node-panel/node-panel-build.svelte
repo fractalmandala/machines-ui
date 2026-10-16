@@ -11,8 +11,6 @@
 	import ChevronIcon from '$lib/icons/flow/chevron-right.svelte';
 	import { ACTIONS } from '../flow-actions.js';
 	import NodePanelRules from './node-panel-rules.svelte';
-	import NodePanelLook from './node-panel-look.svelte';
-	import NodePanelPorts from './node-panel-ports.svelte';
 
 	type NodePanelBuildProps = {
 		node: FlowNodeData;
@@ -104,14 +102,6 @@
 			<div class="fs-pt-sm fs-pb-xs" onfocuscapture={checkpoint}>
 				<NodePanelRules {node} onChange={changeRules} />
 			</div>
-		</div>
-		<div class="fs-box fs-gap-xs">
-			<span class="fl-node-panel-build-section">Look</span>
-			<div class="fs-pt-sm fs-pb-xs"><NodePanelLook {node} /></div>
-		</div>
-		<div class="fs-box fs-gap-xs">
-			<span class="fl-node-panel-build-section">Ports</span>
-			<div class="fs-pt-sm fs-pb-xs"><NodePanelPorts {node} /></div>
 		</div>
 	</div>
 </div>

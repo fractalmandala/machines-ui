@@ -1,23 +1,11 @@
 import { SEED_GRAPHS, type AutomationGraph } from '$lib/data/automations.js';
-import type { Dash, Look, NodePort, PortId, PortSide, Status } from '$lib/core/values.js';
+import type { Dash, Look, NodePort, PortId, PortSide, Status, StepKind } from '$lib/core/values.js';
 import type { FlowNodeBase, FlowNodeFrameOnly } from '$lib/components/flow/FlowNode.svelte';
+import type { LogEntry, RunRecord } from '$lib/engine/run-types.js';
 
 export type { PortId, PortSide, NodePort };
 
-export type ActionKind =
-	| 'trigger'
-	| 'send-email'
-	| 'update-subscription'
-	| 'send-webhook'
-	| 'wait-until'
-	| 'time-delay'
-	| 'branch'
-	| 'enroll'
-	| 'agent'
-	| 'transform'
-	| 'read'
-	| 'write'
-	| 'review';
+export type ActionKind = StepKind;
 
 /**
  * How a node looks, kept with the node so it saves and exports with the flow. Every field is
@@ -68,42 +56,50 @@ export type FlowSelection = { type: 'node' | 'edge'; id: string } | null;
 
 export type FlowView = { x: number; y: number; zoom: number };
 
-export type InspectorTab = 'build' | 'status' | 'logs';
+export type InspectorTab = 'props' | 'build' | 'logs';
 
-export type RunStatus = 'idle' | 'running' | 'done';
+export type RunStatus = 'idle' | 'running' | 'paused' | 'done' | 'failed' | 'stopped';
 
+/** Where one step is in the run on screen. A step that has not been reached has no entry. */
+export type StepProgress = 'running' | 'waiting' | 'done' | 'failed';
+
+/** What the canvas shows of a run. The full record, with every input, output and log line, is `flow.record`. */
 export type RunState = {
 	status: RunStatus;
+	runId: string | null;
 	activeNodeId: string | null;
 	activeEdgeId: string | null;
 	visited: string[];
 	traversed: string[];
 	startedAt: number | null;
 	finishedAt: number | null;
+	/** How many runs this workflow has had in this session. */
 	count: number;
+	stepStatus: Record<string, StepProgress>;
+	/** Steps waiting for a person to approve or reject. */
+	waiting: string[];
+	/** True when any step was answered by a stand-in. */
+	simulated: boolean;
+	error: string | null;
 };
 
-export type RunLog = {
-	id: string;
-	run: number;
-	nodeId: string | null;
-	time: number;
-	level: 'info' | 'success' | 'warning';
-	message: string;
-};
+export type RunLog = LogEntry;
+
+/** One line of the run history. */
+export type RunSummary = { id: string; status: RunRecord['status']; startedAt: number; finishedAt: number | null; simulated: boolean; steps: number; number: number };
 
 type Snapshot = { nodes: FlowNodeData[]; edges: FlowEdge[] };
 
 type SavedGraph = Snapshot & {
 	view: FlowView;
-	logs: RunLog[];
+	record: RunRecord | null;
+	history: RunSummary[];
 	runCount: number;
 };
 
 export const DEFAULT_VIEW: FlowView = { x: -200, y: 48, zoom: 1 };
 
 const HISTORY_LIMIT = 100;
-const LOG_LIMIT = 200;
 
 const IDLE_RUN: RunState = {
 	status: 'idle',
@@ -113,7 +109,12 @@ const IDLE_RUN: RunState = {
 	traversed: [],
 	startedAt: null,
 	finishedAt: null,
-	count: 0
+	count: 0,
+	stepStatus: {},
+	waiting: [],
+	simulated: false,
+	error: null,
+	runId: null
 };
 
 const createId = () => crypto.randomUUID();
@@ -123,7 +124,7 @@ const createId = () => crypto.randomUUID();
 const clone = <T>(value: T): T => $state.snapshot(value) as T;
 
 const settledRun = (run: RunState): RunState =>
-	run.status === 'running' ? run : { ...IDLE_RUN, count: run.count };
+	run.status === 'running' || run.status === 'paused' ? run : { ...IDLE_RUN, count: run.count };
 
 const graphSnapshot = (): Snapshot => clone({ nodes: flow.nodes, edges: flow.edges });
 
@@ -141,7 +142,16 @@ export const flow = $state({
 	past: [] as Snapshot[],
 	future: [] as Snapshot[],
 	run: { ...IDLE_RUN } as RunState,
-	logs: [] as RunLog[],
+	/** The latest run of this workflow, whole: every step's input and output, and every log line. */
+	record: null as RunRecord | null,
+	/** Earlier runs, newest first. */
+	history: [] as RunSummary[],
+	/** The run the Logs tab is showing; null follows the latest. */
+	viewedRun: null as string | null,
+	/** The record of `viewedRun`, loaded from the run store, when it is not the latest. */
+	viewedRecord: null as RunRecord | null,
+	/** The JSON the next run starts with, as typed in the run bar. Empty uses the trigger's sample. */
+	payload: '',
 	fitRequest: 0,
 	command: null as {
 		type: 'fit' | 'reset' | 'focus';
@@ -168,7 +178,7 @@ export function select(selection: FlowSelection) {
 	if (current?.id === selection?.id && current?.type === selection?.type) return;
 	flow.selection = selection;
 	// the step panel follows the selected step, and stays on it when the selection clears
-	if (selection?.type === 'node') flow.inspector = { nodeId: selection.id, tab: flow.inspector?.tab ?? 'build' };
+	if (selection?.type === 'node') flow.inspector = { nodeId: selection.id, tab: flow.inspector?.tab ?? 'props' };
 }
 
 export function checkpoint() {
@@ -306,7 +316,7 @@ export function redo() {
 }
 
 export function openInspector(nodeId: string, tab?: InspectorTab) {
-	flow.inspector = { nodeId, tab: tab ?? flow.inspector?.tab ?? 'build' };
+	flow.inspector = { nodeId, tab: tab ?? flow.inspector?.tab ?? 'props' };
 	flow.selection = { type: 'node', id: nodeId };
 }
 
@@ -324,14 +334,16 @@ export function loadGraph(id: string, fallback: () => AutomationGraph) {
 		nodes: clone(flow.nodes),
 		edges: clone(flow.edges),
 		view: clone(flow.view),
-		logs: clone(flow.logs),
+		record: clone(flow.record),
+		history: clone(flow.history),
 		runCount: flow.run.count
 	};
 	const next = flow.saved[id];
 	const graph: SavedGraph = next ?? {
 		...fallback(),
 		view: { ...DEFAULT_VIEW },
-		logs: [],
+		record: null,
+		history: [],
 		runCount: 0
 	};
 	flow.saved[flow.graphId] = current;
@@ -339,7 +351,11 @@ export function loadGraph(id: string, fallback: () => AutomationGraph) {
 	flow.nodes = graph.nodes;
 	flow.edges = graph.edges;
 	flow.view = graph.view;
-	flow.logs = graph.logs;
+	flow.record = graph.record;
+	flow.history = graph.history;
+	flow.viewedRun = null;
+	flow.viewedRecord = null;
+	flow.payload = '';
 	flow.run = { ...IDLE_RUN, count: graph.runCount };
 	flow.selection = null;
 	flow.inspector = null;
@@ -357,16 +373,6 @@ export function exportGraph(id: string): AutomationGraph {
 
 export function setRun(patch: Partial<RunState>) {
 	Object.assign(flow.run, patch);
-}
-
-export function pushLog(log: Omit<RunLog, 'id' | 'time' | 'run'>) {
-	flow.logs.push({
-		...log,
-		id: createId(),
-		time: Date.now(),
-		run: flow.run.count
-	});
-	if (flow.logs.length > LOG_LIMIT) flow.logs = flow.logs.slice(-LOG_LIMIT);
 }
 
 export function clearRun() {

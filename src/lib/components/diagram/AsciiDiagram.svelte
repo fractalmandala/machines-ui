@@ -16,6 +16,11 @@ Framed ASCII or Unicode diagram text, with an optional label, a copy button, and
   `}
 </AsciiDiagram>
 ```
+
+@example
+```svelte
+<AsciiDiagram title="Box" content={'+---+\n| a |\n+---+'} showCopy={false} />
+```
 -->
 
 <script module lang="ts">
@@ -24,7 +29,7 @@ Framed ASCII or Unicode diagram text, with an optional label, a copy button, and
 		content?: string;
 		/** Optional label above the diagram. Uppercase, 1-2 words. */
 		title?: string;
-		/** Show a copy-to-clipboard button. Default true. */
+		/** Show a copy-to-clipboard button. Default true. The button copies `content`, so it appears only when `content` is passed (not when the diagram is given as children). */
 		showCopy?: boolean;
 		/** Dashed border around the diagram. Default true. */
 		bordered?: boolean;

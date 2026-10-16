@@ -12,7 +12,9 @@
 		selected: boolean;
 		targeted: boolean;
 		dragging: boolean;
-		runState: 'active' | 'done' | 'idle';
+		runState: 'active' | 'done' | 'idle' | 'failed' | 'waiting';
+		/** Words for the status line, from the run: the path a branch took. */
+		runLabel?: string;
 		onMeasure: (id: string, height: number) => void;
 		onNodePointerDown: (id: string, event: PointerEvent) => void;
 		onHandlePointerDown: (id: string, event: PointerEvent, port?: PortId) => void;
@@ -28,6 +30,7 @@
 		targeted,
 		dragging,
 		runState,
+		runLabel,
 		onMeasure,
 		onNodePointerDown,
 		onHandlePointerDown,
@@ -45,8 +48,8 @@
 	// what a FlowNode takes whatever its look; the node's own record and the run supply it
 	const shared = $derived({
 		title: action.label,
-		status: view.status ?? (runState === 'active' ? 'running' : runState === 'done' ? 'done' : 'idle'),
-		statusLabel: view.statusLabel,
+		status: view.status ?? (runState === 'active' ? 'running' : runState === 'done' ? 'done' : runState === 'failed' ? 'error' : runState === 'waiting' ? 'warning' : 'idle'),
+		statusLabel: view.statusLabel ?? (runState === 'waiting' ? 'Waiting' : runLabel),
 		selected,
 		badge: view.badge ?? (node.kind === 'trigger' ? 'IF' : undefined),
 		input: inputSide(node),

@@ -1,187 +1,188 @@
+// The run, as the canvas uses it. The work is done by the headless engine (`$lib/engine`): this file starts a run for
+// the open workflow, and turns the engine's events into the store the canvas, panels and run bar read.
 import { toast } from 'svelte-sonner';
-import {
-	clearRun,
-	openInspector,
-	pushLog,
-	setRun,
-	flow,
-	type PortId,
-	type FlowNodeData
-} from '$lib/stores/flow-store.svelte';
-import { ACTIONS } from './flow-actions.js';
+import { FlowRunError, createRunner, memoryRunStore, type RunEvent, type RunHandle, type RunRecord, type RunStore, type RunnerOptions } from '$lib/engine/index.js';
+import { clearRun, flow, openInspector, setRun, type RunSummary, type StepProgress } from '$lib/stores/flow-store.svelte';
 
-const STEP_DURATION = 720;
-const EDGE_DURATION = 420;
-const MAX_STEPS = 40;
+const plain = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 
-let token = 0;
-let clearTimer: number | null = null;
+let store: RunStore = memoryRunStore();
+let runner = createRunner({ store });
+let handle: RunHandle | null = null;
+let unsubscribe: (() => void) | null = null;
+let edgeTimer: number | null = null;
+let syncing = false;
 
-function wait(duration: number, run: number, graph: string) {
-	return new Promise<boolean>((resolve) =>
-		window.setTimeout(() => resolve(run === token && flow.graphId === graph), duration)
-	);
+/**
+ * Sets what runs are made of. With no call, every step that would touch the outside world is answered by a
+ * stand-in and delays are skipped: a run is a simulation. Pass `adapters` (and a real `clock`) to make steps real,
+ * a `store` such as `indexedDbRunStore()` to keep runs across reloads, and `env` for `${env.NAME}` values.
+ */
+export function configureRunner(options: RunnerOptions = {}) {
+	store = options.store ?? memoryRunStore();
+	runner = createRunner({ ...options, store });
 }
 
-function completion(node: FlowNodeData) {
-	switch (node.kind) {
-		case 'trigger':
-			return `Run started: “${node.title}”`;
-		case 'send-email':
-			return `Sent “${node.title}” to the team`;
-		case 'update-subscription':
-			return `Applied “${node.title}” to the record`;
-		case 'send-webhook':
-			return `POST ${node.rules?.url ?? 'https://hooks.example.com/notify'} responded 200 OK in 184ms`;
-		case 'wait-until':
-			return `Would wait until ${node.title} — skipped in test run`;
-		case 'time-delay':
-			return `${node.title} — fast-forwarded in test run`;
-		case 'enroll':
-			return `Started “${node.title}”`;
-		case 'branch':
-			return 'Evaluated branch conditions';
-		case 'agent':
-			return `${node.rules?.model ?? 'Model'} answered “${node.title}” in 1.2s`;
-		case 'transform':
-			return `${node.rules?.from ?? 'Input'} → ${node.rules?.to ?? 'output'}: “${node.title}” done`;
-		case 'read':
-			return `Read ${node.rules?.source ?? 'the source'} (4.1 KB)`;
-		case 'write':
-			return `Wrote ${node.rules?.target ?? 'the output'}`;
-		case 'review':
-			return `${node.rules?.check ?? 'Check'} passed`;
+/** The store the runner keeps its runs in. */
+export const runStore = () => store;
+
+const name = (id: string) => id.replace(/[-_]+/g, ' ').replace(/^./, (c) => c.toUpperCase());
+
+function scheduleSync() {
+	if (syncing || !handle) return;
+
+	syncing = true;
+	queueMicrotask(() => {
+		syncing = false;
+		if (handle) flow.record = handle.snapshot();
+	});
+}
+
+async function refreshHistory() {
+	const runs = await store.list(flow.graphId);
+
+	flow.history = runs.map((r, i): RunSummary => ({ id: r.id, status: r.status, startedAt: r.startedAt, finishedAt: r.finishedAt, simulated: r.simulated, steps: r.steps.length, number: runs.length - i }));
+}
+
+function reduce(event: RunEvent) {
+	const progress = (nodeId: string, status: StepProgress) => setRun({ stepStatus: { ...flow.run.stepStatus, [nodeId]: status } });
+
+	switch (event.type) {
+		case 'run.started':
+			setRun({ status: 'running', runId: event.record.id, startedAt: event.record.startedAt, finishedAt: null, visited: [], traversed: [], stepStatus: {}, waiting: [], simulated: false, error: null, activeNodeId: null, activeEdgeId: null, count: flow.run.count + 1 });
+			flow.viewedRun = null;
+			flow.viewedRecord = null;
+			break;
+		case 'step.started':
+			progress(event.nodeId, 'running');
+			setRun({ activeNodeId: event.nodeId });
+			break;
+		case 'step.finished':
+			progress(event.step.nodeId, 'done');
+			setRun({ visited: [...new Set([...flow.run.visited, event.step.nodeId])], activeNodeId: null, simulated: flow.run.simulated || event.step.stubbed });
+			break;
+		case 'step.failed':
+			progress(event.step.nodeId, 'failed');
+			setRun({ activeNodeId: null });
+			break;
+		case 'step.waiting':
+			progress(event.nodeId, 'waiting');
+			setRun({ waiting: [...new Set([...flow.run.waiting, event.nodeId])], activeNodeId: null });
+			break;
+		case 'edge.taken':
+			setRun({ traversed: [...flow.run.traversed, event.edgeId], activeEdgeId: event.edgeId });
+			if (edgeTimer) window.clearTimeout(edgeTimer);
+			edgeTimer = window.setTimeout(() => setRun({ activeEdgeId: null }), 700);
+			break;
+		case 'run.paused':
+			setRun({ status: 'paused' });
+			break;
+		case 'run.resumed':
+			setRun({ status: 'running', waiting: flow.run.waiting.filter((id) => flow.run.stepStatus[id] === 'waiting') });
+			break;
+		case 'run.finished': {
+			const r = event.record;
+
+			setRun({ status: r.status === 'done' ? 'done' : r.status === 'stopped' ? 'stopped' : 'failed', finishedAt: r.finishedAt, activeNodeId: null, activeEdgeId: null, waiting: [], simulated: r.simulated, error: r.error ?? null });
+			flow.record = r;
+			void refreshHistory();
+			finished(r);
+			break;
+		}
 	}
+
+	scheduleSync();
 }
 
-function roots() {
-	const { nodes, edges } = flow;
-	const triggers = nodes.filter((node) => node.kind === 'trigger');
-	if (triggers.length) return triggers;
-	return nodes.filter((node) => !edges.some((edge) => edge.target === node.id));
+function finished(r: RunRecord) {
+	const done = r.steps.filter((s) => s.status === 'done').length;
+	const seconds = ((r.finishedAt ?? r.startedAt) - r.startedAt) / 1000;
+	const lastNode = r.steps.filter((s) => s.status === 'done').at(-1)?.nodeId;
+	const action = lastNode ? { label: 'View logs', onClick: () => openInspector(lastNode, 'logs') } : undefined;
+
+	if (r.status === 'done') toast.success(r.simulated ? 'Simulated run finished' : 'Run finished', { description: `${done} steps${seconds >= 0.1 ? ` in ${seconds.toFixed(1)}s` : ''}`, action });
+	else if (r.status === 'failed') toast.error('Run failed', { description: r.error, action });
 }
 
 export function stopRun() {
-	token += 1;
-	clearRun();
+	handle?.stop();
 }
 
-export async function startRun() {
-	const state = flow;
-	if (state.run.status === 'running') return;
-	if (clearTimer) window.clearTimeout(clearTimer);
-	const run = ++token;
-	const graph = state.graphId;
-	const queue = roots().map((node) => node.id);
-	if (!queue.length) {
-		toast('Nothing to run yet', {
-			description: 'Drag a trigger onto the canvas to start a flow.'
-		});
-		return;
-	}
+/** True while a run is going or waiting for a person. */
+export const isRunning = () => flow.run.status === 'running' || flow.run.status === 'paused';
 
-	const startedAt = Date.now();
-	const count = state.run.count + 1;
-	setRun({
-		status: 'running',
-		activeNodeId: null,
-		activeEdgeId: null,
-		visited: [],
-		traversed: [],
-		startedAt,
-		finishedAt: null,
-		count
-	});
-	pushLog({
-		nodeId: null,
-		level: 'info',
-		message: `Test run #${count} started`
-	});
+/**
+ * Runs the open workflow. `trigger` is the payload it starts with; without it the run uses the payload typed in the
+ * run bar, then the trigger step's sample output. Returns the handle, or null if the workflow cannot run.
+ */
+export function startRun(options: { trigger?: unknown; name?: string; from?: string } = {}): RunHandle | null {
+	if (isRunning()) return handle;
 
-	const visited: string[] = [];
-	const traversed: string[] = [];
-	const paths: string[] = [];
-	let steps = 0;
+	let trigger = options.trigger;
 
-	while (queue.length && steps < MAX_STEPS) {
-		const nodeId = queue.shift()!;
-		const node = flow.nodes.find((item) => item.id === nodeId);
-		if (!node || visited.includes(nodeId)) continue;
-		steps += 1;
+	if (trigger === undefined && flow.payload.trim()) {
+		try {
+			trigger = JSON.parse(flow.payload);
+		} catch {
+			toast.error('The payload is not valid JSON', { description: 'Fix it in the run bar, or clear it to use the trigger’s sample.' });
 
-		setRun({ activeNodeId: nodeId, activeEdgeId: null });
-		pushLog({
-			nodeId,
-			level: 'info',
-			message: `${ACTIONS[node.kind].label} started`
-		});
-		if (!(await wait(STEP_DURATION, run, graph))) return;
-
-		visited.push(nodeId);
-		setRun({ visited: [...visited] });
-
-		const { edges } = flow;
-		let port: PortId = 'out';
-		if (node.kind === 'branch') {
-			port = Math.random() < 0.6 ? 'true' : 'false';
-			paths.push(port.toUpperCase());
-			pushLog({
-				nodeId,
-				level: 'success',
-				message: `Conditions evaluated → ${port.toUpperCase()} path`
-			});
-		} else {
-			pushLog({
-				nodeId,
-				level: 'success',
-				message: completion(node)
-			});
-		}
-
-		const outgoing = edges.filter((edge) => edge.source === nodeId && edge.port === port);
-		if (node.kind === 'branch' && !outgoing.length) {
-			pushLog({
-				nodeId,
-				level: 'warning',
-				message: `The ${port.toUpperCase()} path has no next step — the run ends here`
-			});
-		}
-
-		for (const edge of outgoing) {
-			setRun({ activeEdgeId: edge.id, activeNodeId: null });
-			if (!(await wait(EDGE_DURATION, run, graph))) return;
-			traversed.push(edge.id);
-			setRun({ traversed: [...traversed] });
-			queue.push(edge.target);
+			return null;
 		}
 	}
 
-	const finishedAt = Date.now();
-	const seconds = ((finishedAt - startedAt) / 1000).toFixed(1);
-	setRun({
-		status: 'done',
-		activeNodeId: null,
-		activeEdgeId: null,
-		finishedAt
-	});
-	pushLog({
-		nodeId: null,
-		level: 'success',
-		message: `Test run #${count} finished · ${visited.length} steps in ${seconds}s`
-	});
+	unsubscribe?.();
 
-	const lastNode = visited.at(-1);
-	toast.success('Test run finished', {
-		description: `${visited.length} steps in ${seconds}s${paths.length ? ` · took the ${paths.join(' → ')} path` : ''}`,
-		action: lastNode
-			? {
-					label: 'View logs',
-					onClick: () => openInspector(lastNode, 'logs')
-				}
-			: undefined
-	});
+	try {
+		handle = runner.run({ nodes: plain(flow.nodes), edges: plain(flow.edges) }, { trigger, from: options.from, flowId: flow.graphId, flowName: options.name ?? name(flow.graphId) });
+	} catch (error) {
+		if (!(error instanceof FlowRunError)) throw error;
 
-	clearTimer = window.setTimeout(() => {
-		if (run === token && flow.run.status === 'done') clearRun();
-	}, 9000);
+		toast.error('This workflow cannot run yet', { description: error.problems.slice(0, 3).map((p) => p.message).join(' ') });
+
+		return null;
+	}
+
+	unsubscribe = handle.subscribe(reduce);
+
+	// the runner announces the start before anyone can listen: begin from a clean canvas
+	if (flow.run.runId !== handle.id) reduce({ type: 'run.started', record: handle.snapshot() });
+
+	return handle;
+}
+
+/** Lets a step that is waiting for a person carry on. */
+export function approveStep(nodeId: string, note?: string) {
+	handle?.approve(nodeId, note);
+}
+
+/** Fails a step that is waiting for a person. */
+export function rejectStep(nodeId: string, reason?: string) {
+	handle?.reject(nodeId, reason);
+}
+
+/** Shows an earlier run in the Logs tab (null goes back to the latest). */
+export async function viewRun(id: string | null) {
+	flow.viewedRun = id;
+	flow.viewedRecord = id && id !== flow.record?.id ? ((await store.get(id)) ?? null) : null;
+}
+
+/** Carries on a run that was saved while paused, for example after a reload, when the runner was given a persistent store. */
+export async function resumeRun(id: string): Promise<RunHandle | null> {
+	const record = await store.get(id);
+
+	if (!record || record.status !== 'paused') return null;
+
+	unsubscribe?.();
+	handle = runner.resume({ nodes: plain(flow.nodes), edges: plain(flow.edges) }, record);
+	setRun({ status: 'running', runId: record.id, startedAt: record.startedAt, stepStatus: Object.fromEntries(record.steps.filter((s) => s.status === 'done' || s.status === 'waiting').map((s) => [s.nodeId, s.status as StepProgress])), visited: record.steps.filter((s) => s.status === 'done').map((s) => s.nodeId), traversed: record.traversed, waiting: record.state?.waiting ?? [], simulated: record.simulated, error: null });
+	flow.record = record;
+	unsubscribe = handle.subscribe(reduce);
+
+	return handle;
+}
+
+/** Forgets the run on the canvas (the statuses on the steps); the history stays. */
+export function resetRun() {
+	handle?.stop();
+	clearRun();
 }

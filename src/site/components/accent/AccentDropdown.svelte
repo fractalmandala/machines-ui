@@ -1,9 +1,8 @@
 <script lang="ts">
+	import ColorPicker from './ColorPicker.svelte';
+	import { ACCENT_EVENT, accents, DEFAULT_ACCENT_ID, setAccent } from '$lib/utils/accents.js';
 
-    import ColorPicker from './ColorPicker.svelte';
-    import { ACCENT_EVENT, accents, DEFAULT_ACCENT_ID, setAccent } from '$lib/utils/accents.js'
-
-    	let current = $state(DEFAULT_ACCENT_ID);
+	let current = $state(DEFAULT_ACCENT_ID);
 	let accentOpen = $state(false);
 	let showPicker = $state(false);
 	let dropdownEl: HTMLElement | undefined;
@@ -45,7 +44,8 @@
 
 	// The trigger's dot shows the live accent: read it now, and again whenever it changes.
 	$effect(() => {
-		const sync = () => (current = document.documentElement.getAttribute('data-accent') ?? probeHex());
+		const sync = () =>
+			(current = document.documentElement.getAttribute('data-accent') ?? probeHex());
 
 		sync();
 		window.addEventListener(ACCENT_EVENT, sync);
@@ -63,86 +63,84 @@
 	function onKeydown(e: KeyboardEvent) {
 		if (e.key === 'Escape' && accentOpen) closeAccentDropdown();
 	}
-
 </script>
 
-			<div class="fs-relative" role="button" tabindex="0" bind:this={dropdownEl} onkeydown={onKeydown}>
-				<span bind:this={probeEl} class="accent-probe" aria-hidden="true"></span>
+<div class="fs-relative" role="button" tabindex="0" bind:this={dropdownEl} onkeydown={onKeydown}>
+	<span bind:this={probeEl} class="accent-probe" aria-hidden="true"></span>
+	<button
+		type="button"
+		class="fs-icon fs-row fs-ycenter"
+		aria-label="Accent color"
+		aria-expanded={accentOpen}
+		onclick={toggleAccentDropdown}
+	>
+		<span class="accent-preview" style="background: {current}"></span>
+	</button>
+	{#if accentOpen}
+		<div class="accent-panel">
+			{#if !showPicker}
+				<div class="swatch-grid">
+					{#each accents as accent (accent.id)}
+						<button
+							type="button"
+							class="swatch-btn"
+							class:selected={accent.id === current}
+							style:--swatch={accent.accent}
+							aria-label={accent.accent}
+							onclick={(e) => {
+								e.stopPropagation();
+								setAccent(accent.accent);
+								closeAccentDropdown();
+							}}
+						>
+							<span class="swatch-dot"></span>
+						</button>
+					{/each}
+				</div>
 				<button
 					type="button"
-					class="accent-trigger"
-					aria-label="Accent color"
-					aria-expanded={accentOpen}
-					onclick={toggleAccentDropdown}
+					class="custom-btn"
+					onclick={(e) => {
+						e.stopPropagation();
+						showPicker = true;
+					}}
 				>
-					<span class="accent-preview" style:background={current}></span>
+					<span class="custom-icon">+</span>
+					<span>Custom color</span>
 				</button>
-				{#if accentOpen}
-					<div class="accent-panel">
-						{#if !showPicker}
-							<div class="swatch-grid">
-								{#each accents as accent (accent.id)}
-									<button
-										type="button"
-										class="swatch-btn"
-										class:selected={accent.id === current}
-										style:--swatch={accent.accent}
-										aria-label={accent.accent}
-										onclick={(e) => {
-											e.stopPropagation();
-											setAccent(accent.accent);
-											closeAccentDropdown();
-										}}
-									>
-										<span class="swatch-dot"></span>
-									</button>
-								{/each}
-							</div>
-							<button
-								type="button"
-								class="custom-btn"
-								onclick={(e) => {
-									e.stopPropagation();
-									showPicker = true;
-								}}
-							>
-								<span class="custom-icon">+</span>
-								<span>Custom color</span>
-							</button>
-						{:else}
-							<ColorPicker value={current} />
-							<button
-								type="button"
-								class="back-btn"
-								onclick={(e) => {
-									e.stopPropagation();
-									showPicker = false;
-								}}
-							>
-								← Back to presets
-							</button>
-						{/if}
-					</div>
-				{/if}
-			</div>
+			{:else}
+				<ColorPicker value={current} />
+				<button
+					type="button"
+					class="back-btn"
+					onclick={(e) => {
+						e.stopPropagation();
+						showPicker = false;
+					}}
+				>
+					← Back to presets
+				</button>
+			{/if}
+		</div>
+	{/if}
+</div>
 
 <style>
-
 	.accent-probe {
 		position: absolute;
 		width: 0;
 		height: 0;
 		color: var(--graph-accent, oklch(0.78 0.17 155));
+		background: none;
 	}
 
 	.accent-preview {
 		display: block;
-		width: 1.25rem;
-		height: 1.25rem;
+		width: 1rem;
+		height: 1rem;
 		border-radius: 9999px;
-		border: 2px solid var(--border, #333);
+		border: 1px solid var(--border, #333);
 	}
-
 
 	.accent-panel {
 		position: absolute;
@@ -152,7 +150,7 @@
 		background: var(--bg-dialog, #1e1e1e);
 		border: 1px solid var(--border, #333);
 		border-radius: 0.75rem;
-		box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 		z-index: 50;
 		overflow: hidden;
 	}
@@ -235,6 +233,4 @@
 	.back-btn:hover {
 		color: var(--text-primary, #ddd);
 	}
-
-
 </style>

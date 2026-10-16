@@ -42,3 +42,30 @@
 .fl-node-panel-rules-input {
 	color-scheme: dark;
 }
+
+/* JSON rule fields and the hints under the branch editor */
+.fl-node-panel-rules-json {
+	width: 100%;
+	box-sizing: border-box;
+	resize: vertical;
+	border-radius: 12px;
+	border: 1px solid color-mix(in oklab, #fff 10%, transparent);
+	background-color: color-mix(in oklab, #fff 4%, transparent);
+	padding: 10px 12px;
+	font-family: var(--font-mono, ui-monospace, monospace);
+	font-size: 12px;
+	color: #fff;
+}
+
+.fl-node-panel-rules-json[aria-invalid='true'] {
+	border-color: var(--fl-accent-red);
+}
+
+.fl-node-panel-rules-hint {
+	font-size: 12px;
+	color: color-mix(in oklab, #fff 45%, transparent);
+}
+
+.fl-node-panel-rules-hint[data-invalid] {
+	color: var(--fl-accent-red);
+}

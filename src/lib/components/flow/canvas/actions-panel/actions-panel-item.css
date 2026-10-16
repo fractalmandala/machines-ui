@@ -20,6 +20,11 @@
 	}
 }
 
+.fl-actions-panel-item[aria-selected='true'] {
+	background-color: color-mix(in oklab, #fff 6%, transparent);
+	box-shadow: inset 0 0 0 1px rgb(127 89 240 / 0.45);
+}
+
 .fl-actions-panel-item:focus-visible {
 	background-color: color-mix(in oklab, #fff 3%, transparent);
 	box-shadow: 0 0 0 1px rgb(127 89 240 / 0.6);

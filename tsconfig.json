@@ -11,6 +11,8 @@
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"strict": true,
+		// scripts/ run on Node's own type stripping, which needs explicit .ts imports
+		"allowImportingTsExtensions": true,
 		"types": ["$app/types", "node"],
 		"paths": {
 			"$lib/*": ["./src/lib/*"],
@@ -25,6 +27,7 @@
   "include": [
     "src",
     "test",
+    "scripts",
     "*"
   ],
   "exclude": [

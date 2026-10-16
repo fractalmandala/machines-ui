@@ -30,7 +30,7 @@ A one-month calendar grid with a weekday header, accent-marked days, and an opti
 		marks?: CalendarMark[] | number[];
 		/** Day number to draw boxed as today. */
 		today?: number;
-		/** How many accent colours the graph uses: `mono` one, `duo` two, `multi` three. */
+		/** How many accent colours the graph uses: `mono` one, `duo` two, `multi` three. Here it only colours `today`, and only when `today` is not also in `marks` (a marked day is always the accent). */
 		palette?: GraphPalette;
 		/** Character drawn at each corner of the frame. */
 		corner?: string;

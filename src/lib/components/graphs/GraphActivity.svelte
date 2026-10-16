@@ -41,8 +41,6 @@ A GitHub-style contribution grid: one cell per day, weeks across the frame, on a
 		weekStartsOn?: 0 | 1;
 		/** Ceiling of the intensity scale; defaults to the highest count. */
 		max?: number;
-		/** Show the intensity legend below the grid. */
-		legend?: boolean;
 		/** Extra sentence appended to the contribution summary. */
 		caption?: string | false;
 		/** Characters that draw the graph: a preset name (`shade`, `ascii`, `hash`, `bar`) or your own array, lightest to heaviest. */
@@ -71,7 +69,6 @@ A GitHub-style contribution grid: one cell per day, weeks across the frame, on a
 		days,
 		weekStartsOn = 0,
 		max,
-		legend = true,
 		caption,
 		glyphs,
 		palette,
@@ -196,7 +193,7 @@ A GitHub-style contribution grid: one cell per day, weeks across the frame, on a
 					{/each}
 				</div>
 				<div class="fs-row">
-					<div class="fs-box fs-yevenly pad-right-2xs">
+					<div class="fs-box fs-yevenly fs-pr-xs">
 						{#each labels as label, index (`d-${index}`)}
 							<span class="fs-text-muted">{label}</span>
 						{/each}

@@ -20,8 +20,6 @@ A live, character-based preview of a cron schedule, showing matching minute and 
 		baseTime?: number;
 		/** Scene width in characters. Default 60. */
 		cols?: number;
-		/** Scene height in rows. Default 12. */
-		rows?: number;
 		/** Animate the tick highlight. Default true. Reduced motion freezes on first run. */
 		animated?: boolean;
 		/** Milliseconds per tick. Default 220. */
@@ -254,7 +252,6 @@ A live, character-based preview of a cron schedule, showing matching minute and 
 		count = 8,
 		baseTime,
 		cols = 60,
-		rows = 12,
 		animated = true,
 		speedMs = 220,
 		label = '',

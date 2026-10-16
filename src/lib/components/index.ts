@@ -1,7 +1,3 @@
-// Markgraphy — ASCII-framed Svelte graphs for markdown.
-// Glyphs draw the chart: a dashed frame, `+` corners, `[ TITLE ]` on the top
-// edge, one accent color. No SVG, no canvas, no dependencies.
-
 // Frame primitives
 export { default as Frame } from './frame/Frame.svelte';
 export type { FrameProps, FrameDash, FrameMotion, FramePad } from './frame/Frame.svelte';
@@ -10,6 +6,10 @@ export { default as FrameRule } from './frame/FrameRule.svelte';
 export { default as GraphTrack } from './frame/GraphTrack.svelte';
 export { default as GraphTick } from './frame/GraphTick.svelte';
 export { default as GraphArrow } from './frame/GraphArrow.svelte';
+export { default as ButtonMachine } from './frame/ButtonMachine.svelte';
+export type { ButtonMachineProps } from './frame/ButtonMachine.svelte';
+export { default as ButtonMachineOutline } from './frame/ButtonMachineOutline.svelte';
+export type { ButtonMachineOutlineProps } from './frame/ButtonMachineOutline.svelte';
 
 // Flow
 export { default as FlowNode } from './flow/FlowNode.svelte';

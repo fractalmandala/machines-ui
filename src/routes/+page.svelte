@@ -1,5 +1,7 @@
 <script lang="ts">
 	import {
+		ButtonMachine,
+		ButtonMachineOutline,
 		FlowNode,
 		Frame,
 		GraphActivity,
@@ -13,6 +15,7 @@
 		GraphTicker
 	} from '$lib/components/index.js';
 	import CodeBlock from '$site/components/docs/code-block.svelte';
+	import Logo from '$site/components/logo-svg.svelte'
 
 	let { data } = $props();
 
@@ -33,7 +36,7 @@
 </script>
 
 <svelte:head>
-	<title>machines-ui — graphs, animations, diagrams and a workflow builder</title>
+	<title>Machines UI — Svelte nodes, frames, and graphs that move</title>
 	<meta
 		name="description"
 		content="Svelte 5 components drawn with characters: graphs, animated terminals, diagrams, and a node-and-edge workflow builder."
@@ -41,9 +44,11 @@
 </svelte:head>
 
 <section class="fs-content-section fs-box fs-gap-2xl home">
+
 	<div class="fs-grid-6 fs-gap-xl">
 		<div class="fs-cspan-3 fs-box fs-gap-bs fs-ycenter">
-			<span class="docs-kicker">machines-ui · {data.total} components</span>
+			<Logo height={72}/>
+			<p class="fs-text-2xl fs-text-secondary fs-lh11">Svelte 5 components with character and movement - graphs, visual terminals, diagrams, and a workflow visualizing system to run them.</p>
 			<h1 class="fs-page-title fs-text-4xl">Graphs, animation, diagrams — and the machine that runs them.</h1>
 			<p class="fs-page-desc fs-text-secondary">
 				Svelte components drawn with characters, not pixels: dashed frames, block glyphs, monospace
@@ -51,9 +56,9 @@
 			</p>
 			<CodeBlock code="pnpm add @fractaldesign/machines-ui" lang="shell" />
 			<div class="fs-row fs-gap-sm fs-wrap">
-				<a class="fs-primary fs-modern fs-px-bs" href="/docs">Docs</a>
-				<a class="fs-outline fs-modern fs-px-bs" href="/creator">Open the builder</a>
-				<a class="fs-outline fs-modern fs-px-bs" href="/docs/examples">Examples</a>
+				<ButtonMachine href="/docs">Docs</ButtonMachine>
+				<ButtonMachineOutline href="/creator">Open the builder</ButtonMachineOutline>
+				<ButtonMachineOutline href="/docs/examples">Examples</ButtonMachineOutline>
 			</div>
 		</div>
 		<div class="fs-cspan-3 fs-box fs-ycenter">
@@ -137,3 +142,4 @@
 		</Frame>
 	</div>
 </section>
+

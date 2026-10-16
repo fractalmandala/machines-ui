@@ -14,6 +14,8 @@
 	}: DialogContentProps = $props();
 
 	const dialog = useDialog();
+	// the id is read once, when the dialog opens
+	// svelte-ignore state_referenced_locally
 	if (id) dialog.contentId = id;
 
 	const EXIT_MS = 300;

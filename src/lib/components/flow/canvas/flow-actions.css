@@ -10,9 +10,9 @@
 		--accent: var(--fl-accent-send-email);
 	}
 
-	/* update-subscription */
-	.fl-action-theme-update-subscription {
-		--accent: var(--fl-accent-update-subscription);
+	/* update-record */
+	.fl-action-theme-update-record {
+		--accent: var(--fl-accent-update-record);
 	}
 
 	/* send-webhook */
@@ -35,9 +35,9 @@
 		--accent: var(--fl-accent-branch);
 	}
 
-	/* enroll */
-	.fl-action-theme-enroll {
-		--accent: var(--fl-accent-enroll);
+	/* run-workflow */
+	.fl-action-theme-run-workflow {
+		--accent: var(--fl-accent-run-workflow);
 	}
 
 	/* agent */

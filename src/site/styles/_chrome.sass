@@ -1,0 +1,61 @@
+// Docs-site chrome: layout, type and button utilities used by this package's own
+// site. Not part of the library stylesheet (scripts/build-styles.ts rejects them
+// there): a consumer's page must never receive global .row, .box or code rules.
+
+:root
+	--col-svelte: var(--fl-accent-orange)
+	--pad: clamp(1rem, 2.4vw, 2rem)
+
+// ── Layout utilities ─────────────────────────────────────────────────────────
+.box, .row
+	display: flex
+
+.box
+	flex-direction: column
+
+// ── Type utilities ───────────────────────────────────────────────────────────
+.kicker
+	color: var(--graph-accent)
+
+.kicker-hover
+	&:hover
+		color: var(--graph-accent) !important
+
+a
+	&:hover
+		.kicker-hover
+			color: var(--graph-accent) !important
+
+.display
+	font-family: var(--font-sans)
+	font-weight: 600
+	letter-spacing: -0.045em
+	line-height: 0.92
+	text-wrap: balance
+
+// ── Buttons ──────────────────────────────────────────────────────────────────
+.ghost
+	display: inline-flex
+	align-items: center
+	justify-content: center
+	height: 36px
+	min-width: 96px
+	padding: 0 1rem
+	text-transform: uppercase
+	letter-spacing: 0.08em
+	font-size: 0.72rem
+	font-family: var(--font-sans)
+	font-weight: 600
+	text-decoration: none
+	transition: background 90ms, border-color 90ms
+
+.ghost
+	background: transparent
+	color: var(--text-primary)
+	border: 1px solid var(--border)
+	&:hover
+		border-color: var(--text-primary)
+
+// ── Misc utilities ───────────────────────────────────────────────────────────
+code
+	font-family: var(--font-mono)

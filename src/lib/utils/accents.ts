@@ -1,5 +1,5 @@
-// Accent system for the docs site. A choice paints --graph-accent/-2/-3 onto <html>; every graph
-// picks it up through the CSS variable contract. The colours themselves are the package's one
+// Accent system for the docs site. A choice paints --graph-accent/-2/-3 and the site's own
+// --theme-color/-alt onto <html>; every graph and every fs- class picks it up through the CSS variable contract. The colours themselves are the package's one
 // accent palette (ACCENTS in core/values.ts): this file lists them for the picker and applies
 // whichever is chosen, and holds no colour of its own.
 
@@ -15,6 +15,37 @@ export const accents = ACCENTS.map((accent) => {
 
 	return { id: hex, label: accent.name, accent: hex };
 });
+
+// What one accent colour paints onto <html>. `{hex}` is the colour. Both the running code and the pre-paint script
+// (`accentScript`) read this table, so they cannot disagree.
+const ACCENT_VARS: [string, string][] = [
+	['--graph-accent', '{hex}'],
+	['--graph-accent-2', 'color-mix(in oklch, {hex} 65%, black)'],
+	['--graph-accent-3', 'color-mix(in oklch, {hex} 50%, white)'],
+	// the site's colour (links, primary buttons, borders) follows the accent too
+	['--theme-color', '{hex}'],
+	['--theme-color-alt', 'color-mix(in oklch, {hex} 80%, black)']
+];
+
+function paintVars(root: HTMLElement, hex: string) {
+	root.setAttribute('data-accent', hex);
+
+	for (const [name, template] of ACCENT_VARS) root.style.setProperty(name, template.replaceAll('{hex}', hex));
+}
+
+/**
+ * Inline this in <svelte:head> next to `modeScript()`, so the saved accent (or the default) is on <html> before the
+ * first paint. Without it the tokens' fixed --theme-color shows until the app mounts, and every reload flashes it.
+ *
+ * ```svelte
+ * <svelte:head>
+ *   {@html `<script>${accentScript()}<\/script>`}
+ * </svelte:head>
+ * ```
+ */
+export function accentScript(): string {
+	return `(function(){try{var h=localStorage.getItem(${JSON.stringify(ACCENT_STORAGE_KEY)});if(!/^#[0-9a-f]{6}$/i.test(h||''))h=${JSON.stringify(DEFAULT_ACCENT_ID)};h=h.toLowerCase();var r=document.documentElement;r.setAttribute('data-accent',h);${JSON.stringify(ACCENT_VARS)}.forEach(function(v){r.style.setProperty(v[0],v[1].split('{hex}').join(h))})}catch(e){}})()`;
+}
 
 let shimmerTimer: number | undefined;
 
@@ -34,10 +65,7 @@ export function setAccent(hex: string) {
 	if (root.getAttribute('data-accent') === normalized) return;
 
 	const apply = () => {
-		root.setAttribute('data-accent', normalized);
-		root.style.setProperty('--graph-accent', normalized);
-		root.style.setProperty('--graph-accent-2', `color-mix(in oklch, ${normalized} 65%, black)`);
-		root.style.setProperty('--graph-accent-3', `color-mix(in oklch, ${normalized} 50%, white)`);
+		paintVars(root, normalized);
 
 		try {
 			localStorage.setItem(ACCENT_STORAGE_KEY, normalized);
@@ -72,4 +100,24 @@ export function setAccent(hex: string) {
 		root.classList.add('accent-shimmer');
 		shimmerTimer = window.setTimeout(() => root.classList.remove('accent-shimmer'), 420);
 	}
+}
+
+/**
+ * On load: paint the saved accent, or the default one, so the site colour matches the picker from the first
+ * paint of the app. Without this the tokens' fixed --theme-color shows until someone chooses an accent.
+ */
+export function restoreAccent() {
+	let saved: string | null = null;
+
+	try {
+		saved = localStorage.getItem(ACCENT_STORAGE_KEY);
+	} catch {
+		/* private mode: fall back to the default */
+	}
+
+	const hex = saved && /^#[0-9a-f]{6}$/i.test(saved) ? saved : DEFAULT_ACCENT_ID;
+
+	// paint without the wipe: nothing is changing on screen yet
+	paintVars(document.documentElement, hex.toLowerCase());
+	window.dispatchEvent(new Event(ACCENT_EVENT));
 }

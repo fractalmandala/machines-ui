@@ -78,7 +78,7 @@ function jevRouter(): AutomationGraph {
 			node(p, 'resume', 'agent', 'Continue with Luna', 'The worker model picks the plan up where it stopped.', -1, 2,
 				{ rules: { model: 'Luna (worker)' } }),
 			node(p, 'classify', 'agent', 'Jev classifies the prompt', 'Answers one typed question: how complex is this request?', 1, 2,
-				{ rules: { model: 'Jev (classifier)' }, view: { badge: 'score', status: 'done', statusLabel: 'P(complex) 0.82', accent: accentOf('violet') } }),
+				{ rules: { model: 'Jev (classifier)' }, view: { badge: 'score', accent: accentOf('violet') } }),
 			node(p, 'complex', 'branch', 'P(complex) ≥ 0.5?', 'Above the threshold the request needs a planner.', 1, 3,
 				{ outputs: sides('left', 'right') }),
 			node(p, 'plan', 'agent', 'Plan with Sol', 'The planner writes the steps before anything is edited.', 0, 4,
@@ -86,7 +86,7 @@ function jevRouter(): AutomationGraph {
 			node(p, 'simple', 'agent', 'Answer with Luna', 'A simple request goes straight to the worker.', 2, 4,
 				{ rules: { model: 'Luna (worker)' } }),
 			node(p, 'edit', 'review', 'First edit succeeded?', 'Planning ends after the first successful write.', 0, 5,
-				{ rules: { check: 'Tests pass' }, view: { statusLabel: false } }),
+				{ rules: { check: 'Tests pass' } }),
 			node(p, 'handoff', 'agent', 'Hand off to Luna', 'Luna carries out the rest of the plan.', 0, 6,
 				{ rules: { model: 'Luna (worker)' } })
 		],
@@ -117,9 +117,9 @@ function jsonToMarkdown(): AutomationGraph {
 			node(p, 'convert', 'transform', 'JSON → Markdown', 'Turns objects into headings, arrays into lists.', 3, -1,
 				{ input: 'left', outputs: [{ id: 'out', side: 'right' }], rules: { from: 'JSON', to: 'Markdown' } }),
 			node(p, 'repair', 'agent', 'Repair the JSON', 'Fixes trailing commas and unquoted keys, then tries again.', 3, 1,
-				{ input: 'left', outputs: [{ id: 'out', side: 'right' }], view: { look: 'frame', dash: 'dot', motion: 'pulse', corner: '×' } }),
+				{ rules: { model: 'Luna (worker)' }, input: 'left', outputs: [{ id: 'out', side: 'right' }], view: { look: 'frame', dash: 'dot', motion: 'pulse', corner: '×' } }),
 			node(p, 'write', 'write', 'Write data.md', 'Saves the Markdown beside the original.', 4, 0,
-				{ input: 'left', outputs: [{ id: 'out', side: 'bottom' }], rules: { target: 'inbox/data.md' }, view: { status: 'done' } })
+				{ input: 'left', outputs: [{ id: 'out', side: 'bottom' }], rules: { target: 'inbox/data.md' } })
 		],
 		edges: [
 			wire(p, 'start', 'read'),
@@ -144,11 +144,11 @@ function llmWiki(): AutomationGraph {
 				{ rules: { model: 'Luna (worker)' } }),
 			node(p, 'exists', 'branch', 'Page already exists?', 'Looks each entity up in the wiki index.', 0, 3, { outputs: sides('left', 'right') }),
 			node(p, 'merge', 'agent', 'Merge into the page', 'Adds the new claims and cites the source.', -1, 4,
-				{ view: { look: 'frame', dash: 'gap', motion: 'march', speed: 0.6, easing: 'linear' } }),
+				{ rules: { model: 'Luna (worker)' }, view: { look: 'frame', dash: 'gap', motion: 'march', speed: 0.6, easing: 'linear' } }),
 			node(p, 'draft', 'agent', 'Draft a new page', 'Writes a first version with links to related pages.', 1, 4,
-				{ view: { look: 'frame', dash: 'long', motion: 'draw', pad: 'none' } }),
+				{ rules: { model: 'Luna (worker)' }, view: { look: 'frame', dash: 'long', motion: 'draw', pad: 'none' } }),
 			node(p, 'links', 'review', 'Every link resolves', 'Checks that each [[link]] points at a real page.', 0, 5,
-				{ rules: { check: 'Schema valid' }, view: { status: 'warning', statusLabel: '2 unresolved' } }),
+				{ rules: { check: 'Schema valid' } }),
 			node(p, 'write', 'write', 'Write the wiki page', 'Saves the page and its backlinks.', 0, 6, { rules: { target: 'wiki/' } }),
 			node(p, 'index', 'send-webhook', 'Rebuild the index', 'Tells the search index a page changed.', 0, 7)
 		],
@@ -177,9 +177,9 @@ function pullRequestReview(): AutomationGraph {
 				{ rules: { model: 'Sol (planner)' }, view: { look: 'frame', motion: 'scan', speed: 2, dash: 'std' } }),
 			node(p, 'blocking', 'branch', 'Blocking issues?', 'Any finding marked blocking stops the merge.', 0, 3, { outputs: sides('left', 'right') }),
 			node(p, 'changes', 'write', 'Request changes', 'Posts each finding as a comment on its line.', -1, 4,
-				{ view: { status: 'error', statusLabel: 'Blocked' }, rules: { target: 'pull request comments' } }),
+				{ rules: { target: 'pull request comments' } }),
 			node(p, 'approve', 'write', 'Approve the pull request', 'Posts an approval with the summary.', 1, 4,
-				{ view: { status: 'done' }, rules: { target: 'pull request review' } }),
+				{ rules: { target: 'pull request review' } }),
 			node(p, 'notify', 'send-webhook', 'Tell the channel', 'Posts the verdict to the team channel.', 0, 5,
 				{ input: 'top' })
 		],
@@ -210,7 +210,7 @@ function supportTriage(): AutomationGraph {
 			node(p, 'approve', 'review', 'A person approves', 'Holds the draft until a teammate approves it.', 1, 4,
 				{ rules: { check: 'Human approves' }, view: { look: 'frame', dash: 'alt', motion: 'pulse', cornerBlink: false } }),
 			node(p, 'send', 'send-email', 'Send the reply', 'Sends the approved answer to the customer.', 1, 5, { rules: { subject: 'Re: your request' } }),
-			node(p, 'tag', 'update-subscription', 'Tag the ticket', 'Records the urgency and the outcome on the ticket.', 0, 6,
+			node(p, 'tag', 'update-record', 'Tag the ticket', 'Records the urgency and the outcome on the ticket.', 0, 6,
 				{ rules: { action: 'Add tag', value: 'triaged' } })
 		],
 		edges: [
@@ -236,9 +236,9 @@ function meetingNotes(): AutomationGraph {
 			node(p, 'text', 'transform', 'Audio → transcript', 'Converts speech to text with speaker labels.', 1, 0,
 				{ input: 'left', outputs: [{ id: 'out', side: 'right' }], rules: { from: 'Text', to: 'Text' }, view: { badge: 'type' } }),
 			node(p, 'summary', 'agent', 'Summarise the meeting', 'Keeps decisions, drops the small talk.', 2, 0,
-				{ input: 'left', outputs: [{ id: 'out', side: 'right' }, ], view: { look: 'frame', dash: 'std', motion: 'march', corner: '□' } }),
+				{ rules: { model: 'Luna (worker)' }, input: 'left', outputs: [{ id: 'out', side: 'right' }, ], view: { look: 'frame', dash: 'std', motion: 'march', corner: '□' } }),
 			node(p, 'tasks', 'agent', 'List the action items', 'Finds each task, its owner and its due date.', 2, 1,
-				{ input: 'top', outputs: [{ id: 'out', side: 'left' }], view: { look: 'frame', dash: 'short', motion: 'reverse', corner: '*', pad: 'lg' } }),
+				{ rules: { model: 'Luna (worker)' }, input: 'top', outputs: [{ id: 'out', side: 'left' }], view: { look: 'frame', dash: 'short', motion: 'reverse', corner: '*', pad: 'lg' } }),
 			node(p, 'notes', 'write', 'Write the notes page', 'Saves the summary with the transcript attached.', 1, 1,
 				{ input: 'right', outputs: [{ id: 'out', side: 'bottom' }], rules: { target: 'notes/' } }),
 			node(p, 'share', 'send-email', 'Share with attendees', 'Emails the summary and the action items.', 1, 2,
@@ -264,10 +264,10 @@ function weeklyReport(): AutomationGraph {
 			node(p, 'read', 'read', 'Read analytics.csv', 'Loads last week’s numbers.', 0, 2, { rules: { source: 'analytics.csv' } }),
 			node(p, 'json', 'transform', 'CSV → JSON', 'Turns each row into a record.', 0, 3, { rules: { from: 'CSV', to: 'JSON' }, view: { pad: 'sm' } }),
 			node(p, 'summary', 'agent', 'Write the summary', 'Explains what moved and why, in three sentences.', 0, 4,
-				{ view: { look: 'frame', motion: 'draw', dash: 'std', easing: 'out-back' } }),
+				{ rules: { model: 'Luna (worker)' }, view: { look: 'frame', motion: 'draw', dash: 'std', easing: 'out-back' } }),
 			node(p, 'send', 'send-email', 'Email the report', 'Sends the summary to the team.', 0, 5, { rules: { subject: 'Weekly report' } }),
 			node(p, 'again', 'time-delay', 'Wait 7 days', 'Pauses until next week.', 0, 6),
-			node(p, 'next', 'enroll', 'Weekly report', 'Hands the run over to start the flow again.', 0, 7,
+			node(p, 'next', 'run-workflow', 'Weekly report', 'Hands the run over to start the flow again.', 0, 7,
 				{ rules: { automation: 'Weekly report' } })
 		],
 		edges: [
@@ -287,7 +287,7 @@ function releaseNotes(): AutomationGraph {
 			node(p, 'group', 'agent', 'Group by theme', 'Sorts changes into features, fixes and breaking changes.', 0, 2, { rules: { model: 'Luna (worker)' } }),
 			node(p, 'breaking', 'branch', 'Any breaking change?', 'A breaking change needs a migration note.', 0, 3, { outputs: sides('left', 'right') }),
 			node(p, 'migrate', 'agent', 'Write the migration note', 'Explains what to change and shows the before and after.', -1, 4,
-				{ view: { look: 'frame', dash: 'gap', status: 'warning', statusLabel: 'Breaking' } }),
+				{ rules: { model: 'Luna (worker)' }, view: { look: 'frame', dash: 'gap' } }),
 			node(p, 'ok', 'transform', 'Format as Markdown', 'Turns the groups into a CHANGELOG entry.', 1, 4, { rules: { from: 'JSON', to: 'Markdown' } }),
 			node(p, 'approve', 'review', 'A person approves', 'The release manager reads the entry before it ships.', 0, 5, { rules: { check: 'Human approves' } }),
 			node(p, 'write', 'write', 'Update CHANGELOG.md', 'Adds the entry at the top.', 0, 6, { rules: { target: 'CHANGELOG.md' } })
@@ -308,11 +308,11 @@ function translatePost(): AutomationGraph {
 			node(p, 'post', 'trigger', 'Post published', 'A post goes live in English.', 1, 0,
 				{ outputs: [{ id: 'out', side: 'left' }, ], view: { look: 'frame', dash: 'std', motion: 'march' } }),
 			node(p, 'es', 'agent', 'Translate to Spanish', 'Keeps the tone and the code samples.', 0, 1,
-				{ input: 'right', outputs: [{ id: 'out', side: 'bottom' }], view: { badge: 'ES' } }),
+				{ rules: { model: 'Luna (worker)' }, input: 'right', outputs: [{ id: 'out', side: 'bottom' }], view: { badge: 'ES' } }),
 			node(p, 'fr', 'agent', 'Translate to French', 'Keeps the tone and the code samples.', 2, 1,
-				{ input: 'left', outputs: [{ id: 'out', side: 'bottom' }], view: { badge: 'FR' } }),
+				{ rules: { model: 'Luna (worker)' }, input: 'left', outputs: [{ id: 'out', side: 'bottom' }], view: { badge: 'FR' } }),
 			node(p, 'score', 'review', 'Quality score above 0.8', 'Compares each version back against the English.', 1, 2,
-				{ rules: { check: 'Score above threshold' }, view: { status: 'running', statusLabel: 'Scoring' } }),
+				{ rules: { check: 'Score above threshold' } }),
 			node(p, 'write', 'write', 'Publish both versions', 'Adds each language beside the original.', 1, 3, { rules: { target: 'posts/es, posts/fr' } })
 		],
 		edges: [
@@ -329,16 +329,16 @@ function incidentResponse(): AutomationGraph {
 	return {
 		nodes: [
 			node(p, 'alert', 'trigger', 'Alert fired', 'Monitoring reports that the service is unhealthy.', 0, 0,
-				view({ look: 'frame', badge: 'IF', status: 'error', statusLabel: 'Firing', dash: 'short', motion: 'pulse', speed: 2, cornerBlink: true })),
+				view({ look: 'frame', badge: 'IF', dash: 'short', motion: 'pulse', speed: 2, cornerBlink: true })),
 			node(p, 'diagnose', 'agent', 'Diagnose the cause', 'Reads recent deploys and logs and names the likely cause.', 0, 1,
 				{ rules: { model: 'Sol (planner)' } }),
 			node(p, 'fix', 'send-webhook', 'Roll back the deploy', 'Asks the deploy system to restore the last good version.', 0, 2),
 			node(p, 'wait', 'time-delay', 'Wait 5 minutes', 'Gives the service time to recover.', 0, 3, { rules: { amount: '5', unit: 'minutes' } }),
 			node(p, 'status', 'read', 'Read the health check', 'Loads the current status of the service.', 0, 4, { rules: { source: 'status endpoint' } }),
 			node(p, 'ok', 'branch', 'Recovered?', 'The service answers its health check.', 0, 5, { outputs: sides('left', 'right') }),
-			node(p, 'post', 'write', 'Draft the post-mortem', 'Writes the timeline and the cause.', -1, 6, { view: { status: 'done' } }),
-			node(p, 'escalate', 'enroll', 'Escalation', 'Hands the incident to the escalation flow.', 1, 6,
-				{ rules: { automation: 'Escalation' }, view: { look: 'frame', dash: 'alt', motion: 'scan', corner: '×', status: 'warning' } })
+			node(p, 'post', 'write', 'Draft the post-mortem', 'Writes the timeline and the cause.', -1, 6),
+			node(p, 'escalate', 'run-workflow', 'Escalation', 'Hands the incident to the escalation flow.', 1, 6,
+				{ rules: { automation: 'Escalation' }, view: { look: 'frame', dash: 'alt', motion: 'scan', corner: '×' } })
 		],
 		edges: [
 			wire(p, 'alert', 'diagnose', 'out', { accent: accentOf('red') }), wire(p, 'diagnose', 'fix'), wire(p, 'fix', 'wait', 'out', { dash: 'std' }),
@@ -380,17 +380,111 @@ export function seedAutomations(now: number): Automation[] {
 	}));
 }
 
+// ── what each sample step answers with, and the conditions its branches test ───────
+// Every step that would touch the outside world declares `sampleOutput`, the JSON a simulation answers with.
+// A branch's condition then runs for real over that data, so a simulation takes the path the data points to.
+// Change a sample output (in the step panel) and the run takes another path.
+
+const out = (value: unknown) => JSON.stringify(value);
+const when = (path: string, operator: string, value?: string, combine: 'all' | 'any' = 'all') => out({ combine, items: [{ path, operator, ...(value === undefined ? {} : { value }) }] });
+
+type RuleTable = Record<string, Record<string, string>>;
+
+const SAMPLE_RULES: Record<string, RuleTable> = {
+	jev: {
+		'jev-prompt': { sampleOutput: out({ prompt: 'Refactor the billing module and add tests', session: null }) },
+		'jev-resumed': { conditions: when('trigger.session', 'exists') },
+		'jev-resume': { sampleOutput: out({ text: 'Continuing the saved plan' }) },
+		'jev-classify': { sampleOutput: out({ label: 'complex', score: 0.82 }) },
+		'jev-complex': { conditions: when('jev-classify.score', '>=', '0.5') },
+		'jev-plan': { sampleOutput: out({ steps: ['split the module', 'add tests', 'move the callers'] }) },
+		'jev-simple': { sampleOutput: out({ text: 'Answered directly' }) },
+		'jev-edit': { sampleOutput: out({ pass: true }) },
+		'jev-handoff': { sampleOutput: out({ text: 'Carried out the plan' }) }
+	},
+	json: {
+		'json-start': { sampleOutput: out({ file: 'inbox/data.json' }) },
+		'json-read': { sampleOutput: out({ title: 'Weekly metrics', visits: 1200, sources: { search: 700, direct: 500 }, tags: ['growth', 'weekly'] }) },
+		'json-valid': { conditions: when('json-read.title', 'exists') },
+		'json-repair': { sampleOutput: out('# Weekly metrics (repaired)\n\n- **visits:** 1200\n') }
+	},
+	wiki: {
+		'wiki-source': { sampleOutput: out({ source: 'raw/attention-is-all-you-need.md' }) },
+		'wiki-read': { sampleOutput: out({ path: 'raw/attention-is-all-you-need.md', content: 'The Transformer relies on attention alone…' }) },
+		'wiki-extract': { sampleOutput: out({ entities: ['Transformer', 'Attention'], claims: 3, pageExists: true }) },
+		'wiki-exists': { conditions: when('wiki-extract.pageExists', 'is', 'true') },
+		'wiki-merge': { sampleOutput: out({ page: 'Transformer', changed: true }) },
+		'wiki-draft': { sampleOutput: out({ page: 'Transformer', created: true }) },
+		'wiki-links': { schema: out({ type: 'object', required: ['page'] }) }
+	},
+	pr: {
+		'pr-open': { sampleOutput: out({ pr: 482, title: 'Add retry to the queue' }) },
+		'pr-diff': { sampleOutput: out({ files: 4, additions: 120, deletions: 30 }) },
+		'pr-review': { sampleOutput: out({ blocking: 0, findings: ['rename `x` to `attempts`'] }) },
+		'pr-blocking': { conditions: when('pr-review.blocking', '>', '0') }
+	},
+	support: {
+		'support-email': { sampleOutput: out({ from: 'sam@example.com', subject: 'Checkout is slow', body: 'It takes ten seconds to pay.' }) },
+		'support-classify': { sampleOutput: out({ urgency: 'normal' }) },
+		'support-urgent': { conditions: when('support-classify.urgency', 'is', 'urgent') },
+		'support-draft': { sampleOutput: out({ reply: 'Thanks for the report. We are looking into the slow checkout.' }) }
+	},
+	meeting: {
+		'meeting-upload': { sampleOutput: out({ file: 'standup.m4a' }) },
+		'meeting-summary': { sampleOutput: out({ summary: 'Shipped the export; blocked on review.', decisions: 2 }) },
+		'meeting-tasks': { sampleOutput: out({ tasks: [{ owner: 'Ava', task: 'Review the export PR', due: 'Fri' }] }) }
+	},
+	report: {
+		'report-week': { sampleOutput: out({ week: '2026-W41' }) },
+		'report-read': { sampleOutput: out('week,visits,signups\n2026-W40,1200,48\n2026-W41,1344,61\n') },
+		'report-monday': { day: 'Monday', time: '09:00' },
+		'report-summary': { sampleOutput: out({ summary: 'Visits rose 12% and signups 27%.' }) },
+		'report-again': { amount: '7', unit: 'days' }
+	},
+	release: {
+		'release-tag': { sampleOutput: out({ tag: 'v1.4.0' }) },
+		'release-commits': { sampleOutput: out({ commits: ['feat: export workflows', 'fix: log order'] }) },
+		'release-group': { sampleOutput: out({ features: ['export workflows'], fixes: ['log order'], breaking: false }) },
+		'release-breaking': { conditions: when('release-group.breaking', 'is', 'true') },
+		'release-migrate': { sampleOutput: out({ note: 'Rename `enroll` to `run-workflow`.' }) }
+	},
+	translate: {
+		'translate-post': { sampleOutput: out({ post: 'posts/hello.md', title: 'Hello' }) },
+		'translate-es': { sampleOutput: out({ text: 'Hola', score: 0.91 }) },
+		'translate-fr': { sampleOutput: out({ text: 'Bonjour', score: 0.86 }) },
+		'translate-score': { path: 'translate-es.score', threshold: '0.8' }
+	},
+	incident: {
+		'incident-alert': { sampleOutput: out({ service: 'checkout', severity: 'high' }) },
+		'incident-diagnose': { sampleOutput: out({ cause: 'deploy 482 raised the error rate' }) },
+		'incident-status': { sampleOutput: out({ healthy: true }) },
+		'incident-ok': { conditions: when('incident-status.healthy', 'is', 'true') }
+	}
+};
+
+/** A sample with its sample outputs and conditions filled in. */
+function sample(id: string, build: () => AutomationGraph): () => AutomationGraph {
+	return () => {
+		const graph = build();
+		const table = SAMPLE_RULES[id] ?? {};
+
+		for (const node of graph.nodes) if (table[node.id]) node.rules = { ...(node.rules ?? {}), ...table[node.id] };
+
+		return graph;
+	};
+}
+
 export const SEED_GRAPHS: Record<string, () => AutomationGraph> = {
-	jev: jevRouter,
-	json: jsonToMarkdown,
-	wiki: llmWiki,
-	pr: pullRequestReview,
-	support: supportTriage,
-	meeting: meetingNotes,
-	report: weeklyReport,
-	release: releaseNotes,
-	translate: translatePost,
-	incident: incidentResponse
+	jev: sample('jev', jevRouter),
+	json: sample('json', jsonToMarkdown),
+	wiki: sample('wiki', llmWiki),
+	pr: sample('pr', pullRequestReview),
+	support: sample('support', supportTriage),
+	meeting: sample('meeting', meetingNotes),
+	report: sample('report', weeklyReport),
+	release: sample('release', releaseNotes),
+	translate: sample('translate', translatePost),
+	incident: sample('incident', incidentResponse)
 };
 
 export function blankGraph(id: string): AutomationGraph {

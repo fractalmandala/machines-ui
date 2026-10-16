@@ -54,8 +54,8 @@
 	{/each}
 {/snippet}
 
-<pre
-	class="fs-minh0 fs-grow fs-py-md fl-export-preview-pre">
+<!-- a <div>, not a <pre>: Svelte keeps every space and newline of the markup inside a <pre>, and here that drew as gaps between lines -->
+<div class="fs-minh0 fs-grow fs-py-md fl-export-preview-pre">
 	<code class="fs-grid fl-export-preview-code">
 		{#each lines as line, index (index)}
 			<span class="fl-export-preview-span-8">
@@ -72,4 +72,4 @@
 			</span>
 		{/each}
 	</code>
-</pre>
+</div>

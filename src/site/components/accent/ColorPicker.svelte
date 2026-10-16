@@ -4,6 +4,8 @@
 
 	let { value = ACCENTS[0].value }: { value?: string } = $props();
 
+	// the picker starts from `value` and is edited from there
+	// svelte-ignore state_referenced_locally
 	let hex = $state(value);
 	let hue = $state(12);
 	let sat = $state(100);

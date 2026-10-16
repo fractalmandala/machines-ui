@@ -88,8 +88,8 @@ automatically. Name other snippets in the props type and describe them in JSDoc.
 
 | File | Role |
 | --- | --- |
-| `sveld.config.js` | what sveld reads and where it writes |
+| `sveld.config.ts` | what sveld reads and where it writes |
 | `src/docs/data/COMPONENT_API.json` | sveld's output; committed as the API snapshot |
 | `src/docs/data/components.json` | the merged data the docs pages render (generated) |
-| `scripts/docs-gen.mjs` | the pipeline |
-| `scripts/extract-docs.mjs` | the enrichment and the example checks |
+| `scripts/docs-gen.ts` | the pipeline |
+| `scripts/extract-docs.ts` | the enrichment and the example checks |

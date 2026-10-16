@@ -79,7 +79,7 @@ interpolation and scroll, hover or loop triggers.
 		animationMode?: AnimationMode;
 		/** Repeat the shuffle after each cycle. */
 		loop?: boolean;
-		/** Seconds to wait before each loop restarts. */
+		/** Seconds to wait before each loop restarts. Only applies when `loop` is on. */
 		loopDelay?: number;
 		/** Seconds between consecutive character delays. */
 		stagger?: number;
@@ -89,7 +89,7 @@ interpolation and scroll, hover or loop triggers.
 		colorFrom?: string;
 		/** Colour the characters interpolate to; needs `colorFrom` to take effect. */
 		colorTo?: string;
-		/** Stop observing after the first intersection. */
+		/** Stop watching for scroll into view after the first time. Governs the scroll trigger only: hovering still replays the shuffle (see `triggerOnHover`). */
 		triggerOnce?: boolean;
 		/** Show the plain text immediately when the user prefers reduced motion. */
 		respectReducedMotion?: boolean;
